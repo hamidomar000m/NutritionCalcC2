@@ -1,1 +1,1 @@
-Ernährungstracker must be finished till fourth of Novembre.
+Ernährungstracker must be finished until fourth of Novembre.

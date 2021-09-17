@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -42,8 +43,8 @@ public class LoginFrame {
 		loginPanel.add(userName);
 		loginPanel.add(userNameInput);
 		
-		//frame.getContentPane().add(BorderLayout.PAGE_START, appName);
-		//frame.getContentPane().add(BorderLayout.CENTER, loginPanel);
+		frame.getContentPane().add(BorderLayout.PAGE_START, appName);
+		frame.getContentPane().add(BorderLayout.CENTER, loginPanel);
 		
 		update();
 		
@@ -55,4 +56,5 @@ public class LoginFrame {
 		frame.revalidate();
 		
 	}
+	
 }

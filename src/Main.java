@@ -1,9 +1,10 @@
+import gui.LoginFrame;
+
 public class Main {
 	
 	public static void main(String[] args){
 		
-		System.out.println("Test");
-		System.out.println("Test");
+		LoginFrame loginFrame = new LoginFrame("CleanEat", 450, 800);
 		
 	}
 	

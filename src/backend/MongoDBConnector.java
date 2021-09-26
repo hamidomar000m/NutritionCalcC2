@@ -16,7 +16,7 @@ public class MongoDBConnector {
 		MongoDatabase db = client.getDatabase("ernaehrungstracker-app-db");
 		MongoCollection col= db.getCollection("users");
 		
-		Document sample = new Document("_id", "3").append("name", "Robert");
+		Document sample = new Document("_id", "5").append("name", "amrc");
 		col.insertOne(sample);
 		
 		

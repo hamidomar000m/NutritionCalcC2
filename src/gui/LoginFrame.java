@@ -27,7 +27,7 @@ import sun.jvm.hotspot.runtime.StaticBaseConstructor;
 
 public class LoginFrame {
 	
-	public JFrame frame;
+	public static JFrame frame;
 	
 	public LoginFrame() {
 		
@@ -118,7 +118,7 @@ public class LoginFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				InputDataFrame inputDataFrame = new InputDataFrame("he", 600, 600);
-				inputDataFrame.frame.setVisible(true);
+				inputDataFrame.frameRegister.setVisible(true);
 				
 			}
 			

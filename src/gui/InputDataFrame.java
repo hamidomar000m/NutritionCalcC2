@@ -25,7 +25,7 @@ import backend.MongoDBConnector;
 
 public class InputDataFrame {
 
-	public static JFrame frame;
+	public static JFrame frameRegister;
 	public static String gender = "";
 	
 	public InputDataFrame() {
@@ -53,13 +53,13 @@ public class InputDataFrame {
 	public InputDataFrame(final String title, final int width, final int height) {
 		
 		//Grundeinstellungen für das Frame
-		frame = new JFrame(title);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(width, height);
-		frame.getContentPane().setBackground(new Color(50, 72, 81));
-		frame.setLocationRelativeTo(null);
-		frame.setResizable(false);
-		frame.setVisible(true);
+		frameRegister = new JFrame(title);
+		frameRegister.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frameRegister.setSize(width, height);
+		frameRegister.getContentPane().setBackground(new Color(50, 72, 81));
+		frameRegister.setLocationRelativeTo(null);
+		frameRegister.setResizable(false);
+		frameRegister.setVisible(true);
 		
 		//Content Pane for frame
 		JPanel contentPane = new JPanel();
@@ -218,7 +218,7 @@ public class InputDataFrame {
 		borderPnl.add(weightPnl);
 		borderPnl.add(agePnl);
 		borderPnl.add(submitButton);
-		borderPnl.setSize(frame.getWidth(), frame.getHeight());
+		borderPnl.setSize(frameRegister.getWidth(), frameRegister.getHeight());
 		
 		//Container (includes all elements)
 		JPanel container = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -227,9 +227,9 @@ public class InputDataFrame {
 		
 		contentPane.add(BorderLayout.PAGE_START, header);
 		contentPane.add(BorderLayout.CENTER, container);
-		frame.setContentPane(contentPane);
+		frameRegister.setContentPane(contentPane);
 		
-		frame = utils.update(frame);
+		frameRegister = utils.update(frameRegister);
 		
 	}
 	

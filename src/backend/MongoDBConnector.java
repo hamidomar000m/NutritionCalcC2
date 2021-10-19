@@ -75,7 +75,7 @@ public class MongoDBConnector {
 			if(( _id.length() == 0 || userPassword.length() <= 5 || userAge.length() == 0 || userGender.length() == 0 || userHeight.length() == 0 || userHeight.equals("in kg") || userWeight.length() == 0) == true) {
 				
 				System.out.println(cursor.next());
-				JOptionPane.showMessageDialog(InputDataFrame.frame, "Invalid data!\r\nNo field should be empty!\r\nPassword should be at least 6 characters.");
+				JOptionPane.showMessageDialog(InputDataFrame.frameRegister, "Invalid data!\r\nNo field should be empty!\r\nPassword should be at least 6 characters.");
 			
 			} else {
 				System.out.println("No user by that _id");
@@ -85,15 +85,18 @@ public class MongoDBConnector {
 					mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users").insertOne(document);
 					MainFrame mainFrame = new MainFrame();
 					mainFrame.frame.setVisible(true);
+					InputDataFrame inputDataFrame = new InputDataFrame();
+					inputDataFrame.frameRegister.setVisible(false);
+					System.out.println("hey1");
 					LoginFrame loginFrame = new LoginFrame();
 					loginFrame.frame.setVisible(false);
-					InputDataFrame inputDataFrame = new InputDataFrame();
-					inputDataFrame.frame.setVisible(false);
+					System.out.println("hey");
+					
 					System.out.println("Document inserted");
 					
 				} catch (Exception e) {
 					System.out.println("Something went wrong : " +e);
-					JOptionPane.showMessageDialog(InputDataFrame.frame, "User already exists!");
+					JOptionPane.showMessageDialog(InputDataFrame.frameRegister, "User already exists!");
 					
 					
 				} 
@@ -101,7 +104,7 @@ public class MongoDBConnector {
 				
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(InputDataFrame.frame, "Invalid data or user already exists!");
+			JOptionPane.showMessageDialog(InputDataFrame.frameRegister, "Invalid data or user already exists!");
 		} 
 		
 		
@@ -138,7 +141,7 @@ public class MongoDBConnector {
 					MainFrame mainFrame = new MainFrame();
 					mainFrame.frame.setVisible(true);
 				} else {
-					JOptionPane.showMessageDialog(InputDataFrame.frame, "Invalid data!");
+					JOptionPane.showMessageDialog(LoginFrame.frame, "Invalid data!");
 				}
 				/*if(cursorPassword.toString().contentEquals(userPassword)) {
 
@@ -154,9 +157,9 @@ public class MongoDBConnector {
 			} else {
 				System.out.println("No user by that _id");
 			
-				JOptionPane.showMessageDialog(InputDataFrame.frame, "User does not exist! Please, register!");
+				JOptionPane.showMessageDialog(LoginFrame.frame, "User does not exist! Please, register!");
 				InputDataFrame inputDataFrame = new InputDataFrame("he", 600, 600);
-				inputDataFrame.frame.setVisible(true);
+				inputDataFrame.frameRegister.setVisible(true);
 				
 			}
 		} catch (Exception e) {

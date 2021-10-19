@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
 
 public class MainFrame {
 
-	private JFrame frame;
+	public JFrame frame;
 
 	/**
 	 * Create the application.

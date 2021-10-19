@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -19,9 +20,26 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
+import backend.Access;
+import backend.MongoDBConnector;
+
 public class InputDataFrame {
 
-	private JFrame frame;
+	public static JFrame frame;
+	public static String gender = "";
+	
+	public InputDataFrame() {
+		
+	}
+	/*
+	public  userNameInput;
+	public String passwordInput;
+	
+	public float height;
+	public float weight;
+	public Integer age;
+	*/
+	
 	
 	/*
 	 * Was man noch hinzufügen könnte:
@@ -53,6 +71,36 @@ public class InputDataFrame {
 		header.setForeground(Color.white);
 		header.setFont(new Font("Verdana", Font.BOLD, 60));
 		
+		/////////////////////////////////////////
+		
+		//Panel and Label for Login
+		JPanel loginLabelPnl = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		loginLabelPnl.setBackground(new Color(50, 72, 81));
+		JLabel loginLabel = new JLabel("Benutzerdaten");
+		loginLabel.setForeground(Color.white);
+		loginLabel.setFont(new Font("Verdana", Font.BOLD, 24));
+		loginLabelPnl.add(loginLabel);
+		
+		//Panel, Label and Textfield for username
+		JPanel userNamePnl = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		userNamePnl.setBackground(new Color(50, 72, 81));
+		JLabel userName = new JLabel("Benutzername:");
+		userName.setForeground(Color.white);
+		JTextField userNameInput = new JTextField(25);
+		userNamePnl.add(userName);
+		userNamePnl.add(userNameInput);
+		
+		//Panel, Label and Textfield for password
+		JPanel passwordPnl = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		passwordPnl.setBackground(new Color(50, 72, 81));
+		JLabel password = new JLabel("Passwort:");
+		password.setForeground(Color.white);
+		JTextField passwordInput = new JTextField(25);
+		passwordPnl.add(password);
+		passwordPnl.add(passwordInput);
+		
+		///////////////////////////////////
+		
 		//Panel with radiobuttons for gender selection
 		JPanel genderPnl = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		genderPnl.setBackground(new Color(50, 72, 81));
@@ -69,7 +117,7 @@ public class InputDataFrame {
 
 				if(maleButton.isSelected()) {
 					
-					final String gender = "male";
+					gender = "male";
 					System.out.println(gender);
 					
 				}
@@ -88,7 +136,7 @@ public class InputDataFrame {
 
 				if(femaleButton.isSelected()) {
 					
-					final String gender = "female";
+					gender = "female";
 					System.out.println(gender);
 					
 				}
@@ -143,11 +191,16 @@ public class InputDataFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				double userHeight = Double.parseDouble(heightTextField.getText());
-				double weight = Double.parseDouble(weightTextField.getText());
-				int age = Integer.parseInt(ageTextField.getText());
+				// added by hamid can be deleted ////////////////////////////////////////
+				//Access access = new Access(userNameInput.getText(), passwordInput.getText(), gender, weightTextField.getText(), heightTextField.getText(), ageTextField.getText());
+				//access.toMap();
+				//Access.toMap(userNameInput.getText(), passwordInput.getText(), gender.getText(), weightTextField, heightTextField, ageTextField.getText());
+				MongoDBConnector mongoDBConnector = new MongoDBConnector(userNameInput.getText().toLowerCase(), passwordInput.getText(), gender, weightTextField.getText(), heightTextField.getText(), ageTextField.getText());
+				mongoDBConnector.signUpUser();
+
 				
-				System.out.println(userHeight+ " " + weight + " " + age);
+				//MongoDBConnector.MongoDBConnector();
+
 				
 			}
 			
@@ -155,9 +208,11 @@ public class InputDataFrame {
 		
 		JPanel borderPnl = new JPanel();
 		//borderPnl.setLayout(new BoxLayout(borderPnl, BoxLayout.PAGE_AXIS));
-		borderPnl.setLayout(new GridLayout(5, 1, 50, 20));
+		borderPnl.setLayout(new GridLayout(7, 1, 50, 20));
 		borderPnl.setBorder(BorderFactory.createTitledBorder(null, "Körperdaten eingeben", TitledBorder.LEFT, TitledBorder.TOP, new Font("Verdana", Font.PLAIN, 12), Color.white));
 		borderPnl.setBackground(new Color(50, 72, 81));
+		borderPnl.add(userNamePnl);
+		borderPnl.add(passwordPnl);
 		borderPnl.add(genderPnl);
 		borderPnl.add(heightPnl);
 		borderPnl.add(weightPnl);
@@ -177,5 +232,6 @@ public class InputDataFrame {
 		frame = utils.update(frame);
 		
 	}
+	
 	
 }

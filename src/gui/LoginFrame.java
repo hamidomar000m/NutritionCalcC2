@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -19,9 +21,17 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
+import backend.MongoDBConnector;
+import jdk.dynalink.beans.StaticClass;
+import sun.jvm.hotspot.runtime.StaticBaseConstructor;
+
 public class LoginFrame {
 	
-	private JFrame frame;
+	public JFrame frame;
+	
+	public LoginFrame() {
+		
+	}
 	
 	public LoginFrame(final String title, final int width, final int height) {
 		
@@ -72,6 +82,27 @@ public class LoginFrame {
 		
 		//Button to submit login data
 		JButton loginButton = new JButton("Login");
+		loginButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				// added by hamid can be deleted ////////////////////////////////////////
+				//Access access = new Access(userNameInput.getText(), passwordInput.getText(), gender, weightTextField.getText(), heightTextField.getText(), ageTextField.getText());
+				//access.toMap();
+				//Access.toMap(userNameInput.getText(), passwordInput.getText(), gender.getText(), weightTextField, heightTextField, ageTextField.getText());
+				MongoDBConnector mongoDBConnector = new MongoDBConnector(userNameInput.getText().toLowerCase(), passwordInput.getText());
+				mongoDBConnector.logInUser();
+
+				
+				//MongoDBConnector.MongoDBConnector();
+
+				
+			}
+			
+		});
+		
+
 		
 		//Registry Button
 		JPanel registryButtonPnl = new JPanel(new FlowLayout());
@@ -80,7 +111,18 @@ public class LoginFrame {
 		registryLabel.setForeground(Color.white);
 		JButton registryButton = new JButton("Register");
 		registryButtonPnl.add(registryLabel);
-		registryButtonPnl.add(registryButton);
+		registryButtonPnl.add(registryButton);		
+		registryButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				InputDataFrame inputDataFrame = new InputDataFrame("he", 600, 600);
+				inputDataFrame.frame.setVisible(true);
+				
+			}
+			
+		});
 		
 		//Panel for creating two rows as a layout and adding all components
 		JPanel borderPnl = new JPanel();
@@ -105,6 +147,23 @@ public class LoginFrame {
 		
 		frame = utils.update(frame);
 		
+		
+		//this could be deleted,from hamid ###############################
+		//registryButton.addActionListener(new Action());
 	}
+		//this is new from hamid could be deleted #################
+		/*static class Action implements ActionListener{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				MongoDBConnector mongoDBConnector = new MongoDBConnector(userNameInput.getText(), passwordInput.getText(), gender, weightTextField.getText(), heightTextField.getText(), ageTextField.getText());
+				mongoDBConnector.signUpUser();
+				
+				InputDataFrame inputDataFrame = new InputDataFrame("he", 600, 600);
+				inputDataFrame.frame.setVisible(true);
+				
+			}
+	
+		}*/
 	
 }

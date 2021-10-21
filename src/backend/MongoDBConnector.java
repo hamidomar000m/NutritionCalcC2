@@ -8,7 +8,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
-import com.mongodb.*;
 
 import gui.InputDataFrame;
 import gui.LoginFrame;
@@ -32,6 +31,8 @@ public class MongoDBConnector {
 	public static String userWeight;
 	public static String userHeight;
 	public static String userAge;
+	public static String userGoal;
+	public static String userActivity;
 	
 	public MongoDBConnector(String _id, String userPassword) {
 		super();
@@ -44,7 +45,7 @@ public class MongoDBConnector {
 		
 	}
 
-	public MongoDBConnector(String _id, String userPassword, String userGender, String userWeight, String userHeight, String userAge) {
+	public MongoDBConnector(String _id, String userPassword, String userGender, String userWeight, String userHeight, String userAge) {  //, String userGoal, String userActivity)
 		super();
 		this._id = _id;
 		this.userPassword = userPassword;
@@ -72,9 +73,10 @@ public class MongoDBConnector {
 			BasicDBObject searchQuery = new BasicDBObject();
 			searchQuery.put("_id", _id);
 			MongoCursor<Document> cursor = mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users").find(searchQuery).iterator();
-			if(( _id.length() == 0 || userPassword.length() <= 5 || userAge.length() == 0 || userGender.length() == 0 || userHeight.length() == 0 || userHeight.equals("in kg") || userWeight.length() == 0) == true) {
+			if(( _id.length() == 0 || userPassword.length() <= 5 || userAge.length() == 0 || userGender.length() == 0 || userHeight.length() == 0  || userWeight.length() == 0 || userHeight.equalsIgnoreCase("in cm")) || userWeight.equalsIgnoreCase("in kg")== true) {
 				
-				System.out.println(cursor.next());
+				System.out.println(cursor.next() );
+				System.out.println(userHeight.equalsIgnoreCase("in cm"));
 				JOptionPane.showMessageDialog(InputDataFrame.frameRegister, "Invalid data!\r\nNo field should be empty!\r\nPassword should be at least 6 characters.");
 			
 			} else {
@@ -97,6 +99,7 @@ public class MongoDBConnector {
 				} catch (Exception e) {
 					System.out.println("Something went wrong : " +e);
 					JOptionPane.showMessageDialog(InputDataFrame.frameRegister, "User already exists!");
+					System.out.println(userHeight.equalsIgnoreCase("in cm"));
 					
 					
 				} 
@@ -105,6 +108,7 @@ public class MongoDBConnector {
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(InputDataFrame.frameRegister, "Invalid data or user already exists!");
+			System.out.println(userHeight.equalsIgnoreCase("in cm"));
 		} 
 		
 		
@@ -140,6 +144,8 @@ public class MongoDBConnector {
 				if(cursor.next().get("userPassword").equals(userPassword)) {
 					MainFrame mainFrame = new MainFrame();
 					mainFrame.frame.setVisible(true);
+					LoginFrame loginFrame = new LoginFrame();
+					loginFrame.frame.setVisible(false);
 				} else {
 					JOptionPane.showMessageDialog(LoginFrame.frame, "Invalid data!");
 				}

@@ -4,6 +4,7 @@ import backend.MongoDBConnector;
 import gui.LoginFrame;
 import gui.MainFrame;
 import gui.MicronutrientsFrame;
+import gui.SettingsFrame;
 
 public class Main {
 
@@ -23,9 +24,9 @@ public class Main {
 			}
 		});*/
 		
-		MainFrame mainFrame = new MainFrame();
+		//MainFrame mainFrame = new MainFrame();
+		SettingsFrame settingsFrame = new SettingsFrame();
 		//MicronutrientsFrame microFrame = new MicronutrientsFrame();
-		//Test, Test, Test
 		
 	}
 

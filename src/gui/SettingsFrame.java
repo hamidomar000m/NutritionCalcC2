@@ -24,9 +24,6 @@ public class SettingsFrame {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public SettingsFrame() {
 		initialize();
 	}

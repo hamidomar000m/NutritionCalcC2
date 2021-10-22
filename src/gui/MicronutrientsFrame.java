@@ -45,7 +45,8 @@ public class MicronutrientsFrame {
 		String[][] tableData = new String[][] {
 			
 			{"Vitamin A", "1.1 mg"},
-			{"Vitamin B", "1.2 mg"}
+			{"Vitamin B", "1.2 mg"},
+			{"Vitamin C", "1.2 mg"}
 			
 		};
 		

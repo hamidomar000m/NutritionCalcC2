@@ -10,8 +10,10 @@ import com.mongodb.client.MongoDatabase;
 
 
 import gui.InputDataFrame;
+import gui.LogInFrm;
 import gui.LoginFrame;
 import gui.MainFrame;
+import gui.SignUpFrame;
 import sun.security.pkcs11.Secmod.DbMode;
 
 import java.awt.Cursor;
@@ -38,14 +40,12 @@ public class MongoDBConnector {
 		super();
 		this._id = _id;
 		this.userPassword = userPassword;  
-		this.userGender = userGender;
-		this.userWeight = userWeight;
-		this.userHeight = userHeight;
-		this.userAge = userAge;
+
+
 		
 	}
 
-	public MongoDBConnector(String _id, String userPassword, String userGender, String userWeight, String userHeight, String userAge) {  //, String userGoal, String userActivity)
+	public MongoDBConnector(String _id, String userPassword, String userGender, String userWeight, String userHeight, String userAge, String userGoal, String userActivity) {  //, String userGoal, String userActivity)
 		super();
 		this._id = _id;
 		this.userPassword = userPassword;
@@ -53,6 +53,8 @@ public class MongoDBConnector {
 		this.userWeight = userWeight;
 		this.userHeight = userHeight;
 		this.userAge = userAge;
+		this.userGoal = userGoal;
+		this.userActivity = userActivity;
 	}
 	
 	public static void signUpUser() {
@@ -77,29 +79,28 @@ public class MongoDBConnector {
 				
 				System.out.println(cursor.next() );
 				System.out.println(userHeight.equalsIgnoreCase("in cm"));
-				JOptionPane.showMessageDialog(InputDataFrame.frameRegister, "Invalid data!\r\nNo field should be empty!\r\nPassword should be at least 6 characters.");
+				JOptionPane.showMessageDialog(InputDataFrame.frameRegister, "Invalid data!\r\nNo field should be empty!\r\nPassword should be at least 6 characters.", "ERROR", JOptionPane.ERROR_MESSAGE);
 			
 			} else {
 				System.out.println("No user by that _id");
 				try {
 					
-					Document document = new Document("_id", _id).append("userPassword", userPassword).append("userGender", userGender).append("userWeight", userWeight).append("userHeight", userHeight).append("userAge", userAge);
+					Document document = new Document("_id", _id).append("userPassword", userPassword).append("userGender", userGender).append("userWeight", userWeight).append("userHeight", userHeight).append("userAge", userAge).append("userGoal", userGoal).append("userActivity", userActivity);
 					mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users").insertOne(document);
 					MainFrame mainFrame = new MainFrame();
 					mainFrame.frame.setVisible(true);
-					InputDataFrame inputDataFrame = new InputDataFrame();
-					inputDataFrame.frameRegister.setVisible(false);
-					System.out.println("hey1");
-					LoginFrame loginFrame = new LoginFrame();
-					loginFrame.frame.setVisible(false);
+					SignUpFrame signUpFrame = new SignUpFrame();
+					signUpFrame.frmDataCollection.setVisible(false);
+
+
 					System.out.println("hey");
 					
 					System.out.println("Document inserted");
 					
 				} catch (Exception e) {
 					System.out.println("Something went wrong : " +e);
-					JOptionPane.showMessageDialog(InputDataFrame.frameRegister, "User already exists!");
-					System.out.println(userHeight.equalsIgnoreCase("in cm"));
+					JOptionPane.showMessageDialog(InputDataFrame.frameRegister, "User already exists!", "ERROR", JOptionPane.ERROR_MESSAGE);
+
 					
 					
 				} 
@@ -107,8 +108,7 @@ public class MongoDBConnector {
 				
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(InputDataFrame.frameRegister, "Invalid data or user already exists!");
-			System.out.println(userHeight.equalsIgnoreCase("in cm"));
+			JOptionPane.showMessageDialog(InputDataFrame.frameRegister, "Invalid data or user already exists!", "ERROR", JOptionPane.ERROR_MESSAGE);
 		} 
 		
 		
@@ -130,42 +130,29 @@ public class MongoDBConnector {
 		
 		try {
 			BasicDBObject searchQuery_id = new BasicDBObject();
-			BasicDBObject searchQueryUserPassword = new BasicDBObject();
+
 			searchQuery_id.put("_id", _id);
-			//System.out.println("didnt work1");
-			//searchQueryUserPassword.put("userPassword", userPassword);
+
 			
 			MongoCursor<Document> cursor = mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users").find(searchQuery_id).iterator();
-			//MongoCursor<Document> cursorPassword = mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users").find(searchQueryUserPassword).iterator();
-			
-			
-
+	
 			if(cursor.hasNext()) {
 				if(cursor.next().get("userPassword").equals(userPassword)) {
 					MainFrame mainFrame = new MainFrame();
 					mainFrame.frame.setVisible(true);
-					LoginFrame loginFrame = new LoginFrame();
-					loginFrame.frame.setVisible(false);
+					LogInFrm loginFrm = new LogInFrm();
+					loginFrm.frmLogIn.setVisible(false);
 				} else {
-					JOptionPane.showMessageDialog(LoginFrame.frame, "Invalid data!");
+					JOptionPane.showMessageDialog(LoginFrame.frame, "Invalid Password!", "ERROR", JOptionPane.ERROR_MESSAGE);
 				}
-				/*if(cursorPassword.toString().contentEquals(userPassword)) {
 
-				}*/
-				
-				//System.out.println(cursorPassword.toString().contentEquals(userPassword));
-					
-				
-				
-				//System.out.println(cursorPassword.next());
-				//JOptionPane.showMessageDialog(InputDataFrame.frame, "Invalid data or the user already exists");
 				
 			} else {
 				System.out.println("No user by that _id");
 			
-				JOptionPane.showMessageDialog(LoginFrame.frame, "User does not exist! Please, register!");
-				InputDataFrame inputDataFrame = new InputDataFrame("he", 600, 600);
-				inputDataFrame.frameRegister.setVisible(true);
+				JOptionPane.showMessageDialog(LoginFrame.frame, "User does not exist! Please, register!", "ERROR", JOptionPane.ERROR_MESSAGE);
+				SignUpFrame signUpFrame = new SignUpFrame();
+				signUpFrame.frmDataCollection.setVisible(true);
 				
 			}
 		} catch (Exception e) {
@@ -176,24 +163,5 @@ public class MongoDBConnector {
 		
 	}
 
-	/*public static void main(String[] args) {
 
-
-		MongoClient client = MongoClients.create("mongodb+srv://HamidO:123Hamid123@cluster0.f2htr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
-		
-		MongoDatabase db = client.getDatabase("ernaehrungstracker-app-db");
-		MongoCollection col= db.getCollection("users");
-		
-		Document sample = new Document("_id", "227").append("name", "xxx").append("age", 12);
-		col.insertOne(sample);
-		
-		BasicDBObject searchQuery = new BasicDBObject();
-		searchQuery.put("_id", "225");
-		MongoCursor<Document> cursor = col.find(searchQuery).iterator();
-		while(cursor.hasNext()) {
-			System.out.println(cursor.next());
-		}
-	
-		
-	}*/
 }

@@ -8,6 +8,10 @@ import java.awt.Color;
 import java.awt.Panel;
 import java.awt.BorderLayout;
 import javax.swing.JTextPane;
+
+import backend.MongoDBConnector;
+import backend.NutritionCalculator;
+
 import java.awt.Font;
 import java.awt.TextArea;
 import javax.swing.JComboBox;
@@ -28,7 +32,7 @@ import javax.swing.JOptionPane;
 
 public class SignUpFrame extends Thread{
 
-	private JFrame frmDataCollection;
+	public JFrame frmDataCollection;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -64,9 +68,10 @@ public class SignUpFrame extends Thread{
 	 */
 	private void initialize() {
 		frmDataCollection = new JFrame();
-		frmDataCollection.setTitle("Data Collection");
+		frmDataCollection.setTitle("Sign Up");
 		frmDataCollection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmDataCollection.getContentPane().setBackground(new Color(153, 204, 102));
+		frmDataCollection.setVisible(true);
 		frmDataCollection.getContentPane().setLayout(null);
 		
 		JTextPane txtpnRegistration = new JTextPane();
@@ -222,7 +227,7 @@ public class SignUpFrame extends Thread{
 		
 		frmDataCollection.setSize(700, 550);
 		frmDataCollection.setLocationRelativeTo(null);
-		frmDataCollection.setVisible(true);
+		//frmDataCollection.setVisible(true);
 	}
 	
 	/*
@@ -233,17 +238,18 @@ public class SignUpFrame extends Thread{
 		public void actionPerformed(ActionEvent e) {
 			if(inputValid()) {
 				Object[] inputs = getData();
+				MongoDBConnector mongoDBConnector = new MongoDBConnector(inputs[0].toString(), inputs[1].toString(), inputs[2].toString(), inputs[3].toString(), inputs[4].toString(), inputs[5].toString(), inputs[6].toString(), inputs[7].toString());
+				mongoDBConnector.signUpUser();
 				NutritionCalculator n = new NutritionCalculator(inputs[2].toString(),
 										Integer.parseInt(inputs[3].toString()), Double.parseDouble(inputs[4].toString()),
 										Double.parseDouble(inputs[5].toString()), inputs[6].toString(), inputs[7].toString());
 				n.calculate();
 				n.printNutritionalValues();
 				n.printAll();
-				frmDataCollection.dispose();
 				isAlive = false;
 			}
 			else {
-				JOptionPane.showMessageDialog(null, "Input Error... please try again!", "ERROR", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Invalid data!\r\nNo field should be empty!\r\nPassword should be at least 6 characters.", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		
@@ -256,7 +262,7 @@ public class SignUpFrame extends Thread{
 	 */
 	private boolean inputValid() {
 		try {
-			username = textField_3.getText();
+			username = textField_3.getText().toLowerCase();
 			password = textField_4.getText();
 			gender = comboBox.getSelectedItem().toString();
 			goal = comboBox_1.getSelectedItem().toString();
@@ -288,7 +294,7 @@ public class SignUpFrame extends Thread{
 		weight = Double.parseDouble(textField_2.getText());
 		activity = comboBox_1_1.getSelectedItem().toString();
 		
-		Object[] data = {username, password, gender, age, height, weight, goal, activity};
+		Object[] data = {username, password, gender, age, weight, height, goal, activity};
 		return data;
 	}
 	
@@ -311,6 +317,7 @@ public class SignUpFrame extends Thread{
 			if(newBMI != oldBMI) {
 				txtpnBmi_1.setText(newBMI+"");
 				oldBMI = newBMI;
+				System.out.println("hejjksafj");
 			}
 		}
 	}

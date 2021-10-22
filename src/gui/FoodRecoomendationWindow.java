@@ -13,7 +13,6 @@ import javax.swing.JTable;
 public class FoodRecoomendationWindow {
 
 	private JFrame frame;
-	private JTable foodTable;
 	private JScrollPane scrollPane;
 
 	/**
@@ -74,7 +73,7 @@ public class FoodRecoomendationWindow {
 		scrollPane.setBounds(293, 218, 319, 150);
 		frame.getContentPane().add(scrollPane);
 		
-		foodTable = new JTable(tableData, tableHeading);
+		JTable foodTable = new JTable(tableData, tableHeading);
 		scrollPane.setViewportView(foodTable);
 	}
 }

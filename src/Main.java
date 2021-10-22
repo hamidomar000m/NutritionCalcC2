@@ -3,6 +3,7 @@ import java.awt.EventQueue;
 import backend.MongoDBConnector;
 import gui.LoginFrame;
 import gui.MainFrame;
+import gui.MicronutrientsFrame;
 
 public class Main {
 
@@ -23,6 +24,8 @@ public class Main {
 		});*/
 		
 		MainFrame mainFrame = new MainFrame();
+		//MicronutrientsFrame microFrame = new MicronutrientsFrame();
+		//Test, Test, Test
 		
 	}
 

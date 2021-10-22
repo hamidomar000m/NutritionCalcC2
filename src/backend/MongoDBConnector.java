@@ -18,3 +18,7 @@ public class MongoDBConnector {
 		
 		Document sample = new Document("_id", "5").append("name", "amrc");
 		col.insertOne(sample);
+
+	}
+	
+}

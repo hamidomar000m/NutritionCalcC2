@@ -8,16 +8,13 @@ import org.bson.Document;
 
 public class MongoDBConnector {
 
-	public MongoDBConnector() {
-		
+	public static void main(String[] args) {
+
+
 		MongoClient client = MongoClients.create("mongodb+srv://HamidO:123Hamid123@cluster0.f2htr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
 		
 		MongoDatabase db = client.getDatabase("ernaehrungstracker-app-db");
 		MongoCollection col= db.getCollection("users");
 		
-		Document sample = new Document("_id", "7").append("name", "Test Nummer 7");
+		Document sample = new Document("_id", "5").append("name", "amrc");
 		col.insertOne(sample);
-		
-	}
-
-}

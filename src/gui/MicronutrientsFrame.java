@@ -47,7 +47,8 @@ public class MicronutrientsFrame {
 			{"Vitamin A", "1.1 mg"},
 			{"Vitamin B", "1.2 mg"},
 			{"Vitamin C", "1.2 mg"},
-			{"Vitamin D", "1.3 mg"}, 
+			{"Vitamin D", "1.3 mg"},
+			{"Vitamin E", "1.3 mg"}
 			
 		};
 		

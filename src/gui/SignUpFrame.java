@@ -237,22 +237,27 @@ public class SignUpFrame extends Thread{
 	class SubmitListener implements ActionListener{
 		
 		public void actionPerformed(ActionEvent e) {
-			if(inputValid()) {
-				Object[] inputs = getData();
-				MongoDBConnector mongoDBConnector = new MongoDBConnector(inputs[0].toString(), inputs[1].toString(), inputs[2].toString(), inputs[3].toString(), inputs[4].toString(), inputs[5].toString(), inputs[6].toString(), inputs[7].toString());
-				mongoDBConnector.signUpUser();
+			try {
+				if(inputValid()) {
+					Object[] inputs = getData();
+					MongoDBConnector mongoDBConnector = new MongoDBConnector(inputs[0].toString(), inputs[1].toString(), inputs[2].toString(), inputs[3].toString(), inputs[4].toString(), inputs[5].toString(), inputs[6].toString(), inputs[7].toString());
+					mongoDBConnector.signUpUser();
+
+					NutritionCalculator n = new NutritionCalculator(inputs[2].toString(),
+											Integer.parseInt(inputs[3].toString()), Double.parseDouble(inputs[4].toString()),
+											Double.parseDouble(inputs[5].toString()), inputs[6].toString(), inputs[7].toString());
+					n.calculate();
+					n.printNutritionalValues();
+					n.printAll();
+					isAlive = false;
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Invalid data!\r\nNo field should be empty!\r\nPassword should be at least 6 characters.", "ERROR", JOptionPane.ERROR_MESSAGE);
+				}
+			} catch (Exception e2) {
 				frmDataCollection.setVisible(false);
-				NutritionCalculator n = new NutritionCalculator(inputs[2].toString(),
-										Integer.parseInt(inputs[3].toString()), Double.parseDouble(inputs[4].toString()),
-										Double.parseDouble(inputs[5].toString()), inputs[6].toString(), inputs[7].toString());
-				n.calculate();
-				n.printNutritionalValues();
-				n.printAll();
-				isAlive = false;
 			}
-			else {
-				JOptionPane.showMessageDialog(null, "Invalid data!\r\nNo field should be empty!\r\nPassword should be at least 6 characters.", "ERROR", JOptionPane.ERROR_MESSAGE);
-			}
+
 		}
 		
 	}

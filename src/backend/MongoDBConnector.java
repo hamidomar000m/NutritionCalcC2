@@ -79,7 +79,7 @@ public class MongoDBConnector {
 				
 				System.out.println(cursor.next() );
 				System.out.println(userHeight.equalsIgnoreCase("in cm"));
-				JOptionPane.showMessageDialog(InputDataFrame.frameRegister, "Invalid data!\r\nNo field should be empty!\r\nPassword should be at least 6 characters.", "ERROR", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Invalid data!\r\nNo field should be empty!\r\nPassword should be at least 6 characters.", "ERROR", JOptionPane.ERROR_MESSAGE);
 			
 			} else {
 				System.out.println("No user by that _id");
@@ -99,7 +99,7 @@ public class MongoDBConnector {
 					
 				} catch (Exception e) {
 					System.out.println("Something went wrong : " +e);
-					JOptionPane.showMessageDialog(InputDataFrame.frameRegister, "User already exists!", "ERROR", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "User already exists!", "ERROR", JOptionPane.ERROR_MESSAGE);
 
 					
 					
@@ -108,7 +108,7 @@ public class MongoDBConnector {
 				
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(InputDataFrame.frameRegister, "Invalid data or user already exists!", "ERROR", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Invalid data or user already exists!", "ERROR", JOptionPane.ERROR_MESSAGE);
 		} 
 		
 		
@@ -140,19 +140,18 @@ public class MongoDBConnector {
 				if(cursor.next().get("userPassword").equals(userPassword)) {
 					MainFrame mainFrame = new MainFrame();
 					mainFrame.frame.setVisible(true);
-					LogInFrm loginFrm = new LogInFrm();
-					loginFrm.frmLogIn.setVisible(false);
+					LogInFrm logInFrm = new LogInFrm();
+					logInFrm.frmLogIn.setVisible(false);
 				} else {
-					JOptionPane.showMessageDialog(LoginFrame.frame, "Invalid Password!", "ERROR", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Invalid Password!", "ERROR", JOptionPane.ERROR_MESSAGE);
 				}
 
 				
 			} else {
 				System.out.println("No user by that _id");
 			
-				JOptionPane.showMessageDialog(LoginFrame.frame, "User does not exist! Please, register!", "ERROR", JOptionPane.ERROR_MESSAGE);
-				SignUpFrame signUpFrame = new SignUpFrame();
-				signUpFrame.frmDataCollection.setVisible(true);
+				JOptionPane.showMessageDialog(null, "User does not exist! Please, register!", "ERROR", JOptionPane.ERROR_MESSAGE);
+
 				
 			}
 		} catch (Exception e) {

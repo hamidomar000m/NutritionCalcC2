@@ -151,16 +151,21 @@ public class LogInFrm extends Thread{
 	class SubmitListener implements ActionListener{
 		
 		public void actionPerformed(ActionEvent e) {
-			if(inputValid()) {
+			try {
+				if(inputValid()) {
 
-				MongoDBConnector mongoDBConnector = new MongoDBConnector(textField_3.getText().toLowerCase(), textField_4.getText());
-				mongoDBConnector.logInUser();
+					MongoDBConnector mongoDBConnector = new MongoDBConnector(textField_3.getText().toLowerCase(), textField_4.getText());
+					mongoDBConnector.logInUser();
+					
+
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Input Error... please try again!\r\nPassword should be at least 6 characters!", "ERROR", JOptionPane.ERROR_MESSAGE);
+				}
+			} catch (Exception e2) {
 				frmLogIn.setVisible(false);
+			}
 
-			}
-			else {
-				JOptionPane.showMessageDialog(null, "Input Error... please try again!\r\nPassword should be at least 6 characters!", "ERROR", JOptionPane.ERROR_MESSAGE);
-			}
 		}
 		
 	}

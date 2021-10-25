@@ -8,31 +8,28 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JTable;
 
 import backend.MongoDBConnector;
+import javax.swing.JButton;
 
-public class FoodRecoomendationWindow {
+public class FoodRecommendationFrame {
 
-	private JFrame frame;
+	private static JFrame frame;
 	private JScrollPane scrollPane;
 	private ArrayList<String> dataList;
 	private String[] carbs;
 	private String[] proteins;
 	private String[] fats;
 
-	/**
-	 * Create the application.
-	 */
-	public FoodRecoomendationWindow() {
+	public FoodRecommendationFrame() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame("Food Recommendation");
 		frame.getContentPane().setBackground(new Color(154, 205, 50));
@@ -42,7 +39,7 @@ public class FoodRecoomendationWindow {
 		
 		JLabel heading = new JLabel("Food Recommendation");
 		heading.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 36));
-		heading.setBounds(285, 36, 415, 30);
+		heading.setBounds(289, 36, 406, 30);
 		frame.getContentPane().add(heading);
 		
 		MongoDBConnector connectorCarb = new MongoDBConnector("carbohydrates");
@@ -91,21 +88,48 @@ public class FoodRecoomendationWindow {
 		foodTable.setFont(new Font("Arial", Font.PLAIN, 16));
 		scrollPane.setViewportView(foodTable);
 		
-		JLabel lblNewLabel = new JLabel("Carbohydrates");
-		lblNewLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 18));
-		lblNewLabel.setBounds(208, 101, 139, 30);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel carbsLabel = new JLabel("Carbohydrates");
+		carbsLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 18));
+		carbsLabel.setBounds(208, 101, 139, 30);
+		frame.getContentPane().add(carbsLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Proteins");
-		lblNewLabel_1.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 18));
-		lblNewLabel_1.setBounds(447, 101, 82, 30);
-		frame.getContentPane().add(lblNewLabel_1);
+		JLabel proteinsLabel = new JLabel("Proteins");
+		proteinsLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 18));
+		proteinsLabel.setBounds(447, 101, 82, 30);
+		frame.getContentPane().add(proteinsLabel);
 		
-		JLabel lblNewLabel_2 = new JLabel("Fats");
-		lblNewLabel_2.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 18));
-		lblNewLabel_2.setBounds(674, 101, 50, 30);
-		frame.getContentPane().add(lblNewLabel_2);
+		JLabel fatsLabel = new JLabel("Fats");
+		fatsLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 18));
+		fatsLabel.setBounds(674, 101, 50, 30);
+		frame.getContentPane().add(fatsLabel);
 		
+		JButton homeButton = new JButton("Home");
+		homeButton.setFont(new Font("Arial", Font.PLAIN, 16));
+		homeButton.setBounds(106, 587, 125, 30);
+		frame.getContentPane().add(homeButton);
+		homeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Home clicked");
+				frame.setVisible(false);
+				MainFrame.displayFrame();
+			}
+		});
+		
+		JButton supplementButton = new JButton("Supplements");
+		supplementButton.setFont(new Font("Arial", Font.PLAIN, 16));
+		supplementButton.setBounds(757, 587, 125, 30);
+		frame.getContentPane().add(supplementButton);
+		supplementButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Supplements clicked");
+			}
+		});
+		
+		frame.setVisible(false);
+		frame = utils.update(frame);
+	}
+	
+	public static void displayFrame() {
 		frame.setVisible(true);
 	}
 }

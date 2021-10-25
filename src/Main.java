@@ -1,7 +1,7 @@
 import java.awt.EventQueue;
 
 import backend.MongoDBConnector;
-import gui.FoodRecoomendationWindow;
+import gui.FoodRecommendationFrame;
 import gui.LoginFrame;
 import gui.MainFrame;
 import gui.MicronutrientsFrame;
@@ -25,10 +25,11 @@ public class Main {
 			}
 		});*/
 		
-		//MainFrame mainFrame = new MainFrame();
+		MainFrame mainFrame = new MainFrame();
 		//MicronutrientsFrame microFrame = new MicronutrientsFrame();
 		//Test, Test, Test
-		FoodRecoomendationWindow frame = new FoodRecoomendationWindow();
+		FoodRecommendationFrame frame = new FoodRecommendationFrame();
+//		SupplementsFrame frame = new SupplementsFrame();
 	}
 
 }

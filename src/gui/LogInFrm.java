@@ -53,21 +53,22 @@ public class LogInFrm extends Thread{
 	private String password = null;
 
 	
-	//private boolean isAlive;
+	private boolean isAlive;
 	
 	
 	/**
 	 * Create the application.
 	 */
 	public LogInFrm() {
-		//isAlive = true;
+		isAlive = true;
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @return 
 	 */
-	private void initialize() {
+	public  void initialize() {
 		frmLogIn = new JFrame();
 		frmLogIn.setTitle("Log In");
 		frmLogIn.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -134,17 +135,12 @@ public class LogInFrm extends Thread{
 			public void actionPerformed(ActionEvent e) {
 				
 				SignUpFrame signUpFrame = new SignUpFrame();
-				//signUpFrame.frmDataCollection.setVisible(true);
-				//LogInFrm loginFrm = new LogInFrm();
-				//loginFrm.frmLogIn.setVisible(false);
-				//loginFrm.frmLogIn.dispose();
-
-				
+				signUpFrame.start();
+				frmLogIn.setVisible(false);
 			}
-			
 		});
 		
-		frmLogIn.setSize(700, 350);
+		frmLogIn.setSize(700, 300);
 		frmLogIn.setLocationRelativeTo(null);
 		frmLogIn.setVisible(true);
 	}
@@ -159,9 +155,8 @@ public class LogInFrm extends Thread{
 
 				MongoDBConnector mongoDBConnector = new MongoDBConnector(textField_3.getText().toLowerCase(), textField_4.getText());
 				mongoDBConnector.logInUser();
+				frmLogIn.setVisible(false);
 
-				//frmLogIn.dispose();
-				//isAlive = false;
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Input Error... please try again!\r\nPassword should be at least 6 characters!", "ERROR", JOptionPane.ERROR_MESSAGE);

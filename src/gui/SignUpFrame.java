@@ -65,8 +65,9 @@ public class SignUpFrame extends Thread{
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @return 
 	 */
-	private void initialize() {
+	public void initialize() {
 		frmDataCollection = new JFrame();
 		frmDataCollection.setTitle("Sign Up");
 		frmDataCollection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -222,12 +223,12 @@ public class SignUpFrame extends Thread{
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnNewButton.addActionListener(new SubmitListener());
 		btnNewButton.setBackground(Color.GRAY);
-		btnNewButton.setBounds(588, 468, 90, 35);
+		btnNewButton.setBounds(488, 468, 90, 35);
 		frmDataCollection.getContentPane().add(btnNewButton);
 		
 		frmDataCollection.setSize(700, 550);
 		frmDataCollection.setLocationRelativeTo(null);
-		//frmDataCollection.setVisible(true);
+		frmDataCollection.setVisible(true);
 	}
 	
 	/*
@@ -240,6 +241,7 @@ public class SignUpFrame extends Thread{
 				Object[] inputs = getData();
 				MongoDBConnector mongoDBConnector = new MongoDBConnector(inputs[0].toString(), inputs[1].toString(), inputs[2].toString(), inputs[3].toString(), inputs[4].toString(), inputs[5].toString(), inputs[6].toString(), inputs[7].toString());
 				mongoDBConnector.signUpUser();
+				frmDataCollection.setVisible(false);
 				NutritionCalculator n = new NutritionCalculator(inputs[2].toString(),
 										Integer.parseInt(inputs[3].toString()), Double.parseDouble(inputs[4].toString()),
 										Double.parseDouble(inputs[5].toString()), inputs[6].toString(), inputs[7].toString());

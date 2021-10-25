@@ -1,6 +1,7 @@
 import java.awt.EventQueue;
 
 import backend.MongoDBConnector;
+import gui.FoodRecoomendationWindow;
 import gui.LoginFrame;
 import gui.MainFrame;
 import gui.MicronutrientsFrame;
@@ -9,7 +10,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		//MongoDBConnector connector = new MongoDBConnector();
+//		MongoDBConnector connector = new MongoDBConnector("fats");
+//		connector.getFoodRecommendation();
 		//LoginFrame loginFrame = new LoginFrame("Test", 450, 800);
 		
 		/*EventQueue.invokeLater(new Runnable() {
@@ -23,10 +25,10 @@ public class Main {
 			}
 		});*/
 		
-		MainFrame mainFrame = new MainFrame();
+		//MainFrame mainFrame = new MainFrame();
 		//MicronutrientsFrame microFrame = new MicronutrientsFrame();
 		//Test, Test, Test
-		
+		FoodRecoomendationWindow frame = new FoodRecoomendationWindow();
 	}
 
 }

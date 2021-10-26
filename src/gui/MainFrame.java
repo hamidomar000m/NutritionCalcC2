@@ -64,9 +64,9 @@ public class MainFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				System.out.println("food recommendation");
-				
+				System.out.println("food recommendation clicked");
+				frame.setVisible(false);
+				FoodRecommendationFrame.displayFrame();
 			}
 			
 		});
@@ -161,6 +161,10 @@ public class MainFrame {
 
 	public static void enableFrame() {
 		frame.setEnabled(true);
+	}
+	
+	public static void displayFrame() {
+		frame.setVisible(true);
 	}
 	
 	public JFrame getFrame() {

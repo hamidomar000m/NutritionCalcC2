@@ -13,6 +13,8 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
 
+import backend.MongoDBConnector;
+
 import javax.swing.JPanel;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -44,6 +46,8 @@ public class MainFrame {
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		
+		String[] macroNutrientsAndCalories = MongoDBConnector.getMacronutrientsAndCalories("MarcAndresen");
+		
 		JLabel line = new JLabel("");
 		line.setOpaque(true);
 		line.setBackground(Color.BLACK);
@@ -66,6 +70,7 @@ public class MainFrame {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("food recommendation clicked");
 				frame.setVisible(false);
+				new FoodRecommendationFrame();
 				FoodRecommendationFrame.displayFrame();
 			}
 			
@@ -84,9 +89,9 @@ public class MainFrame {
 		
 		//Creating the diagram
 		DefaultPieDataset<String> pieDataSet = new DefaultPieDataset<String>();
-		pieDataSet.setValue("proteins", 110.0);
-		pieDataSet.setValue("carbohydrates", 245.0);
-		pieDataSet.setValue("fats", 75.0);
+		pieDataSet.setValue("proteins", Double.parseDouble(macroNutrientsAndCalories[1]));
+		pieDataSet.setValue("carbohydrates", Double.parseDouble(macroNutrientsAndCalories[3]));
+		pieDataSet.setValue("fats", Double.parseDouble(macroNutrientsAndCalories[2]));
 		
 		JFreeChart pieChart = ChartFactory.createPieChart("Nutrient distribution", pieDataSet,  true,  true,  true);
 		//PiePlot<?> plotter = (PiePlot<?>) pieChart.getPlot();
@@ -104,14 +109,14 @@ public class MainFrame {
 		dayLbl.setBounds(522, 156, 171, 33);
 		frame.getContentPane().add(dayLbl);
 		
-		JLabel caloriesDayLbl = new JLabel("calories left for today: 2184 kcal");
+		JLabel caloriesDayLbl = new JLabel("calories left for today: " + macroNutrientsAndCalories[0] + "kcal");
 		caloriesDayLbl.setFont(new Font("Arial", Font.PLAIN, 16));
-		caloriesDayLbl.setBounds(522, 200, 244, 19);
+		caloriesDayLbl.setBounds(522, 200, 342, 19);
 		frame.getContentPane().add(caloriesDayLbl);
 		
-		JLabel caloriesWeekLbl = new JLabel("calories left for the week: 15291");
+		JLabel caloriesWeekLbl = new JLabel("calories left for the week: " + Double.parseDouble(macroNutrientsAndCalories[0])*7 + "kcal");
 		caloriesWeekLbl.setFont(new Font("Arial", Font.PLAIN, 16));
-		caloriesWeekLbl.setBounds(522, 230, 269, 19);
+		caloriesWeekLbl.setBounds(522, 230, 405, 19);
 		frame.getContentPane().add(caloriesWeekLbl);
 		
 		JLabel makronährstoffeLbl = new JLabel("Macronutrients");
@@ -119,19 +124,19 @@ public class MainFrame {
 		makronährstoffeLbl.setBounds(522, 289, 144, 21);
 		frame.getContentPane().add(makronährstoffeLbl);
 		
-		JLabel carbohydratesLbl = new JLabel("carbohydrates: 245g");
+		JLabel carbohydratesLbl = new JLabel("carbohydrates: " + macroNutrientsAndCalories[3] + "g");
 		carbohydratesLbl.setFont(new Font("Arial", Font.PLAIN, 16));
-		carbohydratesLbl.setBounds(522, 319, 149, 19);
+		carbohydratesLbl.setBounds(522, 319, 306, 19);
 		frame.getContentPane().add(carbohydratesLbl);
 		
-		JLabel proteinsLbl = new JLabel("proteins: 110g");
+		JLabel proteinsLbl = new JLabel("proteins: " + macroNutrientsAndCalories[1] + "g");
 		proteinsLbl.setFont(new Font("Arial", Font.PLAIN, 16));
-		proteinsLbl.setBounds(522, 349, 104, 19);
+		proteinsLbl.setBounds(522, 349, 233, 19);
 		frame.getContentPane().add(proteinsLbl);
 		
-		JLabel fatsLbl = new JLabel("fats: 75g");
+		JLabel fatsLbl = new JLabel("fats: " + macroNutrientsAndCalories[2] + "g");
 		fatsLbl.setFont(new Font("Arial", Font.PLAIN, 16));
-		fatsLbl.setBounds(522, 379, 73, 19);
+		fatsLbl.setBounds(522, 379, 171, 19);
 		frame.getContentPane().add(fatsLbl);
 		
 		JLabel mikronährstoffeLbl = new JLabel("Micronutrients");

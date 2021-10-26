@@ -120,6 +120,7 @@ public class FoodRecommendationFrame {
 		supplementButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Supplements clicked");
+				new SupplementsFrame();
 				frame.setVisible(false);
 				SupplementsFrame.displayFrame();
 			}

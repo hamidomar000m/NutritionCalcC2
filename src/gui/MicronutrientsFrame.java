@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import backend.MongoDBConnector;
+
 import java.awt.Font;
 
 public class MicronutrientsFrame {
@@ -42,15 +44,7 @@ public class MicronutrientsFrame {
 
 		String[] tableHeading = {"Micronutrient", "Amount"};
 		
-		String[][] tableData = new String[][] {
-			
-			{"Vitamin A", "1.1 mg"},
-			{"Vitamin B", "1.2 mg"},
-			{"Vitamin C", "1.2 mg"},
-			{"Vitamin D", "1.3 mg"},
-			{"Vitamin E", "1.3 mg"}
-			
-		};
+		String[][] tableData = MongoDBConnector.getMicronutrients("MarcAndresen");
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(55, 108, 277, 449);

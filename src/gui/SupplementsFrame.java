@@ -44,7 +44,7 @@ public class SupplementsFrame {
 		scrollPane_1.setBounds(92, 250, 800, 215);
 		frame.getContentPane().add(scrollPane_1);
 		
-		String[][] tableData = MongoDBConnector.getSupplements(MongoDBConnector.getAim());
+		String[][] tableData = MongoDBConnector.getSupplements(MongoDBConnector.getAim("username"));
 		String[] columnNames = {
 				"", ""
 		};

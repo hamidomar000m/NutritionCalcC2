@@ -10,7 +10,7 @@ public class Testwindow{
 		String[][] data = new String[][]{
 				{"a", "b", "c", "d"},
 				{"e", "f", "g", "h"},
-				{"i", "j", "k", "l"}
+				{"i", "j", "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk\n kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", "l"}
 		};
 		
 		// Die Column-Titles

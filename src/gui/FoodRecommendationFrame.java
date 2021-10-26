@@ -42,21 +42,19 @@ public class FoodRecommendationFrame {
 		heading.setBounds(289, 36, 406, 30);
 		frame.getContentPane().add(heading);
 		
-		MongoDBConnector connectorCarb = new MongoDBConnector("carbohydrates");
-		dataList = connectorCarb.getFoodRecommendation();
+		dataList = MongoDBConnector.getFoodRecommendation("carbohydrates");
 		String[] carbs = new String[dataList.size()];
 		for(int i = 0; i<dataList.size(); i++) {
 			carbs[i] = dataList.get(i);
 		}
 		
-		MongoDBConnector connectorProt = new MongoDBConnector("proteins");
-		dataList = connectorProt.getFoodRecommendation();
+		dataList = MongoDBConnector.getFoodRecommendation("proteins");
 		String[] proteins = new String[dataList.size()];
 		for(int i = 0; i<dataList.size(); i++) {
 			proteins[i] = dataList.get(i);
 		}
-		MongoDBConnector connectorFats = new MongoDBConnector("fats");
-		dataList = connectorFats.getFoodRecommendation();
+		
+		dataList = MongoDBConnector.getFoodRecommendation("fats");
 		String[] fats = new String[dataList.size()];
 		for(int i = 0; i<dataList.size(); i++) {
 			fats[i] = dataList.get(i);
@@ -122,6 +120,8 @@ public class FoodRecommendationFrame {
 		supplementButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Supplements clicked");
+				frame.setVisible(false);
+				SupplementsFrame.displayFrame();
 			}
 		});
 		

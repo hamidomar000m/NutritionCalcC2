@@ -5,12 +5,13 @@ import gui.FoodRecommendationFrame;
 import gui.LoginFrame;
 import gui.MainFrame;
 import gui.MicronutrientsFrame;
+import gui.SupplementsFrame;
 
 public class Main {
 
 	public static void main(String[] args) {
 		
-//		MongoDBConnector connector = new MongoDBConnector("fats");
+//		MongoDBConnector.getSupplements(MongoDBConnector.getAim());
 //		connector.getFoodRecommendation();
 		//LoginFrame loginFrame = new LoginFrame("Test", 450, 800);
 		
@@ -28,8 +29,8 @@ public class Main {
 		MainFrame mainFrame = new MainFrame();
 		//MicronutrientsFrame microFrame = new MicronutrientsFrame();
 		//Test, Test, Test
-		FoodRecommendationFrame frame = new FoodRecommendationFrame();
-//		SupplementsFrame frame = new SupplementsFrame();
+		FoodRecommendationFrame foodFrame = new FoodRecommendationFrame();
+		SupplementsFrame supFrame = new SupplementsFrame();
 	}
 
 }

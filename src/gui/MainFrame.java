@@ -54,7 +54,7 @@ public class MainFrame {
 		appNameLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
 		appNameLbl.setBackground(new Color(0, 0, 0));
 		appNameLbl.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 44));
-		appNameLbl.setBounds(361, 23, 284, 52);
+		appNameLbl.setBounds(354, 23, 286, 52);
 		frame.getContentPane().add(appNameLbl);
 		
 		JButton ernährungsempfehlungBtn = new JButton("Food Recommendation");
@@ -148,7 +148,7 @@ public class MainFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				System.out.println("See more");
-				MicronutrientsFrame microFrame = new MicronutrientsFrame();
+				new MicronutrientsFrame();
 				frame.setEnabled(false);
 				
 			}

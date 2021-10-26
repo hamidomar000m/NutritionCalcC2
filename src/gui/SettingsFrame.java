@@ -26,18 +26,18 @@ public class SettingsFrame {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 400, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.getContentPane().setBackground(new Color(154, 205, 50));
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblHeading = new JLabel("Settings");
 		lblHeading.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 36));
-		lblHeading.setBounds(125, 36, 145, 43);
+		lblHeading.setBounds(125, 36, 146, 43);
 		frame.getContentPane().add(lblHeading);
 		
 		JLabel lblNewLabel = new JLabel("user data");
 		lblNewLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 18));
-		lblNewLabel.setBounds(156, 109, 83, 21);
+		lblNewLabel.setBounds(156, 109, 84, 21);
 		frame.getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("enter new password");

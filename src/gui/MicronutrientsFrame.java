@@ -57,6 +57,9 @@ public class MicronutrientsFrame {
 		frame.getContentPane().add(scrollPane);
 		
 		JTable micronutrientTable = new JTable(tableData, tableHeading);
+		micronutrientTable.setFont(new Font("Arial", Font.PLAIN, 14));
+		micronutrientTable.setRowMargin(3);
+		micronutrientTable.setRowHeight(25);
 		scrollPane.setViewportView(micronutrientTable);
 		
 		frame.addWindowListener(new WindowAdapter() {

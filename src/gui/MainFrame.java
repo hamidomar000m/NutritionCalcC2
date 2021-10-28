@@ -18,6 +18,7 @@ import backend.MongoDBConnector;
 import javax.swing.JPanel;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -70,7 +71,6 @@ public class MainFrame {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("food recommendation clicked");
 				frame.setVisible(false);
-				new FoodRecommendationFrame();
 				FoodRecommendationFrame.displayFrame();
 			}
 			
@@ -80,9 +80,14 @@ public class MainFrame {
 		
 		JButton settingsBtn = new JButton("Settings");
 		settingsBtn.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Settings clicked");
+				
+				frame.setEnabled(false);
+				SettingsFrame.displayFrame();
+				
 			}
+			
 		});
 		settingsBtn.setBounds(854, 611, 89, 23);
 		frame.getContentPane().add(settingsBtn);
@@ -103,6 +108,8 @@ public class MainFrame {
 		
 		Calendar calendar = Calendar.getInstance();
 		Date date = calendar.getTime();
+		int day = Calendar.DAY_OF_WEEK - 3;
+		double caloriesLeftForWeek = Double.parseDouble(macroNutrientsAndCalories[0])*7 - Double.parseDouble(macroNutrientsAndCalories[0])*day;
 		
 		JLabel dayLbl = new JLabel(new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.getTime()));
 		dayLbl.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 28));
@@ -114,7 +121,7 @@ public class MainFrame {
 		caloriesDayLbl.setBounds(522, 200, 342, 19);
 		frame.getContentPane().add(caloriesDayLbl);
 		
-		JLabel caloriesWeekLbl = new JLabel("calories left for the week: " + Double.parseDouble(macroNutrientsAndCalories[0])*7 + "kcal");
+		JLabel caloriesWeekLbl = new JLabel("calories left for the week: " + caloriesLeftForWeek  + "kcal");
 		caloriesWeekLbl.setFont(new Font("Arial", Font.PLAIN, 16));
 		caloriesWeekLbl.setBounds(522, 230, 405, 19);
 		frame.getContentPane().add(caloriesWeekLbl);
@@ -153,8 +160,8 @@ public class MainFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				System.out.println("See more");
-				new MicronutrientsFrame();
 				frame.setEnabled(false);
+				MicronutrientsFrame.displayFrame();
 				
 			}
 			

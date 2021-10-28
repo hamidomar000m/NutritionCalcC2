@@ -50,6 +50,7 @@ public class SupplementsFrame {
 		};
 		
 		JTable supTable = new JTable(tableData,columnNames);
+		supTable.setEnabled(false);
 		supTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		supTable.setRowMargin(3);
 		supTable.setRowHeight(25);

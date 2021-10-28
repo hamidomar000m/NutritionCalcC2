@@ -8,13 +8,15 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
 public class SettingsFrame {
 
-	private JFrame frame;
+	private static JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
 	private boolean isVisible = false;
@@ -106,8 +108,21 @@ public class SettingsFrame {
 		btnKrperdatenAktualisieren.setBounds(117, 183, 162, 31);
 		frame.getContentPane().add(btnKrperdatenAktualisieren);
 		
+		frame.addWindowListener(new WindowAdapter() {
+			
+			public void windowClosing(WindowEvent e) {
+				MainFrame.enableFrame();
+			}
+			
+		});
+		
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
+		frame.setVisible(false);
+	}
+	
+	public static void displayFrame() {
 		frame.setVisible(true);
 	}
+	
 }

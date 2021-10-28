@@ -81,6 +81,7 @@ public class FoodRecommendationFrame {
 		frame.getContentPane().add(scrollPane);
 		
 		JTable foodTable = new JTable(tableData,columnNames);
+		foodTable.setEnabled(false);
 		foodTable.setRowMargin(3);
 		foodTable.setRowHeight(25);
 		foodTable.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -115,12 +116,11 @@ public class FoodRecommendationFrame {
 		
 		JButton supplementButton = new JButton("Supplements");
 		supplementButton.setFont(new Font("Arial", Font.PLAIN, 16));
-		supplementButton.setBounds(757, 587, 125, 30);
+		supplementButton.setBounds(757, 587, 139, 27);
 		frame.getContentPane().add(supplementButton);
 		supplementButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Supplements clicked");
-				new SupplementsFrame();
 				frame.setVisible(false);
 				SupplementsFrame.displayFrame();
 			}

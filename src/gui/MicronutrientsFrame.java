@@ -19,7 +19,7 @@ import java.awt.Font;
 
 public class MicronutrientsFrame {
 
-	private JFrame frame;
+	private static JFrame frame;
 
 	public MicronutrientsFrame() {
 		
@@ -51,6 +51,7 @@ public class MicronutrientsFrame {
 		frame.getContentPane().add(scrollPane);
 		
 		JTable micronutrientTable = new JTable(tableData, tableHeading);
+		micronutrientTable.setEnabled(false);
 		micronutrientTable.setFont(new Font("Arial", Font.PLAIN, 14));
 		micronutrientTable.setRowMargin(3);
 		micronutrientTable.setRowHeight(25);
@@ -64,7 +65,12 @@ public class MicronutrientsFrame {
 			
 		});
 		
-		frame.setVisible(true);
+		frame.setVisible(false);
 		
 	}
+	
+	public static void displayFrame() {
+		frame.setVisible(true);
+	}
+	
 }

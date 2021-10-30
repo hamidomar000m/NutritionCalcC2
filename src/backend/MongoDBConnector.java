@@ -36,6 +36,8 @@ public class MongoDBConnector {
 	public static String userGoal;
 	public static String userActivity;
 	
+	static MongoClient mongoClient = null;
+	
 	public MongoDBConnector(String _id, String userPassword) {
 		super();
 		this._id = _id;
@@ -57,9 +59,7 @@ public class MongoDBConnector {
 		this.userActivity = userActivity;
 	}
 	
-	public static void signUpUser() {
-		
-		MongoClient mongoClient = null;
+	private static void connectDB() {
 		
 		try {
 			String url = "mongodb+srv://HamidO:123Hamid123@cluster0.f2htr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
@@ -71,14 +71,21 @@ public class MongoDBConnector {
 			System.out.println("Error : "+e);
 		}
 		
+	}
+	
+	
+	
+	public static void signUpUser() {
+		
+		connectDB();
+		
 		try {
 			BasicDBObject searchQuery = new BasicDBObject();
 			searchQuery.put("_id", _id);
 			MongoCursor<Document> cursor = mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users").find(searchQuery).iterator();
 			if(( _id.length() == 0 || userPassword.length() <= 5 || userAge.length() == 0 || userGender.length() == 0 || userHeight.length() == 0  || userWeight.length() == 0 || userHeight.equalsIgnoreCase("in cm")) || userWeight.equalsIgnoreCase("in kg")== true) {
 				
-				System.out.println(cursor.next() );
-				System.out.println(userHeight.equalsIgnoreCase("in cm"));
+
 				JOptionPane.showMessageDialog(null, "Invalid data!\r\nNo field should be empty!\r\nPassword should be at least 6 characters.", "ERROR", JOptionPane.ERROR_MESSAGE);
 			
 			} else {
@@ -89,8 +96,8 @@ public class MongoDBConnector {
 					mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users").insertOne(document);
 					MainFrame mainFrame = new MainFrame();
 					mainFrame.frame.setVisible(true);
-					SignUpFrame signUpFrame = new SignUpFrame();
-					signUpFrame.frmDataCollection.setVisible(false);
+
+					SignUpFrame.frmDataCollection.setVisible(false);
 
 
 					System.out.println("hey");
@@ -116,17 +123,7 @@ public class MongoDBConnector {
 	
 	public static void logInUser() {
 		
-		MongoClient mongoClient = null;
-		
-		try {
-			String url = "mongodb+srv://HamidO:123Hamid123@cluster0.f2htr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-			mongoClient = MongoClients.create(url);
-			
-			System.out.println("Connectionn created");
-			
-		} catch (Exception e) {
-			System.out.println("Error : "+e);
-		}
+		connectDB();
 		
 		try {
 			BasicDBObject searchQuery_id = new BasicDBObject();
@@ -137,12 +134,16 @@ public class MongoDBConnector {
 			MongoCursor<Document> cursor = mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users").find(searchQuery_id).iterator();
 	
 			if(cursor.hasNext()) {
+
 				if(cursor.next().get("userPassword").equals(userPassword)) {
+
 					MainFrame mainFrame = new MainFrame();
 					mainFrame.frame.setVisible(true);
-					LogInFrm logInFrm = new LogInFrm();
-					logInFrm.frmLogIn.setVisible(false);
+
+					LogInFrm.frmLogIn.setVisible(false);
+					
 				} else {
+
 					JOptionPane.showMessageDialog(null, "Invalid Password!", "ERROR", JOptionPane.ERROR_MESSAGE);
 				}
 
@@ -155,12 +156,33 @@ public class MongoDBConnector {
 				
 			}
 		} catch (Exception e) {
-			System.out.println("didnt work");
-			
+			System.out.println("log in didnt work");
+	
 		} 
 		
 		
 	}
+	
+	
+	public static void insertNutrients(String _id, double[] nutritionalValues, String[] names, String[] nutrients) {
+		MongoClient client;
+		String url = "mongodb+srv://HamidO:123Hamid123@cluster0.f2htr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+		client = MongoClients.create(url);
+		
+		MongoCollection collection = client.getDatabase("ernaehrungstracker-app-db").getCollection("nutrients");
+		
+		try {
+			Document document = new Document("_id", _id).append("Kalorienbedarf", nutritionalValues[0]).append("Proteine", nutritionalValues[1]).
+											append("Fette", nutritionalValues[2]).append("Kohlenhydrate", nutritionalValues[3]);
+			for(int i = 0; i < names.length; i++) {
+				document.append(names[i], nutrients[i]);
+			}
+			collection.insertOne(document);
+		} catch(Exception e) {}
+		
+		System.out.println("Nutrients saved");
+	}
+
 
 
 }

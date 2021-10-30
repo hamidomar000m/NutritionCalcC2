@@ -35,22 +35,18 @@ import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 
 public class LogInFrm extends Thread{
 
-	public JFrame frmLogIn;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JComboBox comboBox;
-	private JComboBox comboBox_1;
-	private JComboBox comboBox_1_1;
-	private JTextPane txtpnBmi_1;
+	public static JFrame frmLogIn;
+
+	private JTextField userNameField;
+	private JPasswordField PasswordField;
+
 	
 	private String username = null;
-	private String password = null;
+	private String password;
 
 	
 	private boolean isAlive;
@@ -78,36 +74,37 @@ public class LogInFrm extends Thread{
 		
 		JTextPane txtpnRegistration = new JTextPane();
 		txtpnRegistration.setEditable(false);
-		txtpnRegistration.setBackground(Color.WHITE);
-		txtpnRegistration.setForeground(new Color(153, 204, 102));
-		txtpnRegistration.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		txtpnRegistration.setBackground(new Color(154, 205, 50));
+		txtpnRegistration.setForeground(new Color(0, 0, 0));
+		txtpnRegistration.setFont(new Font("Arial rounded MT", Font.BOLD, 36));
 		txtpnRegistration.setText("NutritionCalc");
-		txtpnRegistration.setBounds(282, 20, 130, 31);
+		txtpnRegistration.setBounds(234, 10, 232, 51);
 		frmLogIn.getContentPane().add(txtpnRegistration);
 		
 		JTextPane txtpnUsername = new JTextPane();
 		txtpnUsername.setEditable(false);
-		txtpnUsername.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		txtpnUsername.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnUsername.setText("Username");
 		txtpnUsername.setBounds(120, 75, 130, 30);
 		frmLogIn.getContentPane().add(txtpnUsername);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(290, 75, 290, 30);
-		frmLogIn.getContentPane().add(textField_3);
-		
+		userNameField = new JTextField();
+		userNameField.setColumns(10);
+		userNameField.setBounds(290, 75, 290, 30);
+		frmLogIn.getContentPane().add(userNameField);
+
 		JTextPane txtpnPassword = new JTextPane();
 		txtpnPassword.setEditable(false);
 		txtpnPassword.setText("Password");
-		txtpnPassword.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		txtpnPassword.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnPassword.setBounds(120, 115, 130, 30);
 		frmLogIn.getContentPane().add(txtpnPassword);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(290, 115, 290, 30);
-		frmLogIn.getContentPane().add(textField_4);
+		PasswordField = new JPasswordField();
+		PasswordField.setColumns(10);
+		PasswordField.setBounds(290, 115, 290, 30);
+		frmLogIn.getContentPane().add(PasswordField);
+	
 		
 		
 		JButton btnNewButton = new JButton("Log in");
@@ -144,6 +141,7 @@ public class LogInFrm extends Thread{
 		frmLogIn.setLocationRelativeTo(null);
 		frmLogIn.setVisible(true);
 	}
+
 	
 	/*
 	 * define the class SubmitListener which is needed for the Submit button
@@ -152,16 +150,19 @@ public class LogInFrm extends Thread{
 		
 		public void actionPerformed(ActionEvent e) {
 			try {
+				String password = new String(PasswordField.getPassword());
 				if(inputValid()) {
 
-					MongoDBConnector mongoDBConnector = new MongoDBConnector(textField_3.getText().toLowerCase(), textField_4.getText());
+					MongoDBConnector mongoDBConnector = new MongoDBConnector(userNameField.getText().toLowerCase(), password);
 					mongoDBConnector.logInUser();
+					
 					
 
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Input Error... please try again!\r\nPassword should be at least 6 characters!", "ERROR", JOptionPane.ERROR_MESSAGE);
 				}
+				
 			} catch (Exception e2) {
 				frmLogIn.setVisible(false);
 			}
@@ -177,8 +178,8 @@ public class LogInFrm extends Thread{
 	 */
 	private boolean inputValid() {
 		try {
-			username = textField_3.getText().toLowerCase();
-			password = textField_4.getText();
+			username = userNameField.getText().toLowerCase();
+			password = new String(PasswordField.getPassword());
 
 			
 			if(username != "" && password.length() > 5 )

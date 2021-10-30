@@ -1,53 +1,44 @@
 package gui;
 
 
-import java.awt.EventQueue;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.JFrame;
-import java.awt.Color;
-import java.awt.Panel;
-import java.awt.BorderLayout;
 import javax.swing.JTextPane;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import backend.MongoDBConnector;
 import backend.NutritionCalculator;
 
-import java.awt.Font;
-import java.awt.TextArea;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JButton;
-import java.awt.Choice;
-import java.awt.TextField;
-import javax.swing.JSpinner;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.Box;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
+
 
 public class SignUpFrame extends Thread{
 
-	public JFrame frmDataCollection;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JComboBox comboBox;
-	private JComboBox comboBox_1;
-	private JComboBox comboBox_1_1;
+	public static  JFrame frmDataCollection;
+	private JTextField usernameField;
+	private JPasswordField passwordField;
+	private JTextField ageField;
+	private JTextField heightField;
+	private JTextField weightField;
+	private JComboBox genderComboBox;
+	private JComboBox goalComboBox;
+	private JComboBox activityComboBox;
 	private JTextPane txtpnBmi_1;
 	
-	private String username = null;
-	private String password = null;
-	private String gender = null;
-	private String goal = null;
-	private String activity = null;
+	private String username;
+	private String password;
+	private String gender;
+	private String goal;
+	private String activity;
 	private int age = 0;
 	private double height = 0;
 	private double weight = 0;
@@ -65,166 +56,184 @@ public class SignUpFrame extends Thread{
 
 	/**
 	 * Initialize the contents of the frame.
-	 * @return 
 	 */
-	public void initialize() {
+	private void initialize() {
 		frmDataCollection = new JFrame();
-		frmDataCollection.setTitle("Sign Up");
+		frmDataCollection.setTitle("Sign up");
 		frmDataCollection.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmDataCollection.getContentPane().setBackground(new Color(153, 204, 102));
-		frmDataCollection.setVisible(true);
+		frmDataCollection.getContentPane().setBackground(new Color(154, 205, 50));
 		frmDataCollection.getContentPane().setLayout(null);
 		
 		JTextPane txtpnRegistration = new JTextPane();
 		txtpnRegistration.setEditable(false);
-		txtpnRegistration.setBackground(Color.WHITE);
-		txtpnRegistration.setForeground(new Color(153, 204, 102));
-		txtpnRegistration.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		txtpnRegistration.setText("Registration");
-		txtpnRegistration.setBounds(282, 20, 121, 31);
+		txtpnRegistration.setBackground(new Color(154, 205, 50));
+		txtpnRegistration.setForeground(new Color(0, 0, 0));
+		txtpnRegistration.setFont(new Font("Arial rounded MT", Font.BOLD, 36));
+		txtpnRegistration.setText("NutritionCalc");
+		txtpnRegistration.setBounds(234, 10, 232, 51);
 		frmDataCollection.getContentPane().add(txtpnRegistration);
 		
 		JTextPane txtpnUsername = new JTextPane();
+		txtpnUsername.setBackground(new Color(255, 255, 255));
 		txtpnUsername.setEditable(false);
-		txtpnUsername.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		txtpnUsername.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnUsername.setText("Username");
 		txtpnUsername.setBounds(120, 75, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnUsername);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(290, 75, 290, 30);
-		frmDataCollection.getContentPane().add(textField_3);
+		usernameField = new JTextField();
+		usernameField.setFont(new Font("Arial", Font.PLAIN, 16));
+		usernameField.setColumns(10);
+		usernameField.setBounds(290, 75, 290, 30);
+		frmDataCollection.getContentPane().add(usernameField);
 		
 		JTextPane txtpnPassword = new JTextPane();
+		txtpnPassword.setBackground(new Color(255, 255, 255));
+		txtpnPassword.setForeground(new Color(0, 0, 0));
 		txtpnPassword.setEditable(false);
 		txtpnPassword.setText("Password");
-		txtpnPassword.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		txtpnPassword.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnPassword.setBounds(120, 115, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnPassword);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(290, 115, 290, 30);
-		frmDataCollection.getContentPane().add(textField_4);
+		passwordField = new JPasswordField();
+		passwordField.setBounds(290, 115, 290, 30);
+		frmDataCollection.getContentPane().add(passwordField);
 		
 		JTextPane txtpnGender = new JTextPane();
 		txtpnGender.setEditable(false);
 		txtpnGender.setText("Gender:");
 		txtpnGender.setForeground(Color.BLACK);
-		txtpnGender.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		txtpnGender.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnGender.setBackground(Color.WHITE);
 		txtpnGender.setBounds(120, 189, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnGender);
 		
-		comboBox = new JComboBox();
-		comboBox.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "male", "female"}));
-		comboBox.setBackground(Color.WHITE);
-		comboBox.setBounds(290, 191, 290, 30);
-		frmDataCollection.getContentPane().add(comboBox);
+		genderComboBox = new JComboBox();
+		genderComboBox.setFont(new Font("Arial", Font.PLAIN, 16));
+		genderComboBox.setModel(new DefaultComboBoxModel(new String[] {"", "male", "female"}));
+		genderComboBox.setBackground(new Color(255, 255, 255));
+		genderComboBox.setBounds(290, 191, 290, 30);
+		frmDataCollection.getContentPane().add(genderComboBox);
 		
 		JTextPane txtpnAge = new JTextPane();
 		txtpnAge.setEditable(false);
 		txtpnAge.setText("Age:");
 		txtpnAge.setForeground(Color.BLACK);
-		txtpnAge.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		txtpnAge.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnAge.setBackground(Color.WHITE);
 		txtpnAge.setBounds(120, 229, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnAge);
 		
-		textField = new JTextField();
-		textField.setBounds(290, 229, 290, 30);
-		frmDataCollection.getContentPane().add(textField);
-		textField.setColumns(10);
+		ageField = new JTextField();
+		ageField.setFont(new Font("Arial", Font.PLAIN, 16));
+		ageField.setBounds(290, 229, 290, 30);
+		frmDataCollection.getContentPane().add(ageField);
+		ageField.setColumns(10);
 		
 		JTextPane txtpnHeight = new JTextPane();
 		txtpnHeight.setEditable(false);
 		txtpnHeight.setText("Height (cm) :");
 		txtpnHeight.setForeground(Color.BLACK);
-		txtpnHeight.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		txtpnHeight.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnHeight.setBackground(Color.WHITE);
 		txtpnHeight.setBounds(120, 269, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnHeight);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(290, 269, 290, 30);
-		frmDataCollection.getContentPane().add(textField_1);
+		heightField = new JTextField();
+		heightField.setFont(new Font("Arial", Font.PLAIN, 16));
+		heightField.setColumns(10);
+		heightField.setBounds(290, 269, 290, 30);
+		frmDataCollection.getContentPane().add(heightField);
 		
 		JTextPane txtpnWeight = new JTextPane();
 		txtpnWeight.setEditable(false);
 		txtpnWeight.setText("Weight (kg) :");
 		txtpnWeight.setForeground(Color.BLACK);
-		txtpnWeight.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		txtpnWeight.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnWeight.setBackground(Color.WHITE);
 		txtpnWeight.setBounds(120, 309, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnWeight);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(290, 309, 290, 30);
-		frmDataCollection.getContentPane().add(textField_2);
+		weightField = new JTextField();
+		weightField.setFont(new Font("Arial", Font.PLAIN, 16));
+		weightField.setColumns(10);
+		weightField.setBounds(290, 309, 290, 30);
+		frmDataCollection.getContentPane().add(weightField);
 		
 		JTextPane txtpnAim = new JTextPane();
 		txtpnAim.setEditable(false);
 		txtpnAim.setText("Goal:");
 		txtpnAim.setForeground(Color.BLACK);
-		txtpnAim.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		txtpnAim.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnAim.setBackground(Color.WHITE);
 		txtpnAim.setBounds(120, 349, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnAim);
 		
-		comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"", "gain muscles", "muscle definition", "hold weight", "lose weight"}));
-		comboBox_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
-		comboBox_1.setBackground(Color.WHITE);
-		comboBox_1.setBounds(290, 349, 290, 30);
-		frmDataCollection.getContentPane().add(comboBox_1);
+		goalComboBox = new JComboBox();
+		goalComboBox.setModel(new DefaultComboBoxModel(new String[] {"", "gain muscles", "muscle definition", "hold weight", "lose weight"}));
+		goalComboBox.setFont(new Font("Arial", Font.PLAIN, 16));
+		goalComboBox.setBackground(new Color(255, 255, 255));
+		goalComboBox.setBounds(290, 349, 290, 30);
+		frmDataCollection.getContentPane().add(goalComboBox);
 		
 		JTextPane txtpnDailyActivity = new JTextPane();
 		txtpnDailyActivity.setText("Daily activity:");
 		txtpnDailyActivity.setForeground(Color.BLACK);
-		txtpnDailyActivity.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		txtpnDailyActivity.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnDailyActivity.setEditable(false);
 		txtpnDailyActivity.setBackground(Color.WHITE);
 		txtpnDailyActivity.setBounds(120, 389, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnDailyActivity);
 
-		comboBox_1_1 = new JComboBox();
+		activityComboBox = new JComboBox();
 		String[] activities = new String[] {"", "Exclusively seated / lying activities",
 				"Almost exclusively sedentary activities with almost no physical activity in the leisure",
 				"Predominantly sedentary activities with occasional standing / walking activity",
 				"Predominantly walking / standing activity", "Vigorous physical activity"};
-		comboBox_1_1.setModel(new DefaultComboBoxModel(activities));
-		comboBox_1_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
-		comboBox_1_1.setBackground(Color.WHITE);
-		comboBox_1_1.setBounds(290, 389, 290, 30);
-		frmDataCollection.getContentPane().add(comboBox_1_1);
+		activityComboBox.setModel(new DefaultComboBoxModel(activities));
+		activityComboBox.setFont(new Font("Arial", Font.PLAIN, 16));
+		activityComboBox.setBackground(new Color(255, 255, 255));
+		activityComboBox.setBounds(290, 389, 290, 30);
+		frmDataCollection.getContentPane().add(activityComboBox);
 		
 		JTextPane txtpnBmi = new JTextPane();
 		txtpnBmi.setText("Your BMI is:");
 		txtpnBmi.setForeground(Color.BLACK);
-		txtpnBmi.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		txtpnBmi.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnBmi.setEditable(false);
-		txtpnBmi.setBackground(new Color(153, 204, 102));
-		txtpnBmi.setBounds(120, 429, 100, 30);
+		txtpnBmi.setBackground(new Color(154, 205, 50));
+		txtpnBmi.setBounds(120, 463, 111, 30);
 		frmDataCollection.getContentPane().add(txtpnBmi);
 		
 		txtpnBmi_1 = new JTextPane();
 		txtpnBmi_1.setForeground(Color.BLACK);
-		txtpnBmi_1.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		txtpnBmi_1.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnBmi_1.setEditable(false);
-		txtpnBmi_1.setBackground(new Color(153, 204, 102));
-		txtpnBmi_1.setBounds(290, 429, 130, 30);
+		txtpnBmi_1.setBackground(new Color(154, 205, 50));
+		txtpnBmi_1.setBounds(290, 463, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnBmi_1);
 		
-		JButton btnNewButton = new JButton("Submit");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnNewButton.addActionListener(new SubmitListener());
-		btnNewButton.setBackground(Color.GRAY);
-		btnNewButton.setBounds(488, 468, 90, 35);
-		frmDataCollection.getContentPane().add(btnNewButton);
+		JButton registerButton = new JButton("Register");
+		registerButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		registerButton.addActionListener(new RegisterListener());
+		registerButton.setBackground(Color.GRAY);
+		registerButton.setBounds(588, 468, 90, 35);
+		frmDataCollection.getContentPane().add(registerButton);
+		
+		JLabel line_1 = new JLabel("");
+		line_1.setOpaque(true);
+		line_1.setEnabled(false);
+		line_1.setBackground(new Color(0, 0, 0));
+		line_1.setBounds(120, 166, 460, 2);
+		frmDataCollection.getContentPane().add(line_1);
+		
+		JLabel line_2 = new JLabel("");
+		line_2.setOpaque(true);
+		line_2.setEnabled(false);
+		line_2.setBackground(Color.BLACK);
+		line_2.setBounds(120, 441, 460, 2);
+		frmDataCollection.getContentPane().add(line_2);
 		
 		frmDataCollection.setSize(700, 550);
 		frmDataCollection.setLocationRelativeTo(null);
@@ -234,28 +243,40 @@ public class SignUpFrame extends Thread{
 	/*
 	 * define the class SubmitListener which is needed for the Submit button
 	 */
-	class SubmitListener implements ActionListener{
+	class RegisterListener implements ActionListener{
 		
 		public void actionPerformed(ActionEvent e) {
 			try {
 				if(inputValid()) {
-					Object[] inputs = getData();
-					MongoDBConnector mongoDBConnector = new MongoDBConnector(inputs[0].toString(), inputs[1].toString(), inputs[2].toString(), inputs[3].toString(), inputs[4].toString(), inputs[5].toString(), inputs[6].toString(), inputs[7].toString());
-					mongoDBConnector.signUpUser();
 
+					Object[] inputs = getData();
+					
+					MongoDBConnector registrationConnector = new MongoDBConnector(inputs[0].toString(), inputs[1].toString(),
+							inputs[2].toString(), inputs[3].toString(), inputs[4].toString(), inputs[5].toString(),
+							inputs[6].toString(), inputs[7].toString());
+					registrationConnector.signUpUser();
+
+					
 					NutritionCalculator n = new NutritionCalculator(inputs[2].toString(),
-											Integer.parseInt(inputs[3].toString()), Double.parseDouble(inputs[4].toString()),
-											Double.parseDouble(inputs[5].toString()), inputs[6].toString(), inputs[7].toString());
+							Integer.parseInt(inputs[3].toString()), Double.parseDouble(inputs[4].toString()),
+							Double.parseDouble(inputs[5].toString()), inputs[6].toString(), inputs[7].toString());
 					n.calculate();
-					n.printNutritionalValues();
-					n.printAll();
+					double[] nutritionalValues = n.getNutritionalValues();
+					String[] names = n.getNames();
+					String[] nutrients = n.getNutrients();
+					
+					//MongoDBConnector nutrientInserter = new MongoDBConnector(inputs[0].toString());
+					MongoDBConnector.insertNutrients(inputs[0].toString(), nutritionalValues, names, nutrients);
+					
+
+					
 					isAlive = false;
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "Invalid data!\r\nNo field should be empty!\r\nPassword should be at least 6 characters.", "ERROR", JOptionPane.ERROR_MESSAGE);
+					//JOptionPane.showMessageDialog(null, "Input Error... please try again!", "ERROR", JOptionPane.ERROR_MESSAGE);
 				}
 			} catch (Exception e2) {
-				frmDataCollection.setVisible(false);
+				//frmDataCollection.setVisible(false);
 			}
 
 		}
@@ -269,19 +290,33 @@ public class SignUpFrame extends Thread{
 	 */
 	private boolean inputValid() {
 		try {
-			username = textField_3.getText().toLowerCase();
-			password = textField_4.getText();
-			gender = comboBox.getSelectedItem().toString();
-			goal = comboBox_1.getSelectedItem().toString();
-			activity = comboBox_1_1.getSelectedItem().toString();
-			age = Integer.parseInt(textField.getText());
-			height = Double.parseDouble(textField_1.getText());
-			weight = Double.parseDouble(textField_2.getText());
+			username = usernameField.getText();
+			if(username.equals("")) {
+				JOptionPane.showMessageDialog(null, "Please enter a username", "ERROR", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
 			
-			if(username != "" && password.length() > 5 && gender != "" && goal != "" && activity != "")
-				return true;
-			return false;
+			String password = new String(passwordField.getPassword());
+
+			if(password.length() < 6) {
+				JOptionPane.showMessageDialog(null, "Password must contain at least 6 characters", "ERROR", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			
+			gender = genderComboBox.getSelectedItem().toString();
+			goal = goalComboBox.getSelectedItem().toString();
+			activity = activityComboBox.getSelectedItem().toString();
+			if(gender.equals("") || goal.equals("") || activity.equals("")) {
+				JOptionPane.showMessageDialog(null, "Please fill in all the boxes", "ERROR", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			
+			age = Integer.parseInt(ageField.getText());
+			height = Double.parseDouble(heightField.getText());
+			weight = Double.parseDouble(weightField.getText());
+			return true;
 		}catch(Exception e) {
+			JOptionPane.showMessageDialog(null, "Input Error... please try again!", "ERROR", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 	}
@@ -292,16 +327,16 @@ public class SignUpFrame extends Thread{
 	 * read out the user inputs and return it
 	 */
 	public Object[] getData() {
-		username = textField_3.getText();
-		password = textField_4.getText(); 
-		gender = comboBox.getSelectedItem().toString();
-		goal = comboBox_1.getSelectedItem().toString();
-		age = Integer.parseInt(textField.getText());
-		height = Double.parseDouble(textField_1.getText());
-		weight = Double.parseDouble(textField_2.getText());
-		activity = comboBox_1_1.getSelectedItem().toString();
+		username = usernameField.getText();
+		String password = new String(passwordField.getPassword());
+		gender = genderComboBox.getSelectedItem().toString();
+		goal = goalComboBox.getSelectedItem().toString();
+		age = Integer.parseInt(ageField.getText());
+		height = Double.parseDouble(heightField.getText());
+		weight = Double.parseDouble(weightField.getText());
+		activity = activityComboBox.getSelectedItem().toString();
 		
-		Object[] data = {username, password, gender, age, weight, height, goal, activity};
+		Object[] data = {username, password, gender, age, height, weight, goal, activity};
 		return data;
 	}
 	
@@ -316,18 +351,16 @@ public class SignUpFrame extends Thread{
 		
 		while(isAlive) {
 			try {
-				height = Double.parseDouble(textField_1.getText());
-				weight = Double.parseDouble(textField_2.getText());
+				height = Double.parseDouble(heightField.getText());
+				weight = Double.parseDouble(weightField.getText());
 				newBMI = weight / ( (height/100)*(height/100) );
 			}catch(Exception e) {}
 			
 			if(newBMI != oldBMI) {
 				txtpnBmi_1.setText(newBMI+"");
 				oldBMI = newBMI;
-				System.out.println("hejjksafj");
 			}
 		}
 	}
 }
-
 

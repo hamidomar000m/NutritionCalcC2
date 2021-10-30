@@ -1,6 +1,5 @@
 package backend;
 
-
 public class NutritionCalculator {
 	
 	//user data
@@ -18,48 +17,48 @@ public class NutritionCalculator {
 	private double carbs;
 	
 	//vitamins
-	private double vitaminA;	//mg
-	private double vitaminB1;	//mg
-	private double vitaminB2;	//mg
-	private double vitaminB3;	//mg
-	private double vitaminB5;	//mg
-	private double vitaminB6;	//mg
-	private double vitaminB7;	//g
-	private double vitaminB9;	//g
-	private double vitaminB12;	//g
-	private double vitaminC;	//mg
-	private double vitaminD;	//g
-	private double vitaminE;	//mg
-	private double vitaminK;	//g
+	private String vitaminA;	//mg
+	private String vitaminB1;	//mg
+	private String vitaminB2;	//mg
+	private String vitaminB3;	//mg
+	private String vitaminB5;	//mg
+	private String vitaminB6;	//mg
+	private String vitaminB7;	//g
+	private String vitaminB9;	//g
+	private String vitaminB12;	//g
+	private String vitaminC;	//mg
+	private String vitaminD;	//g
+	private String vitaminE;	//mg
+	private String vitaminK;	//g
 	
 	//minerals
-	private double calcium;		//g
-	private double chlorid;		//g
-	private double kalium;		//g
-	private double magnesium;	//g
-	private double phosphat;	//g
-	private double schwefel;	//g
+	private String calcium;		//g
+	private String chlorid;		//g
+	private String kalium;		//g
+	private String magnesium;	//g
+	private String phosphat;	//g
+	private String schwefel;	//g
 	
 	//trace elements
-	private double chrom;		//g
-	private double eisen;		//g
-	private double iod;			//g
-	private double kupfer;		//mg
-	private double mangan;		//mg
-	private double molybdaen;	//g
-	private double selen;		//g
-	private double zink;		//mg
+	private String chrom;		//g
+	private String eisen;		//g
+	private String iod;			//g
+	private String kupfer;		//mg
+	private String mangan;		//mg
+	private String molybdaen;	//g
+	private String selen;		//g
+	private String zink;		//mg
 	
 	//essential amino acids
-	private double leucin;		//mg
-	private double lysin;		//mg
-	private double methionin;	//mg
-	private double phenylalanin;//g
-	private double tryptophan;	//mg
+	private String leucin;		//mg
+	private String lysin;		//mg
+	private String methionin;	//mg
+	private String phenylalanin;//g
+	private String tryptophan;	//mg
 	
 	//Unsaturated fatty acids
-	private double ala;			//mg
-	private double epa_dha;		//g
+	private String ala;			//mg
+	private String epa_dha;		//g
 	
 	/*
 	 * create a calculator containing all necessary information
@@ -112,6 +111,8 @@ public class NutritionCalculator {
 			basicRequirements = 66.47 + 13.7*weight + 5*height - 6.8*age;
 			additionalRequirements = basicRequirements * (activityFactor - 1);
 			totalRequirements = basicRequirements + additionalRequirements;
+			//System.out.println(basicRequirements);
+			//System.out.println(additionalRequirements);
 			break;
 		case "female":
 			basicRequirements = 655.1 + 9.6*weight + 1.8*height - 4.7*age;
@@ -130,45 +131,45 @@ public class NutritionCalculator {
 				fats = 1.2*weight;
 				carbs = (totalRequirements - proteins*4.1 - fats*9.3) / 4.1;
 				
-				vitaminA = 1.2;
-				vitaminB1 = 1.5;
-				if(age >= 50) {vitaminB2 = 1.3;}
-				else {vitaminB2 = 1.5;}
-				vitaminB3 = 6.9 * (totalRequirements/1000);
-				vitaminB5 = 6.4;
-				vitaminB6 = 1.8;
-				vitaminB7 = 60;
-				vitaminB9 = 300;
-				vitaminB12 = 6;
-				vitaminC = 110;
-				vitaminD = 50;
-				vitaminE = 15;
-				vitaminK = 80;
+				vitaminA = "1.2 mg";
+				vitaminB1 = "1.5 mg";
+				if(age >= 50) {vitaminB2 = "1.3 mg";}
+				else {vitaminB2 = "1.5 mg";}
+				vitaminB3 = Double.valueOf(6.9 * (totalRequirements/1000)).toString() + " mg";
+				vitaminB5 = "6.4 mg";
+				vitaminB6 = "1.8 mg";
+				vitaminB7 = "60 g";
+				vitaminB9 = "300 g";
+				vitaminB12 = "6 g";
+				vitaminC = "110 mg";
+				vitaminD = "50 g";
+				vitaminE = "15 mg";
+				vitaminK = "80 g";
 				
-				calcium = 1.5;
-				chlorid = 1.5;
-				kalium = 5;
-				magnesium = 0.5;
-				phosphat = 1.25;
-				schwefel = 1;
+				calcium = "1.5 g";
+				chlorid = "1.5 g";
+				kalium = "5 g";
+				magnesium = "0.5 g";
+				phosphat = "1.25 g";
+				schwefel = "1 g";
 				
-				chrom = 100;
-				eisen = 15;
-				iod = 200;
-				kupfer = 1.8;
-				mangan = 5;
-				molybdaen = 100;
-				selen = 90;
-				zink = 12;
+				chrom = "100 g";
+				eisen = "15 g";
+				iod = "200 g";
+				kupfer = "1.8 mg";
+				mangan = "5 mg";
+				molybdaen = "100 g";
+				selen = "90 g";
+				zink = "12 mg";
 				
-				leucin = 25*weight;
-				lysin = 25*weight;
-				methionin = 25*weight;
-				phenylalanin = 0.9;
-				tryptophan = 4.5*weight;
+				leucin = Double.valueOf(25*weight).toString() + " mg";
+				lysin = Double.valueOf(25*weight).toString() + " mg";
+				methionin = Double.valueOf(25*weight).toString() + " mg";
+				phenylalanin = "0.9 g";
+				tryptophan = Double.valueOf(4.5*weight).toString() + " mg";
 				
-				ala = 600;
-				epa_dha = 2;
+				ala = "600 mg";
+				epa_dha = "2 g";
 				
 				break;
 			case "muscle definition":
@@ -177,45 +178,45 @@ public class NutritionCalculator {
 				fats = 1.6*weight;
 				carbs = (totalRequirements - proteins*4.1 - fats*9.3) / 4.1;
 				
-				vitaminA = 1;
-				vitaminB1 = 1.4;
-				if(age >= 50) {vitaminB2 = 1.3;}
-				else {vitaminB2 = 1.4;}
-				vitaminB3 = 6.6 * (totalRequirements/1000);
-				vitaminB5 = 6;
-				vitaminB6 = 1.6;
-				vitaminB7 = 50;
-				vitaminB9 = 300;
-				vitaminB12 = 5.5;
-				vitaminC = 110;
-				vitaminD = 40;
-				vitaminE = 14;
-				vitaminK = 76;
+				vitaminA = "1 mg";
+				vitaminB1 = "1.4 mg";
+				if(age >= 50) {vitaminB2 = "1.3 mg";}
+				else {vitaminB2 = "1.4 mg";}
+				vitaminB3 = Double.valueOf(6.6 * (totalRequirements/1000)).toString() + " mg";
+				vitaminB5 = "6 mg";
+				vitaminB6 = "1.6 mg";
+				vitaminB7 = "50 g";
+				vitaminB9 = "300 g";
+				vitaminB12 = "5.5 g";
+				vitaminC = "110 mg";
+				vitaminD = "40 g";
+				vitaminE = "14 mg";
+				vitaminK = "76 g";
 				
-				calcium = 1.25;
-				chlorid = 1.25;
-				kalium = 4.5;
-				magnesium = 0.45;
-				phosphat = 1;
-				schwefel = 0.8;
+				calcium = "1.25 g";
+				chlorid = "1.25 g";
+				kalium = "4.5 g";
+				magnesium = "0.45 g";
+				phosphat = "1 g";
+				schwefel = "0.8 g";
 				
-				chrom = 80;
-				eisen = 15;
-				iod = 175;
-				kupfer = 1.8;
-				mangan = 4;
-				molybdaen = 75;
-				selen = 80;
-				zink = 11;
+				chrom = "80 g";
+				eisen = "15 g";
+				iod = "175 g";
+				kupfer = "1.8 mg";
+				mangan = "4 mg";
+				molybdaen = "75 g";
+				selen = "80 g";
+				zink = "11 mg";
 				
-				leucin = 22*weight;
-				lysin = 22*weight;
-				methionin = 22*weight;
-				phenylalanin = 0.8;
-				tryptophan = 4.5*weight;
+				leucin = Double.valueOf(22*weight).toString() + " mg";
+				lysin = Double.valueOf(22*weight).toString() + " mg";
+				methionin = Double.valueOf(22*weight).toString() + " mg";
+				phenylalanin = "0.8 g";
+				tryptophan = Double.valueOf(4.5*weight).toString() + " mg";
 				
-				ala = 600;
-				epa_dha = 2;
+				ala = "600 mg";
+				epa_dha = "2 g";
 				
 				break;
 			case "lose weight":
@@ -224,44 +225,44 @@ public class NutritionCalculator {
 				fats = 0.8*weight;
 				carbs = (totalRequirements - proteins*4.1 - fats*9.3) / 4.1;
 				
-				vitaminA = 1;
-				vitaminB1 = 1.3;
-				vitaminB2 = 1.3;
-				vitaminB3 = 6.6 * (totalRequirements/1000);
-				vitaminB5 = 6;
-				vitaminB6 = 1.6;
-				vitaminB7 = 45;
-				vitaminB9 = 300;
-				vitaminB12 = 5.2;
-				vitaminC = 110;
-				vitaminD = 35;
-				vitaminE = 13.5;
-				vitaminK = 75;
+				vitaminA = "1 mg";
+				vitaminB1 = "1.3 mg";
+				vitaminB2 = "1.3 mg";
+				vitaminB3 = Double.valueOf(6.6 * (totalRequirements/1000)).toString() + " mg";
+				vitaminB5 = "6 mg";
+				vitaminB6 = "1.6 mg";
+				vitaminB7 = "45 g";
+				vitaminB9 = "300 g";
+				vitaminB12 = "5.2 g";
+				vitaminC = "110 mg";
+				vitaminD = "35 g";
+				vitaminE = "13.5 mg";
+				vitaminK = "75 g";
 				
-				calcium = 1.2;
-				chlorid = 1.2;
-				kalium = 4.4;
-				magnesium = 0.35;
-				phosphat = 0.9;
-				schwefel = 0.75;
+				calcium = "1.2 g";
+				chlorid = "1.2 g";
+				kalium = "4.4 g";
+				magnesium = "0.35 g";
+				phosphat = "0.9 g";
+				schwefel = "0.75 g";
 				
-				chrom = 40;
-				eisen = 10;
-				iod = 170;
-				kupfer = 1.5;
-				mangan = 3.5;
-				molybdaen = 70;
-				selen = 75;
-				zink = 11;
+				chrom = "40 g";
+				eisen = "10 g";
+				iod = "170 g";
+				kupfer = "1.5 mg";
+				mangan = "3.5 mg";
+				molybdaen = "70 g";
+				selen = "75 g";
+				zink = "11 mg";
 				
-				leucin = 15*weight;
-				lysin = 12*weight;
-				methionin = 13*weight;
-				phenylalanin = 0.6;
-				tryptophan = 3.5*weight;
+				leucin = Double.valueOf(15*weight).toString() + " mg";;
+				lysin = Double.valueOf(12*weight).toString() + " mg";;
+				methionin = Double.valueOf(13*weight).toString() + " mg";;
+				phenylalanin = "0.6 mg";
+				tryptophan = Double.valueOf(3.5*weight).toString() + " mg";;
 				
-				ala = 400;
-				epa_dha = 0.9;
+				ala = "400 mg";
+				epa_dha = "0.9 g";
 				
 				break;
 			case "hold weight":
@@ -269,45 +270,45 @@ public class NutritionCalculator {
 				fats = weight;
 				carbs = (totalRequirements - proteins*4.1 - fats*9.3) / 4.1;
 				
-				vitaminA = 1;
-				vitaminB1 = 1.4;
-				if(age >= 50) {vitaminB2 = 1.3;}
-				else {vitaminB2 = 1.4;}
-				vitaminB3 = 6.6 * (totalRequirements/1000);
-				vitaminB5 = 6;
-				vitaminB6 = 1.6;
-				vitaminB7 = 45;
-				vitaminB9 = 300;
-				vitaminB12 = 5;
-				vitaminC = 110;
-				vitaminD = 40;
-				vitaminE = 14;
-				vitaminK = 76;
+				vitaminA = "1 mg";
+				vitaminB1 = "1.4 mg";
+				if(age >= 50) {vitaminB2 = "1.3 mg";}
+				else {vitaminB2 = "1.4 mg";}
+				vitaminB3 = Double.valueOf(6.6 * (totalRequirements/1000)).toString() + " mg";
+				vitaminB5 = "6 mg";
+				vitaminB6 = "1.6 mg";
+				vitaminB7 = "45 g";
+				vitaminB9 = "300 g";
+				vitaminB12 = "5 g";
+				vitaminC = "110 mg";
+				vitaminD = "40 g";
+				vitaminE = "14 mg";
+				vitaminK = "76 g";
 				
-				calcium = 1.2;
-				chlorid = 1.2;
-				kalium = 4.5;
-				magnesium = 0.35;
-				phosphat = 0.9;
-				schwefel = 0.7;
+				calcium = "1.2 g";
+				chlorid = "1.2 g";
+				kalium = "4.5 g";
+				magnesium = "0.35 g";
+				phosphat = "0.9 g";
+				schwefel = "0.7 g";
 				
-				chrom = 50;
-				eisen = 10;
-				iod = 175;
-				kupfer = 1.6;
-				mangan = 4;
-				molybdaen = 75;
-				selen = 80;
-				zink = 12;
+				chrom = "50 g";
+				eisen = "10 g";
+				iod = "175 g";
+				kupfer = "1.6 mg";
+				mangan = "4 mg";
+				molybdaen = "75 g";
+				selen = "80 g";
+				zink = "12 mg";
 				
-				leucin = 15*weight;
-				lysin = 12*weight;
-				methionin = 13*weight;
-				phenylalanin = 0.6;
-				tryptophan = 3.5*weight;
+				leucin = Double.valueOf(15*weight).toString() + " mg";
+				lysin = Double.valueOf(12*weight).toString() + " mg";
+				methionin = Double.valueOf(13*weight).toString() + " mg";
+				phenylalanin = "0.6 g";
+				tryptophan = Double.valueOf(3.5*weight).toString() + " mg";
 				
-				ala = 400;
-				epa_dha = 0.9;
+				ala = "400 mg";
+				epa_dha = "0.9 g";
 				
 				break;
 			}
@@ -321,45 +322,45 @@ public class NutritionCalculator {
 				fats = 1.2*weight;
 				carbs = (totalRequirements - proteins*4.1 - fats*9.3) / 4.1;
 				
-				vitaminA = 1;
-				vitaminB1 = 1.3;
-				if(age >= 50) {vitaminB2 = 1.3;}
-				else {vitaminB2 = 1.2;}
-				vitaminB3 = 5.8 * (totalRequirements/1000);
-				vitaminB5 = 6;
-				vitaminB6 = 1.6;
-				vitaminB7 = 55;
-				vitaminB9 = 300;
-				vitaminB12 = 5.8;
-				vitaminC = 95;
-				vitaminD = 45;
-				vitaminE = 12;
-				vitaminK = 65;
+				vitaminA = "1 mg";
+				vitaminB1 = "1.3 mg";
+				if(age >= 50) {vitaminB2 = "1.3 mg";}
+				else {vitaminB2 = "1.2 mg";}
+				vitaminB3 = Double.valueOf(5.8 * (totalRequirements/1000)).toString() + " mg";
+				vitaminB5 = "6 mg";
+				vitaminB6 = "1.6 mg";
+				vitaminB7 = "55 g";
+				vitaminB9 = "300 g";
+				vitaminB12 = "5.8 g";
+				vitaminC = "95 mg";
+				vitaminD = "45 g";
+				vitaminE = "12 mg";
+				vitaminK = "65 g";
 				
-				calcium = 1.3;
-				chlorid = 1.3;
-				kalium = 4.5;
-				magnesium = 0.4;
-				phosphat = 1.1;
-				schwefel = 1;
+				calcium = "1.3 g";
+				chlorid = "1.3 g";
+				kalium = "4.5 g";
+				magnesium = "0.4 g";
+				phosphat = "1.1 g";
+				schwefel = "1 g";
 				
-				chrom = 80;
-				eisen = 20;
-				iod = 190;
-				kupfer = 1.8;
-				mangan = 5;
-				molybdaen = 90;
-				selen = 65;
-				zink = 9;
+				chrom = "80 g";
+				eisen = "20 g";
+				iod = "190 g";
+				kupfer = "1.8 mg";
+				mangan = "5 mg";
+				molybdaen = "90 g";
+				selen = "65 g";
+				zink = "9 mg";
 				
-				leucin = 22*weight;
-				lysin = 22*weight;
-				methionin = 22*weight;
-				phenylalanin = 0.8;
-				tryptophan = 4.25*weight;
+				leucin = Double.valueOf(22*weight).toString() + " mg";
+				lysin = Double.valueOf(22*weight).toString() + " mg";
+				methionin = Double.valueOf(22*weight).toString() + " mg";
+				phenylalanin = "0.8 g";
+				tryptophan = Double.valueOf(4.25*weight).toString() + " mg";
 				
-				ala = 600;
-				epa_dha = 2;
+				ala = "600 mg";
+				epa_dha = "2 g";
 				
 				break;
 			case "muscle definition":
@@ -368,45 +369,45 @@ public class NutritionCalculator {
 				fats = 1.6*weight;
 				carbs = (totalRequirements - proteins*4.1 - fats*9.3) / 4.1;
 				
-				vitaminA = 1;
-				vitaminB1 = 1.2;
-				if(age >= 50) {vitaminB2 = 1.3;}
-				else {vitaminB2 = 1.1;}
-				vitaminB3 = 5.5 * (totalRequirements/1000);
-				vitaminB5 = 6;
-				vitaminB6 = 1.4;
-				vitaminB7 = 50;
-				vitaminB9 = 300;
-				vitaminB12 = 5.5;
-				vitaminC = 95;
-				vitaminD = 40;
-				vitaminE = 11;
-				vitaminK = 65;
+				vitaminA = "1 mg";
+				vitaminB1 = "1.2 mg";
+				if(age >= 50) {vitaminB2 = "1.3 mg";}
+				else {vitaminB2 = "1.1 mg";}
+				vitaminB3 = Double.valueOf(5.5 * (totalRequirements/1000)).toString() + " mg";
+				vitaminB5 = "6 mg";
+				vitaminB6 = "1.4 mg";
+				vitaminB7 = "50 g";
+				vitaminB9 = "300 g";
+				vitaminB12 = "5.5 g";
+				vitaminC = "95 mg";
+				vitaminD = "40 g";
+				vitaminE = "11 mg";
+				vitaminK = "65 g";
 				
-				calcium = 1.2;
-				chlorid = 1.2;
-				kalium = 4.4;
-				magnesium = 0.35;
-				phosphat = 1;
-				schwefel = 0.8;
+				calcium = "1.2 g";
+				chlorid = "1.2 g";
+				kalium = "4.4 g";
+				magnesium = "0.35 g";
+				phosphat = "1 g";
+				schwefel = "0.8 g";
 				
-				chrom = 70;
-				eisen = 18;
-				iod = 180;
-				kupfer = 1.6;
-				mangan = 4;
-				molybdaen = 80;
-				selen = 60;
-				zink = 8;
+				chrom = "70 g";
+				eisen = "18 g";
+				iod = "180 g";
+				kupfer = "1.6 mg";
+				mangan = "4 mg";
+				molybdaen = "80 g";
+				selen = "60 g";
+				zink = "8 mg";
 				
-				leucin = 22*weight;
-				lysin = 22*weight;
-				methionin = 22*weight;
-				phenylalanin = 0.7;
-				tryptophan = 4.25*weight;
+				leucin = Double.valueOf(22*weight).toString() + " mg";
+				lysin = Double.valueOf(22*weight).toString() + " mg";
+				methionin = Double.valueOf(22*weight).toString() + " mg";
+				phenylalanin = "0.7 g";
+				tryptophan = Double.valueOf(4.25*weight).toString() + " mg";
 				
-				ala = 600;
-				epa_dha = 2;
+				ala = "600 mg";
+				epa_dha = "2 g";
 				
 				break;
 			case "lose weight":
@@ -415,45 +416,45 @@ public class NutritionCalculator {
 				fats = 0.8*weight;
 				carbs = (totalRequirements - proteins*4.1 - fats*9.3) / 4.1;
 				
-				vitaminA = 0.8;
-				vitaminB1 = 1.1;
-				if(age >= 50) {vitaminB2 = 1.3;}
-				else {vitaminB2 = 1.1;}
-				vitaminB3 = 5.5 * (totalRequirements/1000);
-				vitaminB5 = 5.8;
-				vitaminB6 = 1.4;
-				vitaminB7 = 40;
-				vitaminB9 = 300;
-				vitaminB12 = 4.5;
-				vitaminC = 95;
-				vitaminD = 30;
-				vitaminE = 10;
-				vitaminK = 60;
+				vitaminA = "0.8 mg";
+				vitaminB1 = "1.1 mg";
+				if(age >= 50) {vitaminB2 = "1.3 mg";}
+				else {vitaminB2 = "1.1 mg";}
+				vitaminB3 = Double.valueOf(5.5 * (totalRequirements/1000)).toString() + " mg";
+				vitaminB5 = "5.8 mg";
+				vitaminB6 = "1.4 mg";
+				vitaminB7 = "40 g";
+				vitaminB9 = "300 g";
+				vitaminB12 = "4.5 g";
+				vitaminC = "95 mg";
+				vitaminD = "30 g";
+				vitaminE = "10 mg";
+				vitaminK = "60 g";
 				
-				calcium = 1;
-				chlorid = 1;
-				kalium = 4;
-				magnesium = 0.3;
-				phosphat = 0.9;
-				schwefel = 0.7;
+				calcium = "1 g";
+				chlorid = "1 g";
+				kalium = "4 g";
+				magnesium = "0.3 g";
+				phosphat = "0.9 g";
+				schwefel = "0.7 g";
 				
-				chrom = 60;
-				eisen = 15;
-				iod = 170;
-				kupfer = 1.5;
-				mangan = 4;
-				molybdaen = 75;
-				selen = 60;
-				zink = 7.5;
+				chrom = "60 g";
+				eisen = "15 g";
+				iod = "170 g";
+				kupfer = "1.5 mg";
+				mangan = "4 mg";
+				molybdaen = "75 g";
+				selen = "60 g";
+				zink = "7.5 mg";
 				
-				leucin = 15*weight;
-				lysin = 12*weight;
-				methionin = 13*weight;
-				phenylalanin = 0.6;
-				tryptophan = 3.5*weight;
+				leucin = Double.valueOf(15*weight).toString() + " mg";;
+				lysin = Double.valueOf(12*weight).toString() + " mg";;
+				methionin = Double.valueOf(13*weight).toString() + " mg";;
+				phenylalanin = "0.6 g";
+				tryptophan = Double.valueOf(3.5*weight).toString() + " mg";;
 				
-				ala = 300;
-				epa_dha = 0.9;
+				ala = "300 mg";
+				epa_dha = "0.9 g";
 				
 				break;
 			case "hold weight":
@@ -461,49 +462,51 @@ public class NutritionCalculator {
 				fats = weight;
 				carbs = (totalRequirements - proteins*4.1 - fats*9.3) / 4.1;
 				
-				vitaminA = 0.8;
-				vitaminB1 = 1.2;
-				if(age >= 50) {vitaminB2 = 1.3;}
-				else {vitaminB2 = 1.1;}
-				vitaminB3 = 5.5 * (totalRequirements/1000);
-				vitaminB5 = 6;
-				vitaminB6 = 1.4;
-				vitaminB7 = 45;
-				vitaminB9 = 300;
-				vitaminB12 = 5;
-				vitaminC = 95;
-				vitaminD = 35;
-				vitaminE = 11;
-				vitaminK = 60;
+				vitaminA = "0.8 mg";
+				vitaminB1 = "1.2 mg";
+				if(age >= 50) {vitaminB2 = "1.3 mg";}
+				else {vitaminB2 = "1.1 mg";}
+				vitaminB3 = Double.valueOf(5.5 * (totalRequirements/1000)).toString() + " mg";;
+				vitaminB5 = "6 mg";
+				vitaminB6 = "1.4 mg";
+				vitaminB7 = "45 g";
+				vitaminB9 = "300 g";
+				vitaminB12 = "5 g";
+				vitaminC = "95 mg";
+				vitaminD = "35 g";
+				vitaminE = "11 mg";
+				vitaminK = "60 g";
 				
-				calcium = 1;
-				chlorid = 1;
-				kalium = 4;
-				magnesium = 0.3;
-				phosphat = 0.9;
-				schwefel = 0.7;
+				calcium = "1 g";
+				chlorid = "1 g";
+				kalium = "4 g";
+				magnesium = "0.3 g";
+				phosphat = "0.9 g";
+				schwefel = "0.7 g";
 				
-				chrom = 70;
-				eisen = 15;
-				iod = 175;
-				kupfer = 1.6;
-				mangan = 4;
-				molybdaen = 75;
-				selen = 60;
-				zink = 8;
+				chrom = "70 g";
+				eisen = "15 g";
+				iod = "175 g";
+				kupfer = "1.6 mg";
+				mangan = "4 mg";
+				molybdaen = "75 g";
+				selen = "60 g";
+				zink = "8 mg";
 				
-				leucin = 15*weight;
-				lysin = 12*weight;
-				methionin = 13*weight;
-				phenylalanin = 0.6;
-				tryptophan = 3.5*weight;
+				leucin = Double.valueOf(15*weight).toString() + " mg";
+				lysin = Double.valueOf(12*weight).toString() + " mg";
+				methionin = Double.valueOf(13*weight).toString() + " mg";
+				phenylalanin = "0.6 g";
+				tryptophan = Double.valueOf(3.5*weight).toString() + " mg";
 				
-				ala = 300;
-				epa_dha = 0.9;
+				ala = "300 mg";
+				epa_dha = "0.9 g";
 				
 				break;
 			}
 		}
+		
+		System.out.println("Nutrients calculated");
 	}
 	
 	
@@ -518,30 +521,23 @@ public class NutritionCalculator {
 		return nutritionalValues;
 	}
 	
-	public double[] getVitamins() {
-		double[] vitamins = {vitaminA, vitaminB1, vitaminB2, vitaminB3, vitaminB5, vitaminB6,
-							vitaminB7, vitaminB9, vitaminB12, vitaminC, vitaminD, vitaminE, vitaminK};
-		return vitamins;
+	public String[] getNutrients() {
+		String[] nutrients = {vitaminA, vitaminB1, vitaminB2, vitaminB3, vitaminB5, vitaminB6,
+							vitaminB7, vitaminB9, vitaminB12, vitaminC, vitaminD, vitaminE, vitaminK,
+							calcium, chlorid, kalium, magnesium, phosphat, schwefel,
+							chrom, eisen, iod, kupfer, mangan, molybdaen, selen, zink,
+							leucin, lysin, methionin, phenylalanin, tryptophan,
+							ala, epa_dha};
+		return nutrients;
 	}
 	
-	public double[] getMinerals() {
-		double[] minerals = {calcium, chlorid, kalium, magnesium, phosphat, schwefel};
-		return minerals;
-	}
-	
-	public double[] getTraceElements() {
-		double[] traceElements = {chrom, eisen, iod, kupfer, mangan, molybdaen, selen, zink};
-		return traceElements;
-	}
-	
-	public double[] getAminoAcids() {
-		double[] aminoAcids = {leucin, lysin, methionin, phenylalanin, tryptophan};
-		return aminoAcids;
-	}
-	
-	public double[] getFattyAcids() {
-		double[] fattyAcids = {ala, epa_dha};
-		return fattyAcids;
+	public String[] getNames() {
+		String[] names = {"Vitamin A", "Thiamin", "Riboflavin", "Niacin", "Pantothensure", "Vitamin B6", "Biotin",
+				"Folsure", "Vitamin B12", "Vitamin C", "Vitamin D", "Vitamin E", "Vitamin K", "Calcium",
+				"Chlorid", "Kalium", "Magnesium", "Phosphat", "Schwefel", "Chrom", "Eisen", "Iod", "Kupfer",
+				"Mangan", "Molybdn", "Selen", "Zink", "Leucin", "Lysin", "Methionin", "Phenylalanin",
+				"Tryptophan", "ALA", "EPA und DHA"};
+		return names;
 	}
 	
 	
@@ -550,6 +546,7 @@ public class NutritionCalculator {
 	/*
 	 * some code for test purposes
 	 */
+	/*
 	public void printUserData() {
 		System.out.println(this.gender + "\n" + this.age + "\n" + this.height + "\n" + this.weight + "\n" + this.goal + "\n" + this.activity + "\n\n\n");
 	}
@@ -576,6 +573,6 @@ public class NutritionCalculator {
 			System.out.println(names[i] + ": " + values[i]);
 		}
 	}
+	*/
 
 }
-

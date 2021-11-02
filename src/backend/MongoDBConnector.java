@@ -102,6 +102,7 @@ public class MongoDBConnector {
 		
 		return supData;
 	}
+
 	public static String getAim() {
 //		MongoClient mongoClient = null;
 //		try {
@@ -129,7 +130,7 @@ public class MongoDBConnector {
 //
 //		} catch (Exception e) {
 //		}
-		return "muscle building";
+		return "gain muscles";
 	}
 
 }

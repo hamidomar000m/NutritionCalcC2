@@ -4,9 +4,11 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -14,11 +16,15 @@ import backend.MongoDBConnector;
 
 import javax.swing.JButton;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.event.MouseInputListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
 
 public class SupplementsFrame {
 
+	
 	private static JFrame frame;
-	private JScrollPane scrollPane;
 	
 	public SupplementsFrame() {
 		initialize();
@@ -39,23 +45,35 @@ public class SupplementsFrame {
 		heading.setBounds(376, 28, 231, 45);
 		frame.getContentPane().add(heading);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane_1.setBounds(92, 250, 800, 215);
-		frame.getContentPane().add(scrollPane_1);
-		
-		String[][] tableData = MongoDBConnector.getSupplements(MongoDBConnector.getAim());
-		String[] columnNames = {
-				"", ""
+		JTable supTable = new JTable(new MyTableModel()) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			//get table cell tool tips
+			public String getToolTipText(MouseEvent e) {
+                String tip = null;
+                java.awt.Point p = e.getPoint();
+                int rowIndex = rowAtPoint(p);
+                int colIndex = columnAtPoint(p);
+                int realColumnIndex = convertColumnIndexToModel(colIndex);
+
+                if (realColumnIndex == 1) {
+                    tip = (String) getValueAt(rowIndex, colIndex);
+                } 
+                return tip;
+            }
 		};
-		
-		JTable supTable = new JTable(tableData,columnNames);
-		supTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		supTable.setRowMargin(3);
 		supTable.setRowHeight(25);
 		supTable.setFont(new Font("Arial", Font.PLAIN, 16));
 		
-		scrollPane_1.setViewportView(supTable);
+		JScrollPane scrollPane1 = new JScrollPane();
+		scrollPane1.setBounds(92, 250, 800, 215);
+		frame.getContentPane().add(scrollPane1);
+		
+		scrollPane1.setViewportView(supTable);
 		
 		JLabel nameLabel = new JLabel("Name");
 		nameLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 18));
@@ -92,11 +110,38 @@ public class SupplementsFrame {
 		});
 		
 		
-		frame.setVisible(false);
+		frame.setVisible(true);
 		frame = utils.update(frame);
+	}
+	
+	class MyTableModel extends AbstractTableModel {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		private String[] columnNames = {"",
+                                        ""};
+        
+        private String[][] tableData = MongoDBConnector.getSupplements(MongoDBConnector.getAim());
+        
+		@Override
+		public int getRowCount() {
+			return tableData.length;
+		}
+		@Override
+		public int getColumnCount() {
+			return columnNames.length;
+		}
+		@Override
+		public Object getValueAt(int row, int col) {
+			return tableData[row][col];
+		}
 	}
 	
 	public static void displayFrame() {
 		frame.setVisible(true);
 	}
+
+	
 }

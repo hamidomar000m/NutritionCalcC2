@@ -26,10 +26,10 @@ public class Main {
 			}
 		});*/
 		
-		MainFrame mainFrame = new MainFrame();
+		//MainFrame mainFrame = new MainFrame();
 		//MicronutrientsFrame microFrame = new MicronutrientsFrame();
 		//Test, Test, Test
-		FoodRecommendationFrame foodFrame = new FoodRecommendationFrame();
+		//FoodRecommendationFrame foodFrame = new FoodRecommendationFrame();
 		SupplementsFrame supFrame = new SupplementsFrame();
 	}
 

@@ -36,10 +36,11 @@ public class FoodRecommendationFrame {
 		frame.setBounds(100, 100, 1000, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setLocationRelativeTo(null);
 		
 		JLabel heading = new JLabel("Food Recommendation");
 		heading.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 36));
-		heading.setBounds(289, 36, 406, 30);
+		heading.setBounds(289, 36, 407, 43);
 		frame.getContentPane().add(heading);
 		
 		dataList = MongoDBConnector.getFoodRecommendation("carbohydrates");

@@ -229,19 +229,15 @@ public class MongoDBConnector {
 //		try {
 //			BasicDBObject searchQuery_id = new BasicDBObject();
 //			
-//			searchQuery_id.put("userGoal", userGoal);
+//			searchQuery_id.put("userGoal", userGoal);	//Hier muss nach userName gesucht werden
 //
 //			MongoCursor<Document> cursor = mongoClient.getDatabase("ernaehrungstracker-app-db")
 //					.getCollection("users").find(searchQuery_id).iterator();
 //			
-//			while (cursor.hasNext()) {
-//				supDataList.add((String) cursor.next().get("supplement"));
-//			}
-//			
 //
 //		} catch (Exception e) {
 //		}
-		return "muscle building";
+		return "gain muscles";							//Hier muss das Ernährungsziel des Users returned werden
 	}
 
 }

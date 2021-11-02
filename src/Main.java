@@ -1,11 +1,18 @@
-import gui.LoginFrame;
+import backend.MongoDBConnector;
+import gui.FoodRecommendationFrame;
+import gui.LogInFrm;
+import gui.MainFrame;
+import gui.MicronutrientsFrame;
+import gui.SettingsFrame;
+import gui.SignUpFrame;
+import gui.SupplementsFrame;
 
 public class Main {
+
+	public static void main(String[] args) {
 	
-	public static void main(String[] args){
-		
-		LoginFrame loginFrame = new LoginFrame("CleanEat", 450, 800);
+		LogInFrm loginFrame = new LogInFrm();
 		
 	}
-	
+
 }

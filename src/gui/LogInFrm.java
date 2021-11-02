@@ -63,7 +63,7 @@ public class LogInFrm extends Thread {
 		frmLogIn = new JFrame();
 		frmLogIn.setTitle("Log In");
 		frmLogIn.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmLogIn.getContentPane().setBackground(new Color(153, 204, 102));
+		frmLogIn.getContentPane().setBackground(new Color(154, 205, 50));
 		frmLogIn.getContentPane().setLayout(null);
 		frmLogIn.setResizable(false);
 		frmLogIn.setLocationRelativeTo(null);

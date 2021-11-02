@@ -248,14 +248,13 @@ public class SignUpFrame extends Thread{
 		public void actionPerformed(ActionEvent e) {
 			try {
 				if(inputValid()) {
-
+					
 					Object[] inputs = getData();
 					
 					MongoDBConnector registrationConnector = new MongoDBConnector(inputs[0].toString(), inputs[1].toString(),
 							inputs[2].toString(), inputs[3].toString(), inputs[4].toString(), inputs[5].toString(),
 							inputs[6].toString(), inputs[7].toString());
 					registrationConnector.signUpUser();
-
 					
 					NutritionCalculator n = new NutritionCalculator(inputs[2].toString(),
 							Integer.parseInt(inputs[3].toString()), Double.parseDouble(inputs[4].toString()),
@@ -278,10 +277,10 @@ public class SignUpFrame extends Thread{
 					isAlive = false;
 				}
 				else {
-					//JOptionPane.showMessageDialog(null, "Input Error... please try again!", "ERROR", JOptionPane.ERROR_MESSAGE);
+					//JOptionPane.showMessageDialog(null, "Something went wrong", "ERROR", JOptionPane.ERROR_MESSAGE);
 				}
 			} catch (Exception e2) {
-				//frmDataCollection.setVisible(false);
+				JOptionPane.showMessageDialog(null, "User already exists! Either log in or change username.", "ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 
 		}

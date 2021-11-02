@@ -90,7 +90,6 @@ public class MongoDBConnector {
 						"ERROR", JOptionPane.ERROR_MESSAGE);
 
 			} else {
-				System.out.println("No user by that _id");
 				try {
 
 					Document document = new Document("_id", _id).append("userPassword", userPassword)
@@ -131,7 +130,7 @@ public class MongoDBConnector {
 
 					MainFrame mainFrame = new MainFrame(_id);
 					mainFrame.frame.setVisible(true);
-					
+
 					FoodRecommendationFrame foodRecommendationFrame = new FoodRecommendationFrame();
 					SupplementsFrame supplementsFrame = new SupplementsFrame(_id);
 					SettingsFrame settingsFrame = new SettingsFrame();
@@ -158,6 +157,33 @@ public class MongoDBConnector {
 
 	}
 
+	public static boolean isUserRegistered(final String userName) {
+
+		boolean isRegistered = false;
+		try {
+			
+			BasicDBObject searchQuery = new BasicDBObject();
+			searchQuery.put("_id", userName);
+			MongoCursor<Document> cursor = mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users")
+					.find(searchQuery).iterator();
+			isRegistered = true;
+			
+			while (cursor.hasNext()) {
+				if(((String)cursor.next().get("_id")).equals(userName)) {
+					System.out.println((String)cursor.next().get("_id"));
+					isRegistered = true;
+				}
+			}
+			
+		} catch (Exception e) {
+			isRegistered = false;
+		}
+
+		System.out.println(isRegistered);
+		return isRegistered;
+
+	}
+
 	public static void insertNutrients(String _id, double[] nutritionalValues, String[] names, String[] nutrients) {
 
 		MongoCollection collection = mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("nutrients");
@@ -170,6 +196,7 @@ public class MongoDBConnector {
 				document.append(names[i], nutrients[i]);
 			}
 			collection.insertOne(document);
+
 		} catch (Exception e) {
 		}
 
@@ -333,21 +360,21 @@ public class MongoDBConnector {
 	}
 
 	public static String getAim(final String userName) {
-		
+
 		String goal = "";
-		
+
 		try {
 			BasicDBObject searchQuery_id = new BasicDBObject();
-			
+
 			searchQuery_id.put("_id", userName);
 
-			MongoCursor<Document> cursor = mongoClient.getDatabase("ernaehrungstracker-app-db")
-					.getCollection("users").find(searchQuery_id).iterator();
-			
+			MongoCursor<Document> cursor = mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users")
+					.find(searchQuery_id).iterator();
+
 			while (cursor.hasNext()) {
 				goal = (String) cursor.next().get("userGoal");
 			}
-			
+
 		} catch (Exception e) {
 		}
 		return goal;

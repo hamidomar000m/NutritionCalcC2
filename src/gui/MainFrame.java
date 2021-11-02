@@ -109,8 +109,11 @@ public class MainFrame {
 		
 		Calendar calendar = Calendar.getInstance();
 		Date date = calendar.getTime();
-		int day = Calendar.DAY_OF_WEEK - 3;
-		double caloriesLeftForWeek = Double.parseDouble(macroNutrientsAndCalories[0])*7 - Double.parseDouble(macroNutrientsAndCalories[0])*day;
+		Date today = new Date();
+		calendar.setTime(today);
+		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+		System.out.println(dayOfWeek);
+		double caloriesLeftForWeek = Double.parseDouble(macroNutrientsAndCalories[0])*7 - Double.parseDouble(macroNutrientsAndCalories[0])*dayOfWeek;
 		
 		JLabel dayLbl = new JLabel(new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.getTime()));
 		dayLbl.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 28));
@@ -122,7 +125,7 @@ public class MainFrame {
 		caloriesDayLbl.setBounds(522, 200, 342, 19);
 		frame.getContentPane().add(caloriesDayLbl);
 		
-		JLabel caloriesWeekLbl = new JLabel("calories left for the week: " + caloriesLeftForWeek  + "kcal");
+		JLabel caloriesWeekLbl = new JLabel("calories left for the week: " + caloriesLeftForWeek + "kcal");
 		caloriesWeekLbl.setFont(new Font("Arial", Font.PLAIN, 16));
 		caloriesWeekLbl.setBounds(522, 230, 405, 19);
 		frame.getContentPane().add(caloriesWeekLbl);

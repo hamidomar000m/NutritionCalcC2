@@ -35,6 +35,7 @@ public class MongoDBConnector {
 	public static String userAge;
 	public static String userGoal;
 	public static String userActivity;
+	public static boolean notAlreadyRegistered;
 
 	static MongoClient mongoClient = null;
 
@@ -97,11 +98,12 @@ public class MongoDBConnector {
 							.append("userHeight", userHeight).append("userAge", userAge).append("userGoal", userGoal)
 							.append("userActivity", userActivity);
 					mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users").insertOne(document);
-
+					notAlreadyRegistered = true;
 					SignUpFrame.frmDataCollection.setVisible(false);
 
 				} catch (Exception e) {
 					System.out.println("Something went wrong : " + e);
+					notAlreadyRegistered = false;
 					JOptionPane.showMessageDialog(null, "User already exists!", "ERROR", JOptionPane.ERROR_MESSAGE);
 
 				}

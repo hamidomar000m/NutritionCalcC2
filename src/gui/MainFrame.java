@@ -28,12 +28,14 @@ import java.awt.Component;
 
 public class MainFrame {
 
-	private static JFrame frame;
+	public static JFrame frame;
+	private String userName;
 
 	/**
 	 * Create the application.
 	 */
-	public MainFrame() {
+	public MainFrame(final String _id) {
+		this.userName = _id;
 		initialize();
 	}
 
@@ -47,7 +49,7 @@ public class MainFrame {
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		
-		String[] macroNutrientsAndCalories = MongoDBConnector.getMacronutrientsAndCalories("MarcAndresen");
+		String[] macroNutrientsAndCalories = MongoDBConnector.getMacronutrientsAndCalories(userName);
 		
 		JLabel line = new JLabel("");
 		line.setOpaque(true);
@@ -69,7 +71,6 @@ public class MainFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("food recommendation clicked");
 				frame.setVisible(false);
 				FoodRecommendationFrame.displayFrame();
 			}
@@ -159,7 +160,6 @@ public class MainFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				System.out.println("See more");
 				frame.setEnabled(false);
 				MicronutrientsFrame.displayFrame();
 				
@@ -168,7 +168,7 @@ public class MainFrame {
 		});
 		
 		frame.getContentPane().add(btnSeeMore);
-		frame.setVisible(true);
+		frame.setVisible(false);
 	}
 
 	public static void enableFrame() {

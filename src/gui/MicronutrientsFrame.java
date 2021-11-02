@@ -19,10 +19,12 @@ import java.awt.Font;
 
 public class MicronutrientsFrame {
 
-	private static JFrame frame;
+	public static JFrame frame;
+	private String userName;
 
-	public MicronutrientsFrame() {
+	public MicronutrientsFrame(final String _id) {
 		
+		this.userName = _id;
 		initialize();
 		
 	}
@@ -44,7 +46,7 @@ public class MicronutrientsFrame {
 
 		String[] tableHeading = {"Micronutrient", "Amount"};
 		
-		String[][] tableData = MongoDBConnector.getMicronutrients("MarcAndresen");
+		String[][] tableData = MongoDBConnector.getMicronutrients(userName);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(55, 108, 277, 449);

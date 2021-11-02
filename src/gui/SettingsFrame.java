@@ -31,6 +31,7 @@ public class SettingsFrame {
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.getContentPane().setBackground(new Color(154, 205, 50));
 		frame.getContentPane().setLayout(null);
+		frame.setLocationRelativeTo(null);
 		
 		JLabel lblHeading = new JLabel("Settings");
 		lblHeading.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 36));

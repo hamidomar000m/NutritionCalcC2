@@ -109,7 +109,6 @@ public class FoodRecommendationFrame {
 		frame.getContentPane().add(homeButton);
 		homeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Home clicked");
 				frame.setVisible(false);
 				MainFrame.displayFrame();
 			}
@@ -121,7 +120,6 @@ public class FoodRecommendationFrame {
 		frame.getContentPane().add(supplementButton);
 		supplementButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Supplements clicked");
 				frame.setVisible(false);
 				SupplementsFrame.displayFrame();
 			}

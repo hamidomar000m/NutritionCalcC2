@@ -47,8 +47,8 @@ public class MongoDBConnector {
 
 	}
 
-	public MongoDBConnector(String _id, String userPassword, String userGender, String userWeight, String userHeight,
-			String userAge, String userGoal, String userActivity) { // , String userGoal, String userActivity)
+	public MongoDBConnector(String _id, String userPassword, String userGender, String userAge, String userHeight,
+			String userWeight, String userGoal, String userActivity) { // , String userGoal, String userActivity)
 		super();
 		this._id = _id;
 		this.userPassword = userPassword;

@@ -263,14 +263,10 @@ public class NutritionCalculator {
 				zink = "11 mg";
 
 				leucin = Double.valueOf(15 * weight).toString() + " mg";
-				;
 				lysin = Double.valueOf(12 * weight).toString() + " mg";
-				;
 				methionin = Double.valueOf(13 * weight).toString() + " mg";
-				;
 				phenylalanin = "0.6 mg";
 				tryptophan = Double.valueOf(3.5 * weight).toString() + " mg";
-				;
 
 				ala = "400 mg";
 				epa_dha = "0.9 g";
@@ -475,14 +471,10 @@ public class NutritionCalculator {
 				zink = "7.5 mg";
 
 				leucin = Double.valueOf(15 * weight).toString() + " mg";
-				;
 				lysin = Double.valueOf(12 * weight).toString() + " mg";
-				;
 				methionin = Double.valueOf(13 * weight).toString() + " mg";
-				;
 				phenylalanin = "0.6 g";
 				tryptophan = Double.valueOf(3.5 * weight).toString() + " mg";
-				;
 
 				ala = "300 mg";
 				epa_dha = "0.9 g";

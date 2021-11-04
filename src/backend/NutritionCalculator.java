@@ -81,13 +81,13 @@ public class NutritionCalculator {
 		double activityFactor;
 
 		switch (activity) {
-		case "Exclusively seated / lying activities":
+		case "Exclusively seated/lying activities":
 			activityFactor = 1.2;
 			break;
-		case "Almost exclusively sedentary activities with almost no physical activity in the leisure":
+		case "Almost exclusively sedentary activities, almost no physical leisure activities":
 			activityFactor = 1.4;
 			break;
-		case "Predominantly sedentary activities with occasional standing / walking activity":
+		case "Predominantly sedentary activities, occasional standing/walking activity":
 			activityFactor = 1.65;
 			break;
 		case "Predominantly walking / standing activity":
@@ -140,13 +140,13 @@ public class NutritionCalculator {
 						+ " mg";
 				vitaminB5 = "6.4 mg";
 				vitaminB6 = "1.8 mg";
-				vitaminB7 = "60 g";
-				vitaminB9 = "300 g";
-				vitaminB12 = "6 g";
+				vitaminB7 = "60 mcg";
+				vitaminB9 = "300 mcg";
+				vitaminB12 = "6 mcg";
 				vitaminC = "110 mg";
-				vitaminD = "50 g";
+				vitaminD = "50 mcg";
 				vitaminE = "15 mg";
-				vitaminK = "80 g";
+				vitaminK = "80 mcg";
 
 				calcium = "1.5 g";
 				chlorid = "1.5 g";
@@ -155,13 +155,13 @@ public class NutritionCalculator {
 				phosphat = "1.25 g";
 				schwefel = "1 g";
 
-				chrom = "100 g";
-				eisen = "15 g";
-				iod = "200 g";
+				chrom = "100 mcg";
+				eisen = "15 mcg";
+				iod = "200 mcg";
 				kupfer = "1.8 mg";
 				mangan = "5 mg";
-				molybdaen = "100 g";
-				selen = "90 g";
+				molybdaen = "100 mcg";
+				selen = "90 mcg";
 				zink = "12 mg";
 
 				leucin = Double.valueOf(25 * weight).toString() + " mg";
@@ -191,13 +191,13 @@ public class NutritionCalculator {
 						+ " mg";
 				vitaminB5 = "6 mg";
 				vitaminB6 = "1.6 mg";
-				vitaminB7 = "50 g";
-				vitaminB9 = "300 g";
-				vitaminB12 = "5.5 g";
+				vitaminB7 = "50 mcg";
+				vitaminB9 = "300 mcg";
+				vitaminB12 = "5.5 mcg";
 				vitaminC = "110 mg";
-				vitaminD = "40 g";
+				vitaminD = "40 mcg";
 				vitaminE = "14 mg";
-				vitaminK = "76 g";
+				vitaminK = "76 mcg";
 
 				calcium = "1.25 g";
 				chlorid = "1.25 g";
@@ -206,13 +206,13 @@ public class NutritionCalculator {
 				phosphat = "1 g";
 				schwefel = "0.8 g";
 
-				chrom = "80 g";
-				eisen = "15 g";
-				iod = "175 g";
+				chrom = "80 mcg";
+				eisen = "15 mcg";
+				iod = "175 mcg";
 				kupfer = "1.8 mg";
 				mangan = "4 mg";
-				molybdaen = "75 g";
-				selen = "80 g";
+				molybdaen = "75 mcg";
+				selen = "80 mcg";
 				zink = "11 mg";
 
 				leucin = Double.valueOf(22 * weight).toString() + " mg";
@@ -238,13 +238,13 @@ public class NutritionCalculator {
 						+ " mg";
 				vitaminB5 = "6 mg";
 				vitaminB6 = "1.6 mg";
-				vitaminB7 = "45 g";
-				vitaminB9 = "300 g";
-				vitaminB12 = "5.2 g";
+				vitaminB7 = "45 mcg";
+				vitaminB9 = "300 mcg";
+				vitaminB12 = "5.2 mcg";
 				vitaminC = "110 mg";
-				vitaminD = "35 g";
+				vitaminD = "35 mcg";
 				vitaminE = "13.5 mg";
-				vitaminK = "75 g";
+				vitaminK = "75 mcg";
 
 				calcium = "1.2 g";
 				chlorid = "1.2 g";
@@ -253,13 +253,13 @@ public class NutritionCalculator {
 				phosphat = "0.9 g";
 				schwefel = "0.75 g";
 
-				chrom = "40 g";
-				eisen = "10 g";
-				iod = "170 g";
+				chrom = "40 mcg";
+				eisen = "10 mcg";
+				iod = "170 mcg";
 				kupfer = "1.5 mg";
 				mangan = "3.5 mg";
-				molybdaen = "70 g";
-				selen = "75 g";
+				molybdaen = "70 mcg";
+				selen = "75 mcg";
 				zink = "11 mg";
 
 				leucin = Double.valueOf(15 * weight).toString() + " mg";
@@ -292,13 +292,13 @@ public class NutritionCalculator {
 						+ " mg";
 				vitaminB5 = "6 mg";
 				vitaminB6 = "1.6 mg";
-				vitaminB7 = "45 g";
-				vitaminB9 = "300 g";
-				vitaminB12 = "5 g";
+				vitaminB7 = "45 mcg";
+				vitaminB9 = "300 mcg";
+				vitaminB12 = "5 mcg";
 				vitaminC = "110 mg";
-				vitaminD = "40 g";
+				vitaminD = "40 mcg";
 				vitaminE = "14 mg";
-				vitaminK = "76 g";
+				vitaminK = "76 mcg";
 
 				calcium = "1.2 g";
 				chlorid = "1.2 g";
@@ -307,13 +307,13 @@ public class NutritionCalculator {
 				phosphat = "0.9 g";
 				schwefel = "0.7 g";
 
-				chrom = "50 g";
-				eisen = "10 g";
-				iod = "175 g";
+				chrom = "50 mcg";
+				eisen = "10 mcg";
+				iod = "175 mcg";
 				kupfer = "1.6 mg";
 				mangan = "4 mg";
-				molybdaen = "75 g";
-				selen = "80 g";
+				molybdaen = "75 mcg";
+				selen = "80 mcg";
 				zink = "12 mg";
 
 				leucin = Double.valueOf(15 * weight).toString() + " mg";
@@ -348,13 +348,13 @@ public class NutritionCalculator {
 						+ " mg";
 				vitaminB5 = "6 mg";
 				vitaminB6 = "1.6 mg";
-				vitaminB7 = "55 g";
-				vitaminB9 = "300 g";
-				vitaminB12 = "5.8 g";
+				vitaminB7 = "55 mcg";
+				vitaminB9 = "300 mcg";
+				vitaminB12 = "5.8 mcg";
 				vitaminC = "95 mg";
-				vitaminD = "45 g";
+				vitaminD = "45 mcg";
 				vitaminE = "12 mg";
-				vitaminK = "65 g";
+				vitaminK = "65 mcg";
 
 				calcium = "1.3 g";
 				chlorid = "1.3 g";
@@ -363,13 +363,13 @@ public class NutritionCalculator {
 				phosphat = "1.1 g";
 				schwefel = "1 g";
 
-				chrom = "80 g";
-				eisen = "20 g";
-				iod = "190 g";
+				chrom = "80 mcg";
+				eisen = "20 mcg";
+				iod = "190 mcg";
 				kupfer = "1.8 mg";
 				mangan = "5 mg";
-				molybdaen = "90 g";
-				selen = "65 g";
+				molybdaen = "90 mcg";
+				selen = "65 mcg";
 				zink = "9 mg";
 
 				leucin = Double.valueOf(22 * weight).toString() + " mg";
@@ -399,13 +399,13 @@ public class NutritionCalculator {
 						+ " mg";
 				vitaminB5 = "6 mg";
 				vitaminB6 = "1.4 mg";
-				vitaminB7 = "50 g";
-				vitaminB9 = "300 g";
-				vitaminB12 = "5.5 g";
+				vitaminB7 = "50 mcg";
+				vitaminB9 = "300 mcg";
+				vitaminB12 = "5.5 mcg";
 				vitaminC = "95 mg";
-				vitaminD = "40 g";
+				vitaminD = "40 mcg";
 				vitaminE = "11 mg";
-				vitaminK = "65 g";
+				vitaminK = "65 mcg";
 
 				calcium = "1.2 g";
 				chlorid = "1.2 g";
@@ -414,13 +414,13 @@ public class NutritionCalculator {
 				phosphat = "1 g";
 				schwefel = "0.8 g";
 
-				chrom = "70 g";
-				eisen = "18 g";
-				iod = "180 g";
+				chrom = "70 mcg";
+				eisen = "18 mcg";
+				iod = "180 mcg";
 				kupfer = "1.6 mg";
 				mangan = "4 mg";
-				molybdaen = "80 g";
-				selen = "60 g";
+				molybdaen = "80 mcg";
+				selen = "60 mcg";
 				zink = "8 mg";
 
 				leucin = Double.valueOf(22 * weight).toString() + " mg";
@@ -450,13 +450,13 @@ public class NutritionCalculator {
 						+ " mg";
 				vitaminB5 = "5.8 mg";
 				vitaminB6 = "1.4 mg";
-				vitaminB7 = "40 g";
-				vitaminB9 = "300 g";
-				vitaminB12 = "4.5 g";
+				vitaminB7 = "40 mcg";
+				vitaminB9 = "300 mcg";
+				vitaminB12 = "4.5 mcg";
 				vitaminC = "95 mg";
-				vitaminD = "30 g";
+				vitaminD = "30 mcg";
 				vitaminE = "10 mg";
-				vitaminK = "60 g";
+				vitaminK = "60 mcg";
 
 				calcium = "1 g";
 				chlorid = "1 g";
@@ -465,13 +465,13 @@ public class NutritionCalculator {
 				phosphat = "0.9 g";
 				schwefel = "0.7 g";
 
-				chrom = "60 g";
-				eisen = "15 g";
-				iod = "170 g";
+				chrom = "60 mcg";
+				eisen = "15 mcg";
+				iod = "170 mcg";
 				kupfer = "1.5 mg";
 				mangan = "4 mg";
-				molybdaen = "75 g";
-				selen = "60 g";
+				molybdaen = "75 mcg";
+				selen = "60 mcg";
 				zink = "7.5 mg";
 
 				leucin = Double.valueOf(15 * weight).toString() + " mg";
@@ -504,13 +504,13 @@ public class NutritionCalculator {
 						+ " mg";
 				vitaminB5 = "6 mg";
 				vitaminB6 = "1.4 mg";
-				vitaminB7 = "45 g";
-				vitaminB9 = "300 g";
-				vitaminB12 = "5 g";
+				vitaminB7 = "45 mcg";
+				vitaminB9 = "300 mcg";
+				vitaminB12 = "5 mcg";
 				vitaminC = "95 mg";
-				vitaminD = "35 g";
+				vitaminD = "35 mcg";
 				vitaminE = "11 mg";
-				vitaminK = "60 g";
+				vitaminK = "60 mcg";
 
 				calcium = "1 g";
 				chlorid = "1 g";
@@ -519,13 +519,13 @@ public class NutritionCalculator {
 				phosphat = "0.9 g";
 				schwefel = "0.7 g";
 
-				chrom = "70 g";
-				eisen = "15 g";
-				iod = "175 g";
+				chrom = "70 mcg";
+				eisen = "15 mcg";
+				iod = "175 mcg";
 				kupfer = "1.6 mg";
 				mangan = "4 mg";
-				molybdaen = "75 g";
-				selen = "60 g";
+				molybdaen = "75 mcg";
+				selen = "60 mcg";
 				zink = "8 mg";
 
 				leucin = Double.valueOf(15 * weight).toString() + " mg";
@@ -563,9 +563,9 @@ public class NutritionCalculator {
 	}
 
 	public String[] getNames() {
-		String[] names = { "Vitamin A", "Thiamin", "Riboflavin", "Niacin", "Pantothensure", "Vitamin B6", "Biotin",
-				"Folsure", "Vitamin B12", "Vitamin C", "Vitamin D", "Vitamin E", "Vitamin K", "Calcium", "Chlorid",
-				"Kalium", "Magnesium", "Phosphat", "Schwefel", "Chrom", "Eisen", "Iod", "Kupfer", "Mangan", "Molybdn",
+		String[] names = { "Vitamin A", "Thiamin", "Riboflavin", "Niacin", "Pantothensaeure", "Vitamin B6", "Biotin",
+				"Folsaeure", "Vitamin B12", "Vitamin C", "Vitamin D", "Vitamin E", "Vitamin K", "Calcium", "Chlorid",
+				"Kalium", "Magnesium", "Phosphat", "Schwefel", "Chrom", "Eisen", "Iod", "Kupfer", "Mangan", "Molybdaen",
 				"Selen", "Zink", "Leucin", "Lysin", "Methionin", "Phenylalanin", "Tryptophan", "ALA", "EPA und DHA" };
 		return names;
 	}

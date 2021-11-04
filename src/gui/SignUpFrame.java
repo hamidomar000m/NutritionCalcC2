@@ -68,7 +68,7 @@ public class SignUpFrame extends Thread {
 		txtpnRegistration.setForeground(new Color(0, 0, 0));
 		txtpnRegistration.setFont(new Font("Arial rounded MT", Font.BOLD, 36));
 		txtpnRegistration.setText("NutritionCalc");
-		txtpnRegistration.setBounds(234, 10, 232, 51);
+		txtpnRegistration.setBounds(227, 10, 232, 51);
 		frmDataCollection.getContentPane().add(txtpnRegistration);
 
 		JTextPane txtpnUsername = new JTextPane();
@@ -76,13 +76,13 @@ public class SignUpFrame extends Thread {
 		txtpnUsername.setEditable(false);
 		txtpnUsername.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnUsername.setText("Username");
-		txtpnUsername.setBounds(120, 75, 130, 30);
+		txtpnUsername.setBounds(57, 75, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnUsername);
 
 		usernameField = new JTextField();
 		usernameField.setFont(new Font("Arial", Font.PLAIN, 16));
 		usernameField.setColumns(10);
-		usernameField.setBounds(290, 75, 290, 30);
+		usernameField.setBounds(254, 75, 372, 30);
 		frmDataCollection.getContentPane().add(usernameField);
 
 		JTextPane txtpnPassword = new JTextPane();
@@ -91,11 +91,11 @@ public class SignUpFrame extends Thread {
 		txtpnPassword.setEditable(false);
 		txtpnPassword.setText("Password");
 		txtpnPassword.setFont(new Font("Arial", Font.PLAIN, 16));
-		txtpnPassword.setBounds(120, 115, 130, 30);
+		txtpnPassword.setBounds(57, 116, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnPassword);
 
 		passwordField = new JPasswordField();
-		passwordField.setBounds(290, 115, 290, 30);
+		passwordField.setBounds(254, 116, 372, 30);
 		frmDataCollection.getContentPane().add(passwordField);
 
 		JTextPane txtpnGender = new JTextPane();
@@ -104,14 +104,14 @@ public class SignUpFrame extends Thread {
 		txtpnGender.setForeground(Color.BLACK);
 		txtpnGender.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnGender.setBackground(Color.WHITE);
-		txtpnGender.setBounds(120, 189, 130, 30);
+		txtpnGender.setBounds(57, 191, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnGender);
 
 		genderComboBox = new JComboBox();
 		genderComboBox.setFont(new Font("Arial", Font.PLAIN, 16));
 		genderComboBox.setModel(new DefaultComboBoxModel(new String[] { "", "male", "female" }));
 		genderComboBox.setBackground(new Color(255, 255, 255));
-		genderComboBox.setBounds(290, 191, 290, 30);
+		genderComboBox.setBounds(254, 191, 372, 30);
 		frmDataCollection.getContentPane().add(genderComboBox);
 
 		JTextPane txtpnAge = new JTextPane();
@@ -120,12 +120,12 @@ public class SignUpFrame extends Thread {
 		txtpnAge.setForeground(Color.BLACK);
 		txtpnAge.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnAge.setBackground(Color.WHITE);
-		txtpnAge.setBounds(120, 229, 130, 30);
+		txtpnAge.setBounds(57, 229, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnAge);
 
 		ageField = new JTextField();
 		ageField.setFont(new Font("Arial", Font.PLAIN, 16));
-		ageField.setBounds(290, 229, 290, 30);
+		ageField.setBounds(254, 229, 372, 30);
 		frmDataCollection.getContentPane().add(ageField);
 		ageField.setColumns(10);
 
@@ -135,13 +135,13 @@ public class SignUpFrame extends Thread {
 		txtpnHeight.setForeground(Color.BLACK);
 		txtpnHeight.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnHeight.setBackground(Color.WHITE);
-		txtpnHeight.setBounds(120, 269, 130, 30);
+		txtpnHeight.setBounds(57, 270, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnHeight);
 
 		heightField = new JTextField();
 		heightField.setFont(new Font("Arial", Font.PLAIN, 16));
 		heightField.setColumns(10);
-		heightField.setBounds(290, 269, 290, 30);
+		heightField.setBounds(254, 269, 372, 30);
 		frmDataCollection.getContentPane().add(heightField);
 
 		JTextPane txtpnWeight = new JTextPane();
@@ -150,13 +150,13 @@ public class SignUpFrame extends Thread {
 		txtpnWeight.setForeground(Color.BLACK);
 		txtpnWeight.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnWeight.setBackground(Color.WHITE);
-		txtpnWeight.setBounds(120, 309, 130, 30);
+		txtpnWeight.setBounds(57, 311, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnWeight);
 
 		weightField = new JTextField();
 		weightField.setFont(new Font("Arial", Font.PLAIN, 16));
 		weightField.setColumns(10);
-		weightField.setBounds(290, 309, 290, 30);
+		weightField.setBounds(254, 309, 372, 30);
 		frmDataCollection.getContentPane().add(weightField);
 
 		JTextPane txtpnAim = new JTextPane();
@@ -165,7 +165,7 @@ public class SignUpFrame extends Thread {
 		txtpnAim.setForeground(Color.BLACK);
 		txtpnAim.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnAim.setBackground(Color.WHITE);
-		txtpnAim.setBounds(120, 349, 130, 30);
+		txtpnAim.setBounds(57, 349, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnAim);
 
 		goalComboBox = new JComboBox();
@@ -173,7 +173,7 @@ public class SignUpFrame extends Thread {
 				new String[] { "", "gain muscles", "muscle definition", "hold weight", "lose weight" }));
 		goalComboBox.setFont(new Font("Arial", Font.PLAIN, 16));
 		goalComboBox.setBackground(new Color(255, 255, 255));
-		goalComboBox.setBounds(290, 349, 290, 30);
+		goalComboBox.setBounds(254, 349, 372, 30);
 		frmDataCollection.getContentPane().add(goalComboBox);
 
 		JTextPane txtpnDailyActivity = new JTextPane();
@@ -182,18 +182,18 @@ public class SignUpFrame extends Thread {
 		txtpnDailyActivity.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnDailyActivity.setEditable(false);
 		txtpnDailyActivity.setBackground(Color.WHITE);
-		txtpnDailyActivity.setBounds(120, 389, 130, 30);
+		txtpnDailyActivity.setBounds(57, 390, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnDailyActivity);
 
 		activityComboBox = new JComboBox();
-		String[] activities = new String[] { "", "Exclusively seated / lying activities",
-				"Almost exclusively sedentary activities with almost no physical activity in the leisure",
-				"Predominantly sedentary activities with occasional standing / walking activity",
+		String[] activities = new String[] { "", "Exclusively seated/lying activities",
+				"Almost exclusively sedentary activities, almost no physical leisure activities",
+				"Predominantly sedentary activities, occasional standing/walking activity",
 				"Predominantly walking / standing activity", "Vigorous physical activity" };
 		activityComboBox.setModel(new DefaultComboBoxModel(activities));
-		activityComboBox.setFont(new Font("Arial", Font.PLAIN, 16));
+		activityComboBox.setFont(new Font("Arial", Font.PLAIN, 11));
 		activityComboBox.setBackground(new Color(255, 255, 255));
-		activityComboBox.setBounds(290, 389, 290, 30);
+		activityComboBox.setBounds(254, 390, 372, 30);
 		frmDataCollection.getContentPane().add(activityComboBox);
 
 		JTextPane txtpnBmi = new JTextPane();
@@ -202,7 +202,7 @@ public class SignUpFrame extends Thread {
 		txtpnBmi.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnBmi.setEditable(false);
 		txtpnBmi.setBackground(new Color(154, 205, 50));
-		txtpnBmi.setBounds(120, 463, 111, 30);
+		txtpnBmi.setBounds(57, 463, 111, 30);
 		frmDataCollection.getContentPane().add(txtpnBmi);
 
 		txtpnBmi_1 = new JTextPane();
@@ -210,28 +210,28 @@ public class SignUpFrame extends Thread {
 		txtpnBmi_1.setFont(new Font("Arial", Font.PLAIN, 16));
 		txtpnBmi_1.setEditable(false);
 		txtpnBmi_1.setBackground(new Color(154, 205, 50));
-		txtpnBmi_1.setBounds(290, 463, 130, 30);
+		txtpnBmi_1.setBounds(254, 463, 130, 30);
 		frmDataCollection.getContentPane().add(txtpnBmi_1);
 
 		JButton registerButton = new JButton("Register");
 		registerButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		registerButton.addActionListener(new RegisterListener());
 		registerButton.setBackground(Color.GRAY);
-		registerButton.setBounds(588, 468, 90, 35);
+		registerButton.setBounds(536, 463, 90, 35);
 		frmDataCollection.getContentPane().add(registerButton);
 
 		JLabel line_1 = new JLabel("");
 		line_1.setOpaque(true);
 		line_1.setEnabled(false);
 		line_1.setBackground(new Color(0, 0, 0));
-		line_1.setBounds(120, 166, 460, 2);
+		line_1.setBounds(57, 166, 569, 2);
 		frmDataCollection.getContentPane().add(line_1);
 
 		JLabel line_2 = new JLabel("");
 		line_2.setOpaque(true);
 		line_2.setEnabled(false);
 		line_2.setBackground(Color.BLACK);
-		line_2.setBounds(120, 441, 460, 2);
+		line_2.setBounds(57, 441, 569, 2);
 		frmDataCollection.getContentPane().add(line_2);
 
 		frmDataCollection.setSize(700, 550);

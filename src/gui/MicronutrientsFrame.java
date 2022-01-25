@@ -30,6 +30,7 @@ public class MicronutrientsFrame {
 	}
 
 	private void initialize() {
+		
 		frame = new JFrame("Micronutrients");
 		frame.getContentPane().setBackground(new Color(154, 205, 50));
 		frame.getContentPane().setLayout(null);

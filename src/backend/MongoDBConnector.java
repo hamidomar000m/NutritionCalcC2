@@ -35,6 +35,7 @@ public class MongoDBConnector {
 	public static String userAge;
 	public static String userGoal;
 	public static String userActivity;
+	public static boolean notAlreadyRegistered;
 
 	static MongoClient mongoClient = null;
 
@@ -46,8 +47,8 @@ public class MongoDBConnector {
 
 	}
 
-	public MongoDBConnector(String _id, String userPassword, String userGender, String userWeight, String userHeight,
-			String userAge, String userGoal, String userActivity) { // , String userGoal, String userActivity)
+	public MongoDBConnector(String _id, String userPassword, String userGender, String userAge, String userHeight,
+			String userWeight, String userGoal, String userActivity) { // , String userGoal, String userActivity)
 		super();
 		this._id = _id;
 		this.userPassword = userPassword;
@@ -97,11 +98,12 @@ public class MongoDBConnector {
 							.append("userHeight", userHeight).append("userAge", userAge).append("userGoal", userGoal)
 							.append("userActivity", userActivity);
 					mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users").insertOne(document);
-
+					notAlreadyRegistered = true;
 					SignUpFrame.frmDataCollection.setVisible(false);
 
 				} catch (Exception e) {
 					System.out.println("Something went wrong : " + e);
+					notAlreadyRegistered = false;
 					JOptionPane.showMessageDialog(null, "User already exists!", "ERROR", JOptionPane.ERROR_MESSAGE);
 
 				}
@@ -133,7 +135,7 @@ public class MongoDBConnector {
 
 					FoodRecommendationFrame foodRecommendationFrame = new FoodRecommendationFrame();
 					SupplementsFrame supplementsFrame = new SupplementsFrame(_id);
-					SettingsFrame settingsFrame = new SettingsFrame();
+					SettingsFrame settingsFrame = new SettingsFrame(_id);
 					MicronutrientsFrame microNutrientsFrame = new MicronutrientsFrame(_id);
 
 					LogInFrm.frmLogIn.setVisible(false);
@@ -260,13 +262,6 @@ public class MongoDBConnector {
 		} catch (Exception e) {
 		}
 
-//		for(int i = 0; i<7; i++) {
-//			for (int j = 0; j<2; j++) {
-//				System.out.println(supData[i][j]);
-//			}
-//			
-//		}
-
 		return supData;
 	}
 
@@ -278,7 +273,7 @@ public class MongoDBConnector {
 		try {
 			BasicDBObject searchQuery_id = new BasicDBObject();
 
-			searchQuery_id.put("_id", userName); // Hier muss dann der Nutzername stehen
+			searchQuery_id.put("_id", userName);
 
 			MongoCursor<Document> cursor = mongoClient.getDatabase("ernaehrungstracker-app-db")
 					.getCollection("nutrients").find(searchQuery_id).iterator();
@@ -365,7 +360,6 @@ public class MongoDBConnector {
 
 		try {
 			BasicDBObject searchQuery_id = new BasicDBObject();
-
 			searchQuery_id.put("_id", userName);
 
 			MongoCursor<Document> cursor = mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users")
@@ -376,8 +370,121 @@ public class MongoDBConnector {
 			}
 
 		} catch (Exception e) {
+			
 		}
 		return goal;
+	}
+	
+	public static void changePassword(final String userName, final String userPassword) {
+		
+		try {
+			BasicDBObject searchQuery_id = new BasicDBObject();
+			searchQuery_id.put("_id", userName);
+			
+			BasicDBObject newDocument = new BasicDBObject();
+			newDocument.put("userPassword", userPassword);
+			
+			BasicDBObject updateObject = new BasicDBObject();
+			updateObject.put("$set", newDocument);
+			
+			mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users").updateOne(searchQuery_id, updateObject);
+
+		} catch (Exception e) {
+			
+		}
+		
+	}
+	
+	public static void changeValue(final String userName, final String property, final String value) {
+		
+		try {
+			
+			BasicDBObject searchQuery_id = new BasicDBObject();
+			searchQuery_id.put("_id", userName);
+			
+			BasicDBObject newDocument = new BasicDBObject();
+			newDocument.put(property, value);
+			
+			BasicDBObject updateObject = new BasicDBObject();
+			updateObject.put("$set", newDocument);
+			
+			mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users").updateOne(searchQuery_id, updateObject);
+			
+		} catch (Exception e) {
+			
+		}
+		
+	}
+	
+	public static void deleteAccount(final String userName) {
+		
+		try {
+			BasicDBObject searchQuery_id = new BasicDBObject();
+			searchQuery_id.put("_id", userName);
+			
+			mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users").deleteOne(searchQuery_id);
+
+		} catch (Exception e) {
+			
+		}
+		
+	}
+	
+	public static void deleteNutrients(final String userName) {
+		
+		try {
+			BasicDBObject searchQuery_id = new BasicDBObject();
+			searchQuery_id.put("_id", userName);
+			
+			mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("nutrients").deleteOne(searchQuery_id);
+
+		} catch (Exception e) {
+			
+		}
+		
+	}
+	
+	public static String getUserValue(final String userName, final String property) {
+		
+		String value = "";
+		
+		try {
+			BasicDBObject searchQuery_id = new BasicDBObject();
+			searchQuery_id.put("_id", userName);
+
+			MongoCursor<Document> cursor = mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users")
+					.find(searchQuery_id).iterator();
+
+			while (cursor.hasNext()) {
+				value = (String) cursor.next().get("user" + property);
+			}
+			
+		} catch (Exception e) {
+			
+		}
+		
+		return value;
+		
+	}
+	
+	public static void reloadNutritionCalculation(final String userName) {
+		
+		try {
+
+			NutritionCalculator n = new NutritionCalculator(getUserValue(userName, "Gender"), Integer.parseInt(getUserValue(userName, "Age")),
+															Double.parseDouble(getUserValue(userName, "Height")), Double.parseDouble(getUserValue(userName, "Weight")),
+															getUserValue(userName, "Goal"), getUserValue(userName, "Activity"));
+			n.calculate();
+			double[] nutritionalValues = n.getNutritionalValues();
+			String[] names = n.getNames();
+			String[] nutrients = n.getNutrients();
+			deleteNutrients(userName);
+			insertNutrients(userName, nutritionalValues, names, nutrients);
+
+		} catch (Exception e) {
+			
+		}
+		
 	}
 
 }

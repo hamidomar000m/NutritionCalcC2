@@ -124,7 +124,7 @@ public class SupplementsFrame implements MouseListener {
 		frame.setVisible(false);
 		frame = utils.update(frame);
 	}
-
+	
 	class MyTableModel extends AbstractTableModel {
         /**
 		 * 

@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -139,6 +138,7 @@ public class SettingsFrame {
 			}
 			
 		});
+		System.out.println("Test");
 		frame.getContentPane().add(submitPwBtn);
 		
 		JButton submitBdBtn = new JButton("Submit");

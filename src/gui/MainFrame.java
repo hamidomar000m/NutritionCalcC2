@@ -40,7 +40,7 @@ public class MainFrame {
 	}
 
 
-	private void initialize() {
+	public void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(154, 205, 50));
 		frame.setBounds(100, 100, 1000, 700);
@@ -182,11 +182,4 @@ public class MainFrame {
 		frame.setVisible(true);
 	}
 	
-	public JFrame getFrame() {
-		return frame;
-	}
-
-	public void setFrame(JFrame frame) {
-		this.frame = frame;
-	}
 }

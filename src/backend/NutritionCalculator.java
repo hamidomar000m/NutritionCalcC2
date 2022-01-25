@@ -109,8 +109,6 @@ public class NutritionCalculator {
 			basicRequirements = 66.47 + 13.7 * weight + 5 * height - 6.8 * age;
 			additionalRequirements = basicRequirements * (activityFactor - 1);
 			totalRequirements = (int) Math.round(basicRequirements + additionalRequirements);
-			// System.out.println(basicRequirements);
-			// System.out.println(additionalRequirements);
 			break;
 		case "female":
 			basicRequirements = 655.1 + 9.6 * weight + 1.8 * height - 4.7 * age;
@@ -125,9 +123,9 @@ public class NutritionCalculator {
 			switch (goal) {
 			case "gain muscles":
 				totalRequirements = totalRequirements + 400;
-				proteins = (int) Math.round(2.6 * weight);
-				fats = (int) Math.round(1.2 * weight);
-				carbs = (int) Math.round((totalRequirements - proteins * 4.1 - fats * 9.3) / 4.1);
+				proteins = (int) Math.round((totalRequirements*0.3) / 4.1);
+				fats = (int) Math.round((totalRequirements*0.2) / 9.3);
+				carbs = (int) Math.round((totalRequirements*0.5) / 4.1);
 
 				vitaminA = "1.2 mg";
 				vitaminB1 = "1.5 mg";
@@ -176,9 +174,9 @@ public class NutritionCalculator {
 				break;
 			case "muscle definition":
 				totalRequirements = totalRequirements - 400;
-				proteins = (int) Math.round(2.5 * weight);
-				fats = (int) Math.round(1.6 * weight);
-				carbs = (int) Math.round((totalRequirements - proteins * 4.1 - fats * 9.3) / 4.1);
+				proteins = (int) Math.round((totalRequirements*0.3) / 4.1);
+				fats = (int) Math.round((totalRequirements*0.3) / 9.3);
+				carbs = (int) Math.round((totalRequirements*0.4) / 4.1);
 
 				vitaminA = "1 mg";
 				vitaminB1 = "1.4 mg";
@@ -227,9 +225,9 @@ public class NutritionCalculator {
 				break;
 			case "lose weight":
 				totalRequirements = totalRequirements - 400;
-				proteins = (int) Math.round(1.9 * weight);
-				fats = (int) Math.round(0.8 * weight);
-				carbs = (int) Math.round((totalRequirements - proteins * 4.1 - fats * 9.3) / 4.1);
+				proteins = (int) Math.round((totalRequirements*0.3) / 4.1);
+				fats = (int) Math.round((totalRequirements*0.35) / 9.3);
+				carbs = (int) Math.round((totalRequirements*0.35) / 4.1);
 
 				vitaminA = "1 mg";
 				vitaminB1 = "1.3 mg";
@@ -273,9 +271,9 @@ public class NutritionCalculator {
 
 				break;
 			case "hold weight":
-				proteins = (int) Math.round(1.9 * weight);
-				fats = (int) Math.round(weight);
-				carbs = (int) Math.round((totalRequirements - proteins * 4.1 - fats * 9.3) / 4.1);
+				proteins = (int) Math.round((totalRequirements*0.2) / 4.1);
+				fats = (int) Math.round((totalRequirements*0.3) / 9.3);
+				carbs = (int) Math.round((totalRequirements*0.5) / 4.1);
 
 				vitaminA = "1 mg";
 				vitaminB1 = "1.4 mg";
@@ -329,9 +327,9 @@ public class NutritionCalculator {
 			switch (goal) {
 			case "gain muscles":
 				totalRequirements = totalRequirements + 400;
-				proteins = (int) Math.round(2.5 * weight);
-				fats = (int) Math.round(1.2 * weight);
-				carbs = (int) Math.round((totalRequirements - proteins * 4.1 - fats * 9.3) / 4.1);
+				proteins = (int) Math.round((totalRequirements*0.3) / 4.1);
+				fats = (int) Math.round((totalRequirements*0.2) / 9.3);
+				carbs = (int) Math.round((totalRequirements*0.5) / 4.1);
 
 				vitaminA = "1 mg";
 				vitaminB1 = "1.3 mg";
@@ -380,9 +378,9 @@ public class NutritionCalculator {
 				break;
 			case "muscle definition":
 				totalRequirements = totalRequirements - 400;
-				proteins = (int) Math.round(2.4 * weight);
-				fats = (int) Math.round(1.6 * weight);
-				carbs = (int) Math.round((totalRequirements - proteins * 4.1 - fats * 9.3) / 4.1);
+				proteins = (int) Math.round((totalRequirements*0.3) / 4.1);
+				fats = (int) Math.round((totalRequirements*0.3) / 9.3);
+				carbs = (int) Math.round((totalRequirements*0.4) / 4.1);
 
 				vitaminA = "1 mg";
 				vitaminB1 = "1.2 mg";
@@ -431,9 +429,9 @@ public class NutritionCalculator {
 				break;
 			case "lose weight":
 				totalRequirements = totalRequirements - 400;
-				proteins = (int) Math.round(1.9 * weight);
-				fats = (int) Math.round(0.8 * weight);
-				carbs = (int) Math.round((totalRequirements - proteins * 4.1 - fats * 9.3) / 4.1);
+				proteins = (int) Math.round((totalRequirements*0.3) / 4.1);
+				fats = (int) Math.round((totalRequirements*0.35) / 9.3);
+				carbs = (int) Math.round((totalRequirements*0.35) / 4.1);
 
 				vitaminA = "0.8 mg";
 				vitaminB1 = "1.1 mg";
@@ -481,9 +479,9 @@ public class NutritionCalculator {
 
 				break;
 			case "hold weight":
-				proteins = (int) Math.round(1.9 * weight);
-				fats = (int) Math.round(weight);
-				carbs = (int) Math.round((totalRequirements - proteins * 4.1 - fats * 9.3) / 4.1);
+				proteins = (int) Math.round((totalRequirements*0.2) / 4.1);
+				fats = (int) Math.round((totalRequirements*0.3) / 9.3);
+				carbs = (int) Math.round((totalRequirements*0.5) / 4.1);
 
 				vitaminA = "0.8 mg";
 				vitaminB1 = "1.2 mg";

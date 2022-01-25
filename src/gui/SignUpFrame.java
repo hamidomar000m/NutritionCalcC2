@@ -264,16 +264,13 @@ public class SignUpFrame extends Thread {
 						double[] nutritionalValues = n.getNutritionalValues();
 						String[] names = n.getNames();
 						String[] nutrients = n.getNutrients();
-
-						// MongoDBConnector nutrientInserter = new
-						// MongoDBConnector(inputs[0].toString());
 						MongoDBConnector.insertNutrients(inputs[0].toString(), nutritionalValues, names, nutrients);
 
 						MainFrame mainFrame = new MainFrame(inputs[0].toString());
 						mainFrame.frame.setVisible(true);
 						FoodRecommendationFrame foodRecommendationFrame = new FoodRecommendationFrame();
 						SupplementsFrame supplementsFrame = new SupplementsFrame(inputs[0].toString());
-						SettingsFrame settingsFrame = new SettingsFrame();
+						SettingsFrame settingsFrame = new SettingsFrame(username);
 						MicronutrientsFrame microNutrientsFrame = new MicronutrientsFrame(inputs[0].toString());
 
 						isAlive = false;

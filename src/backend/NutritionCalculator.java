@@ -1,7 +1,7 @@
 package backend;
 
 public class NutritionCalculator {
-
+	//test
 	// user data
 	private String gender;
 	private String goal;

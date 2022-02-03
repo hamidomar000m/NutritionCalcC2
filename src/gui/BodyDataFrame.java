@@ -18,9 +18,13 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import backend.MongoDBConnector;
+
 import javax.swing.JSeparator;
 import java.awt.Color;
 
@@ -28,6 +32,7 @@ public class BodyDataFrame {
 
 	private static JFrame frame;
 	private JTextField newValueTxt;
+	private final String userName = MongoDBConnector._id;
 
 	public BodyDataFrame() {
 		initialize();
@@ -111,6 +116,21 @@ public class BodyDataFrame {
 		deleteAccBtn.setBorder(null);
 		deleteAccBtn.setBackground(Constants.MIDGREEN);
 		deleteAccBtn.setBounds(60, 696, 126, 21);
+		deleteAccBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			    int confirmed = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your account?", "Delete Account", JOptionPane.YES_NO_OPTION);
+
+			    if (confirmed == JOptionPane.YES_OPTION) {
+			    	MongoDBConnector.deleteAccount(MongoDBConnector._id);
+			    	MongoDBConnector.deleteNutrients(MongoDBConnector._id);
+			        System.exit(0);
+			    }
+				
+			}
+		});
 		sidePnl.add(deleteAccBtn);
 		
 		JButton btnSettings = new JButton("Settings");
@@ -237,21 +257,25 @@ public class BodyDataFrame {
 		parentPnl.add(mainPnl, BorderLayout.CENTER);
 		mainPnl.setLayout(null);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] { "", "gender", "weight", "height", "age", "goal", "activity" }));
-		comboBox.setBounds(250, 316, 233, 31);
-		mainPnl.add(comboBox);
+		JComboBox dataCombobox = new JComboBox();
+		dataCombobox.setFont(Constants.PLAINTEXT);
+		dataCombobox.setBackground(Constants.MAINBACKGROUND);
+		dataCombobox.setModel(new DefaultComboBoxModel(new String[] { "", "gender", "weight", "height", "age", "goal", "activity" }));
+		dataCombobox.setBounds(250, 316, 233, 31);
+		mainPnl.add(dataCombobox);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(250, 388, 348, 31);
-		mainPnl.add(comboBox_1);
+		JComboBox valueCombobox = new JComboBox();
+		valueCombobox.setBounds(250, 388, 348, 31);
+		valueCombobox.setFont(Constants.PLAINTEXT);
+		valueCombobox.setBackground(Constants.MAINBACKGROUND);
+		mainPnl.add(valueCombobox);
 		
-		JLabel lblNewLabel_2 = new JLabel("Which data would you like to change?");
-		lblNewLabel_2.setBounds(250, 291, 265, 19);
+		JLabel lblNewLabel_2 = new JLabel("WHICH DATA WOULD YOU LIKE TO CHANGE?");
+		lblNewLabel_2.setBounds(250, 291, 297, 19);
 		lblNewLabel_2.setFont(Constants.PLAINTEXT);
 		mainPnl.add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_3 = new JLabel("enter new value");
+		JLabel lblNewLabel_3 = new JLabel("ENTER NEW VALUE");
 		lblNewLabel_3.setBounds(250, 363, 137, 14);
 		lblNewLabel_3.setFont(Constants.PLAINTEXT);
 		mainPnl.add(lblNewLabel_3);
@@ -263,7 +287,158 @@ public class BodyDataFrame {
 		mainPnl.add(newValueTxt);
 		
 		JButton submitBdBtn = new JButton("Submit");
-		submitBdBtn.setBounds(250, 428, 89, 23);
+		submitBdBtn.setBounds(660, 440, 89, 23);
+		submitBdBtn.setFont(Constants.BUTTONTEXT);
+		submitBdBtn.setFocusPainted(false);
+		submitBdBtn.setBorderPainted(false);
+		submitBdBtn.setBorder(null);
+		submitBdBtn.setBackground(Constants.LIGHTGRAY);
+		submitBdBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if(dataCombobox.getSelectedItem().toString().equals("weight")) {
+
+					String newValue = newValueTxt.getText();
+					try {
+						
+						String oldValue = MongoDBConnector.getUserValue(userName, "Weight");
+						
+						if(!newValue.equals("") && isNumeric(newValue) && !newValue.equals(oldValue)) {
+							MongoDBConnector.changeValue(userName, "userWeight", newValue);
+							JOptionPane.showMessageDialog(null, "Successfully changed your weight to " + newValue, "INFO", JOptionPane.INFORMATION_MESSAGE);
+							MongoDBConnector.reloadNutritionCalculation(userName);
+						} else {
+							JOptionPane.showMessageDialog(null, "Value must be valid and is not allowed to be the same!", "INFO", JOptionPane.ERROR_MESSAGE);
+						}
+						
+					} catch (Exception e2) {
+						
+					}
+					
+				}
+				
+				if(dataCombobox.getSelectedItem().toString().equals("height")) {
+
+					String newValue = newValueTxt.getText();
+					try {
+						
+						String oldValue = MongoDBConnector.getUserValue(userName, "Height");
+						
+						if(!newValue.equals("") && isNumeric(newValue) && !newValue.equals(oldValue)) {
+							MongoDBConnector.changeValue(userName, "userHeight", newValue);
+							JOptionPane.showMessageDialog(null, "Successfully changed your height to " + newValue, "INFO", JOptionPane.INFORMATION_MESSAGE);
+							MongoDBConnector.reloadNutritionCalculation(userName);
+						} else {
+							JOptionPane.showMessageDialog(null, "Value must be valid and is not allowed to be the same!", "INFO", JOptionPane.ERROR_MESSAGE);
+						}
+						
+					} catch (Exception e2) {
+						
+					}
+					
+				}
+				
+				if(dataCombobox.getSelectedItem().toString().equals("age")) {
+
+					String newValue = newValueTxt.getText();
+					try {
+						
+						String oldValue = MongoDBConnector.getUserValue(userName, "Age");
+						
+						if(!newValue.equals("") && isNumeric(newValue) && !newValue.equals(oldValue)) {
+							MongoDBConnector.changeValue(userName, "userAge", newValue);
+							JOptionPane.showMessageDialog(null, "Successfully changed your age to " + newValue, "INFO", JOptionPane.INFORMATION_MESSAGE);
+							MongoDBConnector.reloadNutritionCalculation(userName);
+						} else {
+							JOptionPane.showMessageDialog(null, "Value must be valid and is not allowed to be the same!", "INFO", JOptionPane.ERROR_MESSAGE);
+						}
+						
+					} catch (Exception e2) {
+						
+					}
+					
+				}
+				
+				if(dataCombobox.getSelectedItem().toString().equals("gender")) {
+
+					String newValue = valueCombobox.getSelectedItem().toString();
+					try {
+						
+						String oldValue = MongoDBConnector.getUserValue(userName, "Gender");
+						
+						if(!newValue.equals(oldValue)) {
+							
+							MongoDBConnector.changeValue(userName, "userGender", newValue);
+							JOptionPane.showMessageDialog(null, "Successfully changed your gender to " + newValue, "INFO", JOptionPane.INFORMATION_MESSAGE);
+							MongoDBConnector.reloadNutritionCalculation(userName);
+							
+						} else {
+							JOptionPane.showMessageDialog(null, "Value is not allowed to be the same!", "INFO", JOptionPane.ERROR_MESSAGE);
+						}
+						
+					} catch (Exception e2) {
+						
+					}
+					
+				}
+				
+				if(dataCombobox.getSelectedItem().toString().equals("goal")) {
+
+					String newValue = valueCombobox.getSelectedItem().toString();
+					
+					try {
+						
+						String oldValue = MongoDBConnector.getUserValue(userName, "Goal");
+						
+						if(!newValue.equals(oldValue)) {
+							
+							MongoDBConnector.changeValue(userName, "userGoal", newValue);
+							JOptionPane.showMessageDialog(null, "Successfully changed your goal to " + newValue, "INFO", JOptionPane.INFORMATION_MESSAGE);
+							MongoDBConnector.reloadNutritionCalculation(userName);
+							//if the goal changes, the supplements have to be reloaded again
+							SupplementFrame reloadedSupFrame = new SupplementFrame();
+							
+						} else {
+							JOptionPane.showMessageDialog(null, "Value is not allowed to be the same!", "INFO", JOptionPane.ERROR_MESSAGE);
+						}
+						
+						
+					} catch (Exception e2) {
+						
+					}
+					
+				}
+				
+				if(dataCombobox.getSelectedItem().toString().equals("activity")) {
+
+					String newValue = valueCombobox.getSelectedItem().toString();
+					
+					try {
+						
+						String oldValue = MongoDBConnector.getUserValue(userName, "Activity");
+						
+						if(!newValue.equals(oldValue)) {
+							
+							MongoDBConnector.changeValue(userName, "userActivity", newValue);
+							JOptionPane.showMessageDialog(null, "Successfully changed your activity to " + newValue, "INFO", JOptionPane.INFORMATION_MESSAGE);
+							MongoDBConnector.reloadNutritionCalculation(userName);
+							
+						} else {
+							JOptionPane.showMessageDialog(null, "Value is not allowed to be the same!", "INFO", JOptionPane.ERROR_MESSAGE);
+						}
+						
+					} catch (Exception e2) {
+						
+					}
+					
+				}
+			
+			reloadAllFrames();
+				
+			}
+		});
 		mainPnl.add(submitBdBtn);
 		
 		JSeparator separator = new JSeparator();
@@ -276,42 +451,42 @@ public class BodyDataFrame {
 		lblLogin.setBounds(250, 227, 285, 36);
 		mainPnl.add(lblLogin);
 		
-		comboBox.addActionListener(new ActionListener() {
+		dataCombobox.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if(comboBox.getSelectedItem().toString().equals("weight")) {
-					comboBox_1.setVisible(false);
+				if(dataCombobox.getSelectedItem().toString().equals("weight")) {
+					valueCombobox.setVisible(false);
 					newValueTxt.setVisible(true);
 				}
 				
-				if(comboBox.getSelectedItem().toString().equals("height")) {
-					comboBox_1.setVisible(false);
+				if(dataCombobox.getSelectedItem().toString().equals("height")) {
+					valueCombobox.setVisible(false);
 					newValueTxt.setVisible(true);
 				}
 				
-				if(comboBox.getSelectedItem().toString().equals("age")) {
-					comboBox_1.setVisible(false);
+				if(dataCombobox.getSelectedItem().toString().equals("age")) {
+					valueCombobox.setVisible(false);
 					newValueTxt.setVisible(true);
 				}
 				
-				if(comboBox.getSelectedItem().toString().equals("gender")) {
-					comboBox_1.setVisible(true);
+				if(dataCombobox.getSelectedItem().toString().equals("gender")) {
+					valueCombobox.setVisible(true);
 					newValueTxt.setVisible(false);
-					comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"", "male", "female"}));
+					valueCombobox.setModel(new DefaultComboBoxModel(new String[] {"", "male", "female"}));
 				}
 				
-				if(comboBox.getSelectedItem().toString().equals("goal")) {
-					comboBox_1.setVisible(true);
+				if(dataCombobox.getSelectedItem().toString().equals("goal")) {
+					valueCombobox.setVisible(true);
 					newValueTxt.setVisible(false);
-					comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"", "gain muscles", "muscle definition", "hold weight", "lose weight"}));
+					valueCombobox.setModel(new DefaultComboBoxModel(new String[] {"", "gain muscles", "muscle definition", "hold weight", "lose weight"}));
 				}
 				
-				if(comboBox.getSelectedItem().toString().equals("activity")) {
-					comboBox_1.setVisible(true);
+				if(dataCombobox.getSelectedItem().toString().equals("activity")) {
+					valueCombobox.setVisible(true);
 					newValueTxt.setVisible(false);
-					comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"", "Exclusively seated/lying activities",
+					valueCombobox.setModel(new DefaultComboBoxModel(new String[] {"", "Exclusively seated/lying activities",
 							"Very often sedentary activities",
 							"Predominantly sedentary activities",
 							"Predominantly walking / standing activity", "Vigorous physical activity"}));
@@ -397,6 +572,28 @@ public class BodyDataFrame {
 	public static void displayFrame() {
 		frame.setVisible(true);
 	}
+	
+	public static void reloadAllFrames() {
+		frame.dispose();
+		StartFrame.disposeFrame();;
+		StartFrame reloadedMainFrame = new StartFrame();
+		reloadedMainFrame.displayFrame();
+		
+		MicronutrientsFrame.frame.dispose();
+		MicronutrientsFrame reloadedMicronutrientsFrame = new MicronutrientsFrame();
+	}
 
+	public static boolean isNumeric(String str) {
+		
+		try {  
+			
+			Double.parseDouble(str);  
+		    return true;
+		    
+		} catch(NumberFormatException e){  
+		    return false;  
+		  }  
+		
+	}
 
 }

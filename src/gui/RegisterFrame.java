@@ -21,24 +21,45 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+
+import backend.MongoDBConnector;
+import backend.NutritionCalculator;
+
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import java.awt.SystemColor;
 
-public class RegisterFrame {
+public class RegisterFrame extends Thread {
 
 	private static JFrame frame;
 	private JPasswordField passwordField;
-	private JTextField textField;
+	private JTextField usernameField;
 	private JTextField ageField;
 	private JTextField heightField;
-	private JTextField WeightField;
+	private JTextField weightField;
+	private JComboBox goalBox;
+	private JComboBox activityBox;
+	private ButtonGroup genderGroup;
+	private JLabel lblBMI;
+	
+	private String username;
+	private String password;
+	private String gender;
+	private String goal;
+	private String activity;
+	private int age = 0;
+	private double height = 0;
+	private double weight = 0;
+
+	private boolean isAlive;
 	
 	public RegisterFrame() {
+		isAlive = true;
 		initialize();
 	}
 	
@@ -145,15 +166,16 @@ public class RegisterFrame {
 		passwordField.setBackground(Constants.MAINBACKGROUND);
 		mainPnl.add(passwordField);
 		
-		textField = new JTextField();
-		textField.setBounds(386, 318, 363, 26);
-		textField.setFont(Constants.PLAINTEXT);
-		textField.setBorder(BorderFactory.createLineBorder(Constants.DARKGRAY, 1));
-		textField.setBackground(Constants.MAINBACKGROUND);
-		mainPnl.add(textField);
-		textField.setColumns(10);
+		usernameField = new JTextField();
+		usernameField.setBounds(386, 318, 363, 26);
+		usernameField.setFont(Constants.PLAINTEXT);
+		usernameField.setBorder(BorderFactory.createLineBorder(Constants.DARKGRAY, 1));
+		usernameField.setBackground(Constants.MAINBACKGROUND);
+		mainPnl.add(usernameField);
+		usernameField.setColumns(10);
 		
 		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.addActionListener(new RegisterListener());
 		btnSubmit.setBounds(660, 693, 89, 23);
 		btnSubmit.setFont(Constants.BUTTONTEXT);
 		btnSubmit.setFocusPainted(false);
@@ -162,50 +184,57 @@ public class RegisterFrame {
 		mainPnl.add(btnSubmit);
 		
 		JLabel lblGender = new JLabel("GENDER");
-		lblGender.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+		lblGender.setFont(Constants.LOGINTEXT);
 		lblGender.setBounds(250, 420, 72, 23);
 		mainPnl.add(lblGender);
 		
 		JLabel lblAge = new JLabel("AGE");
-		lblAge.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+		lblAge.setFont(Constants.LOGINTEXT);
 		lblAge.setBounds(250, 465, 38, 23);
 		mainPnl.add(lblAge);
 		
 		JLabel lblHeight = new JLabel("HEIGHT (cm)");
-		lblHeight.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+		lblHeight.setFont(Constants.LOGINTEXT);
 		lblHeight.setBounds(250, 510, 107, 23);
 		mainPnl.add(lblHeight);
 		
 		JLabel lblWeightkg = new JLabel("WEIGHT (kg)");
-		lblWeightkg.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+		lblWeightkg.setFont(Constants.LOGINTEXT);
 		lblWeightkg.setBounds(250, 555, 107, 23);
 		mainPnl.add(lblWeightkg);
 		
 		JLabel lblGoal = new JLabel("ACTIVITY");
-		lblGoal.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+		lblGoal.setFont(Constants.LOGINTEXT);
 		lblGoal.setBounds(250, 600, 89, 23);
 		mainPnl.add(lblGoal);
 		
 		JLabel lblGoal_2 = new JLabel("GOAL");
-		lblGoal_2.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+		lblGoal_2.setFont(Constants.LOGINTEXT);
 		lblGoal_2.setBounds(250, 645, 52, 23);
 		mainPnl.add(lblGoal_2);
 		
+		lblBMI = new JLabel("BMI: ");
+		lblBMI.setFont(Constants.BUTTONTEXTBOLD);
+		lblBMI.setBounds(250, 693, 128, 23);
+		mainPnl.add(lblBMI);
+		
 		JRadioButton femaleButton = new JRadioButton("FEMALE");
 		femaleButton.setBounds(386, 424, 77, 27);
+		femaleButton.setActionCommand("female");
 		femaleButton.setFont(Constants.PLAINTEXT);
 		mainPnl.add(femaleButton);
 		
 		JRadioButton maleButton = new JRadioButton("MALE");
 		maleButton.setBounds(470, 424, 63, 27);
+		maleButton.setActionCommand("male");
 		maleButton.setFont(Constants.PLAINTEXT);
 		mainPnl.add(maleButton);
 		
-		ButtonGroup genderGroup = new ButtonGroup();
+		genderGroup = new ButtonGroup();
 		genderGroup.add(femaleButton);
 		genderGroup.add(maleButton);
 		
-		JComboBox activityBox = new JComboBox();
+		activityBox = new JComboBox();
 		activityBox.setBounds(386, 600, 363, 26);
 		activityBox.setFont(Constants.PLAINTEXT);
 		activityBox.setBackground(Constants.MAINBACKGROUND);
@@ -216,7 +245,7 @@ public class RegisterFrame {
 		activityBox.setModel(new DefaultComboBoxModel(activities));
 		mainPnl.add(activityBox);
 		
-		JComboBox goalBox = new JComboBox();
+		goalBox = new JComboBox();
 		goalBox.setBounds(386, 645, 363, 26);
 		goalBox.setFont(Constants.PLAINTEXT);
 		goalBox.setBackground(Constants.MAINBACKGROUND);
@@ -230,6 +259,7 @@ public class RegisterFrame {
 		ageField.setBorder(BorderFactory.createLineBorder(Constants.DARKGRAY, 1));
 		ageField.setBackground(SystemColor.menu);
 		ageField.setBounds(386, 465, 147, 26);
+		ageField.setDocument(new LengthRestrictedDocument(3));
 		mainPnl.add(ageField);
 		
 		heightField = new JTextField();
@@ -238,15 +268,17 @@ public class RegisterFrame {
 		heightField.setBorder(BorderFactory.createLineBorder(Constants.DARKGRAY, 1));
 		heightField.setBackground(SystemColor.menu);
 		heightField.setBounds(386, 510, 147, 26);
+		heightField.setDocument(new LengthRestrictedDocument(3));
 		mainPnl.add(heightField);
 		
-		WeightField = new JTextField();
-		WeightField.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		WeightField.setColumns(10);
-		WeightField.setBorder(BorderFactory.createLineBorder(Constants.DARKGRAY, 1));
-		WeightField.setBackground(SystemColor.menu);
-		WeightField.setBounds(386, 555, 147, 26);
-		mainPnl.add(WeightField);
+		weightField = new JTextField();
+		weightField.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		weightField.setColumns(10);
+		weightField.setBorder(BorderFactory.createLineBorder(Constants.DARKGRAY, 1));
+		weightField.setBackground(SystemColor.menu);
+		weightField.setBounds(386, 555, 147, 26);
+		weightField.setDocument(new LengthRestrictedDocument(3));
+		mainPnl.add(weightField);
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBackground(new Color(204, 204, 204));
@@ -328,5 +360,134 @@ public class RegisterFrame {
 	
 	public static void displayFrame() {
 		frame.setVisible(true);
+	}
+	
+	public static void hideFrame() {
+		frame.setVisible(false);
+	}
+	
+	class RegisterListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			try {
+				if (inputValid()) {
+
+					Object[] inputs = getData();
+
+					MongoDBConnector registrationConnector = new MongoDBConnector(inputs[0].toString(),
+							inputs[1].toString(), inputs[2].toString(), inputs[3].toString(), inputs[4].toString(),
+							inputs[5].toString(), inputs[6].toString(), inputs[7].toString());
+					registrationConnector.signUpUser();
+
+					if (MongoDBConnector.notAlreadyRegistered) {
+
+						NutritionCalculator n = new NutritionCalculator(inputs[2].toString(),
+								Integer.parseInt(inputs[3].toString()), Double.parseDouble(inputs[4].toString()),
+								Double.parseDouble(inputs[5].toString()), inputs[6].toString(), inputs[7].toString());
+						n.calculate();
+						double[] nutritionalValues = n.getNutritionalValues();
+						String[] names = n.getNames();
+						String[] nutrients = n.getNutrients();
+						MongoDBConnector.insertNutrients(inputs[0].toString(), nutritionalValues, names, nutrients);
+
+						StartFrame mainFrame = new StartFrame();
+						StartFrame.displayFrame();
+						FoodsFrame foodRecommendationFrame = new FoodsFrame();
+						SupplementFrame supplementsFrame = new SupplementFrame();
+						MicronutrientsFrame microNutrientsFrame = new MicronutrientsFrame();
+						WorkoutFrame workoutFrame = new WorkoutFrame();
+						TrackingFrame trackingFrame = new TrackingFrame();
+						PasswordFrame passwordFrame = new PasswordFrame();
+						BodyDataFrame bodyDataFrame = new BodyDataFrame();
+
+						isAlive = false;
+
+					}
+				} else {
+					
+				}
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(null, "User already exists! Either log in or change username.", "ERROR",
+						JOptionPane.ERROR_MESSAGE);
+			}
+
+		}
+
+	}
+
+	/*
+	 * check whether the user input is valid
+	 */
+	private boolean inputValid() {
+		try {
+			username = usernameField.getText();
+			if (username.equals("")) {
+				JOptionPane.showMessageDialog(null, "Please enter a username", "ERROR", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+
+			String password = new String(passwordField.getPassword());
+
+			if (password.length() < 6) {
+				JOptionPane.showMessageDialog(null, "Password must contain at least 6 characters", "ERROR",
+						JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+
+			gender = genderGroup.getSelection().getActionCommand();
+			goal = goalBox.getSelectedItem().toString();
+			activity = activityBox.getSelectedItem().toString();
+			if (gender.equals("") || goal.equals("") || activity.equals("")) {
+				JOptionPane.showMessageDialog(null, "Please fill in all the boxes", "ERROR", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+
+			age = Integer.parseInt(ageField.getText());
+			height = Double.parseDouble(heightField.getText());
+			weight = Double.parseDouble(weightField.getText());
+			return true;
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Input Error... please try again!", "ERROR", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+	}
+
+	/*
+	 * read out the user inputs and return it
+	 */
+	public Object[] getData() {
+		username = usernameField.getText();
+		String password = new String(passwordField.getPassword());
+		gender = genderGroup.getSelection().getActionCommand();
+		goal = goalBox.getSelectedItem().toString();
+		age = Integer.parseInt(ageField.getText());
+		height = Double.parseDouble(heightField.getText());
+		weight = Double.parseDouble(weightField.getText());
+		activity = activityBox.getSelectedItem().toString();
+
+		Object[] data = { username, password, gender, age, height, weight, goal, activity };
+		return data;
+	}
+
+	/*
+	 * try to calculate the BMI
+	 */
+	public void run() {
+		double oldBMI = 0;
+		double newBMI = 0;
+
+		while (isAlive) {
+			try {
+				height = Double.parseDouble(heightField.getText());
+				weight = Double.parseDouble(weightField.getText());
+				newBMI = weight / ((height / 100) * (height / 100));
+			} catch (Exception e) {
+			}
+
+			if (newBMI != oldBMI) {
+				lblBMI.setText("BMI: " + Math.round(newBMI));
+				oldBMI = newBMI;
+			}
+		}
 	}
 }

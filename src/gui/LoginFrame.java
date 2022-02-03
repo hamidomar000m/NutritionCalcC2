@@ -17,9 +17,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+
+import backend.MongoDBConnector;
+
 import javax.swing.JSeparator;
 import java.awt.Color;
 import javax.swing.JPasswordField;
@@ -30,7 +34,9 @@ public class LoginFrame {
 
 	private static JFrame frame;
 	private JPasswordField passwordField;
-	private JTextField textField;
+	private JTextField usernameField;
+	private String username = null;
+	private String password;
 
 	public LoginFrame() {
 		initialize();
@@ -96,6 +102,8 @@ public class LoginFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				frame.setVisible(false);
+				RegisterFrame registerDevFrame = new RegisterFrame();
+				registerDevFrame.start();
 				RegisterFrame.displayFrame();
 				
 			}
@@ -139,13 +147,13 @@ public class LoginFrame {
 		passwordField.setBackground(Constants.MAINBACKGROUND);
 		mainPnl.add(passwordField);
 		
-		textField = new JTextField();
-		textField.setBounds(386, 319, 363, 26);
-		textField.setFont(Constants.PLAINTEXT);
-		textField.setBorder(BorderFactory.createLineBorder(Constants.DARKGRAY, 1));
-		textField.setBackground(Constants.MAINBACKGROUND);
-		mainPnl.add(textField);
-		textField.setColumns(10);
+		usernameField = new JTextField();
+		usernameField.setBounds(386, 319, 363, 26);
+		usernameField.setFont(Constants.PLAINTEXT);
+		usernameField.setBorder(BorderFactory.createLineBorder(Constants.DARKGRAY, 1));
+		usernameField.setBackground(Constants.MAINBACKGROUND);
+		mainPnl.add(usernameField);
+		usernameField.setColumns(10);
 		
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.setBounds(660, 428, 89, 23);
@@ -153,6 +161,7 @@ public class LoginFrame {
 		btnSubmit.setFocusPainted(false);
 		btnSubmit.setBorder(BorderFactory.createLineBorder(Constants.DARKGRAY, 1));
 		btnSubmit.setBackground(Constants.LIGHTGRAY);
+		btnSubmit.addActionListener(new SubmitListener());
 		mainPnl.add(btnSubmit);
 		
 		JPanel topPnl = new JPanel();
@@ -231,4 +240,49 @@ public class LoginFrame {
 	public static void displayFrame() {
 		frame.setVisible(true);
 	}
+	
+	public static void hideFrame() {
+		frame.setVisible(false);
+	}
+	
+	class SubmitListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			try {
+				String password = new String(passwordField.getPassword());
+				if (inputValid()) {
+
+					MongoDBConnector mongoDBConnector = new MongoDBConnector(usernameField.getText(), password);
+					mongoDBConnector.logInUser();
+
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"Input Error... please try again!\r\nPassword should be at least 6 characters!", "ERROR",
+							JOptionPane.ERROR_MESSAGE);
+				}
+
+			} catch (Exception e2) {
+				frame.setVisible(false);
+			}
+
+		}
+
+	}
+
+	/*
+	 * check whether the user input is valid
+	 */
+	private boolean inputValid() {
+		try {
+			username = usernameField.getText();
+			password = new String(passwordField.getPassword());
+
+			if (username != "" && password.length() > 5)
+				return true;
+			return false;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
 }

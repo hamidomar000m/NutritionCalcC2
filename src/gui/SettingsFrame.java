@@ -138,7 +138,6 @@ public class SettingsFrame {
 			}
 			
 		});
-		System.out.println("Test");
 		frame.getContentPane().add(submitPwBtn);
 		
 		JButton submitBdBtn = new JButton("Submit");
@@ -452,7 +451,7 @@ public class SettingsFrame {
 				reloadedMainFrame.frame.setVisible(true);
 				
 				MicronutrientsFrame.frame.dispose();
-				MicronutrientsFrame reloadedMicronutrientsFrame = new MicronutrientsFrame(userName);
+				MicronutrientsFrame reloadedMicronutrientsFrame = new MicronutrientsFrame();
 				
 			}
 			

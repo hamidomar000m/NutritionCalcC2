@@ -17,8 +17,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import backend.MongoDBConnector;
 
 public class WorkoutFrame {
 
@@ -131,6 +134,21 @@ public class WorkoutFrame {
 		deleteAccBtn.setBackground(Constants.MIDGREEN);
 		deleteAccBtn.setBounds(60, 696, 126, 21);
 		deleteAccBtn.setVisible(false);
+		deleteAccBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			    int confirmed = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your account?", "Delete Account", JOptionPane.YES_NO_OPTION);
+
+			    if (confirmed == JOptionPane.YES_OPTION) {
+			    	MongoDBConnector.deleteAccount(MongoDBConnector._id);
+			    	MongoDBConnector.deleteNutrients(MongoDBConnector._id);
+			        System.exit(0);
+			    }
+				
+			}
+		});
 		sidePnl.add(deleteAccBtn);
 		
 		btnSettings = new JButton("Settings");

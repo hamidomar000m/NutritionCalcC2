@@ -16,8 +16,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import backend.MongoDBConnector;
+
 import javax.swing.JSeparator;
 import java.awt.Color;
 import javax.swing.JPasswordField;
@@ -28,8 +32,8 @@ import javax.swing.JTextField;
 public class PasswordFrame {
 
 	private static JFrame frame;
+	private JPasswordField rePasswordField;
 	private JPasswordField passwordField;
-	private JTextField textField;
 
 	public PasswordFrame() {
 		initialize();
@@ -259,19 +263,18 @@ public class PasswordFrame {
 		mainPnl.add(lblPassword);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(405, 364, 344, 26);
-		passwordField.setFont(Constants.PLAINTEXT);
+		passwordField.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		passwordField.setBorder(BorderFactory.createLineBorder(Constants.DARKGRAY, 1));
-		passwordField.setBackground(Constants.MAINBACKGROUND);
+		passwordField.setBackground(SystemColor.menu);
+		passwordField.setBounds(405, 319, 344, 26);
 		mainPnl.add(passwordField);
 		
-		textField = new JTextField();
-		textField.setBounds(405, 319, 344, 26);
-		textField.setFont(Constants.PLAINTEXT);
-		textField.setBorder(BorderFactory.createLineBorder(Constants.DARKGRAY, 1));
-		textField.setBackground(Constants.MAINBACKGROUND);
-		mainPnl.add(textField);
-		textField.setColumns(10);
+		rePasswordField = new JPasswordField();
+		rePasswordField.setBounds(405, 364, 344, 26);
+		rePasswordField.setFont(Constants.PLAINTEXT);
+		rePasswordField.setBorder(BorderFactory.createLineBorder(Constants.DARKGRAY, 1));
+		rePasswordField.setBackground(Constants.MAINBACKGROUND);
+		mainPnl.add(rePasswordField);
 		
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.setBounds(660, 428, 89, 23);
@@ -279,6 +282,41 @@ public class PasswordFrame {
 		btnSubmit.setFocusPainted(false);
 		btnSubmit.setBorder(BorderFactory.createLineBorder(Constants.DARKGRAY, 1));
 		btnSubmit.setBackground(Constants.LIGHTGRAY);
+		btnSubmit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					
+					String newPassword = String.valueOf(passwordField.getPassword());
+					String confirmedPassword = String.valueOf(rePasswordField.getPassword());
+
+					if(newPassword.equals("")) {
+						JOptionPane.showMessageDialog(null, "Password can't be empty! ", "INFO", JOptionPane.ERROR_MESSAGE);
+					}
+					
+					if(newPassword.length() <= 5 && !newPassword.equals("")) {
+						JOptionPane.showMessageDialog(null, "Password must contain at least 6 characters! ", "INFO", JOptionPane.ERROR_MESSAGE);
+					}
+					
+					if(!newPassword.equals(confirmedPassword)) {
+						JOptionPane.showMessageDialog(null, "The given passwords are not equal!", "INFO", JOptionPane.ERROR_MESSAGE);
+					}
+					
+					if(newPassword.equals(confirmedPassword) && newPassword.length() >= 6) {
+						//change password in database
+						MongoDBConnector.changePassword(MongoDBConnector._id, newPassword);
+						JOptionPane.showMessageDialog(null, "Successfully changed your password to " + newPassword, "INFO", JOptionPane.INFORMATION_MESSAGE);
+					}
+					
+				} catch(Exception ex) {
+					
+				}
+				
+			}
+			
+		});
 		mainPnl.add(btnSubmit);
 		
 		JPanel topPnl = new JPanel();
@@ -357,5 +395,4 @@ public class PasswordFrame {
 	public static void displayFrame() {
 		frame.setVisible(true);
 	}
-
 }

@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -16,24 +18,29 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.table.AbstractTableModel;
+
+import backend.MongoDBConnector;
+import gui.SupplementsFrame.MyTableModel;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 
-public class SupplementFrame {
+public class SupplementFrame implements MouseListener {
 
 	private static JFrame frame;
-	private String userName;
-	private JTable supplementsTable;
+	private static JTable supTable;
+	private JScrollPane scrollPane;
 	public JButton passwordBtn;
 	public JButton btnSettings;
 	public JButton bodydataBtn;
 	public JButton deleteAccBtn;
 
-	public SupplementFrame(final String _id) {
-		this.userName = _id;
+	public SupplementFrame() {
 		initialize();
 	}
 
@@ -137,6 +144,21 @@ public class SupplementFrame {
 		deleteAccBtn.setBackground(Constants.MIDGREEN);
 		deleteAccBtn.setBounds(60, 696, 126, 21);
 		deleteAccBtn.setVisible(false);
+		deleteAccBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			    int confirmed = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your account?", "Delete Account", JOptionPane.YES_NO_OPTION);
+
+			    if (confirmed == JOptionPane.YES_OPTION) {
+			    	MongoDBConnector.deleteAccount(MongoDBConnector._id);
+			    	MongoDBConnector.deleteNutrients(MongoDBConnector._id);
+			        System.exit(0);
+			    }
+				
+			}
+		});
 		sidePnl.add(deleteAccBtn);
 		
 		btnSettings = new JButton("Settings");
@@ -286,17 +308,56 @@ public class SupplementFrame {
 		parentPnl.add(mainPnl, BorderLayout.CENTER);
 		mainPnl.setLayout(null);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(84, 227, 831, 316);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		mainPnl.add(scrollPane);
 		
-		supplementsTable = new JTable();
-		supplementsTable.setEnabled(false);
-		supplementsTable.setRowMargin(3);
-		supplementsTable.setRowHeight(25);
-		supplementsTable.setFont(Constants.PLAINTEXT);
-		scrollPane.setViewportView(supplementsTable);
+		String[][] tableData = MongoDBConnector.getSupplements(MongoDBConnector.getAim(MongoDBConnector._id));
+		String[] columnNames = {
+				"Supplement", "Description"
+		};
+		
+		supTable = new JTable(new MyTableModel()) {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			//get table cell tool tips
+			public String getToolTipText(MouseEvent e) {
+                String tip = null;
+                java.awt.Point p = e.getPoint();
+                int rowIndex = rowAtPoint(p);
+                int colIndex = columnAtPoint(p);
+                int realColumnIndex = convertColumnIndexToModel(colIndex);
+
+                if (realColumnIndex == 1) {
+                    tip = (String) getValueAt(rowIndex, colIndex);
+                }
+                
+                return tip;
+            }
+			
+		};
+		
+		supTable.setEnabled(false);
+		supTable.setRowMargin(3);
+		supTable.setRowHeight(25);
+		supTable.setFont(Constants.PLAINTEXT);
+		supTable.addMouseListener(this);
+		scrollPane.setViewportView(supTable);
+		
+		JLabel nameLabel = new JLabel("Name");
+		nameLabel.setFont(Constants.HEADING1);
+		nameLabel.setBounds(267, 194, 59, 26);
+		mainPnl.add(nameLabel);
+		
+		JLabel descriptionLabel = new JLabel("Description");
+		descriptionLabel.setFont(Constants.HEADING1);
+		descriptionLabel.setBounds(640, 190, 108, 26);
+		mainPnl.add(descriptionLabel);
 		
 		JPanel topPnl = new JPanel();
 		topPnl.setPreferredSize(new Dimension(10, 30));
@@ -371,8 +432,77 @@ public class SupplementFrame {
 		
 	}
 	
+	class MyTableModel extends AbstractTableModel {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		private String[] columnNames = {"Supplement",
+                                        "Description"};
+        
+        private String[][] tableData = MongoDBConnector.getSupplements(MongoDBConnector.getAim(MongoDBConnector._id));
+        
+		public int getRowCount() {
+			return tableData.length;
+		}
+		
+		public int getColumnCount() {
+			return columnNames.length;
+		}
+		
+		public Object getValueAt(int row, int col) {
+			return tableData[row][col];
+		}
+	}
+	
 	public static void displayFrame() {
 		frame.setVisible(true);
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		
+		String tip = supTable.getToolTipText(e);
+		
+        java.awt.Point p = e.getPoint();
+        int rowIndex = supTable.rowAtPoint(p);
+        int colIndex = supTable.columnAtPoint(p);
+        int realColumnIndex = supTable.convertColumnIndexToModel(colIndex);
+
+        if (realColumnIndex == 1) {
+        	JOptionPane.showMessageDialog(null, tip, "Description", JOptionPane.INFORMATION_MESSAGE);
+        }
+		
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

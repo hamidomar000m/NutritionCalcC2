@@ -271,7 +271,7 @@ public class SignUpFrame extends Thread {
 						FoodRecommendationFrame foodRecommendationFrame = new FoodRecommendationFrame();
 						SupplementsFrame supplementsFrame = new SupplementsFrame(inputs[0].toString());
 						SettingsFrame settingsFrame = new SettingsFrame(username);
-						MicronutrientsFrame microNutrientsFrame = new MicronutrientsFrame(inputs[0].toString());
+						MicronutrientsFrame microNutrientsFrame = new MicronutrientsFrame();
 
 						isAlive = false;
 

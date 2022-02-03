@@ -705,7 +705,7 @@ public class SettingFrame {
 				reloadedMainFrame.frame.setVisible(true);
 				
 				MicronutrientsFrame.frame.dispose();
-				MicronutrientsFrame reloadedMicronutrientsFrame = new MicronutrientsFrame(userName);
+				MicronutrientsFrame reloadedMicronutrientsFrame = new MicronutrientsFrame();
 				
 			}
 			

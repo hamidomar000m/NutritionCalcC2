@@ -10,14 +10,19 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import backend.MongoDBConnector;
+
 import javax.swing.JTable;
 import java.awt.Rectangle;
 import javax.swing.JScrollPane;
@@ -29,6 +34,11 @@ public class FoodsFrame {
 	public JButton btnSettings;
 	public JButton bodydataBtn;
 	public JButton deleteAccBtn;
+	
+	private ArrayList<String> dataList;
+	private String[] carbs;
+	private String[] proteins;
+	private String[] fats;
 
 	public FoodsFrame() {
 		initialize();
@@ -133,6 +143,21 @@ public class FoodsFrame {
 		deleteAccBtn.setBackground(Constants.MIDGREEN);
 		deleteAccBtn.setBounds(60, 696, 126, 21);
 		deleteAccBtn.setVisible(false);
+		deleteAccBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			    int confirmed = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your account?", "Delete Account", JOptionPane.YES_NO_OPTION);
+
+			    if (confirmed == JOptionPane.YES_OPTION) {
+			    	MongoDBConnector.deleteAccount(MongoDBConnector._id);
+			    	MongoDBConnector.deleteNutrients(MongoDBConnector._id);
+			        System.exit(0);
+			    }
+				
+			}
+		});
 		sidePnl.add(deleteAccBtn);
 		
 		btnSettings = new JButton("Settings");
@@ -282,16 +307,65 @@ public class FoodsFrame {
 		parentPnl.add(mainPnl, BorderLayout.CENTER);
 		mainPnl.setLayout(null);
 		
+		dataList = MongoDBConnector.getFoodRecommendation("carbohydrates");
+		String[] carbs = new String[dataList.size()];
+		for(int i = 0; i<dataList.size(); i++) {
+			carbs[i] = dataList.get(i);
+		}
+		
+		dataList = MongoDBConnector.getFoodRecommendation("proteins");
+		String[] proteins = new String[dataList.size()];
+		for(int i = 0; i<dataList.size(); i++) {
+			proteins[i] = dataList.get(i);
+		}
+		
+		dataList = MongoDBConnector.getFoodRecommendation("fats");
+		String[] fats = new String[dataList.size()];
+		for(int i = 0; i<dataList.size(); i++) {
+			fats[i] = dataList.get(i);
+		}
+		
+		String[][] tableData = new String[24][3];
+		
+		for(int i = 0; i<carbs.length; i++) {
+			tableData[i][0] = carbs[i];
+		}
+		for(int i = 0; i<proteins.length; i++) {
+			tableData[i][1] = proteins[i];
+		}
+		for(int i = 0; i<fats.length; i++) {
+			tableData[i][2] = fats[i];
+		}
+		
+		String[] columnNames = {
+				"", "", ""
+		};
+		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(148, 155, 704, 459);
+		scrollPane.setBounds(115, 131, 769, 507);
 		mainPnl.add(scrollPane);
 		
-		JTable foodTable = new JTable();
+		JTable foodTable = new JTable(tableData, columnNames);
 		foodTable.setEnabled(false);
 		foodTable.setRowMargin(3);
 		foodTable.setRowHeight(25);
 		foodTable.setFont(Constants.PLAINTEXT);
 		scrollPane.setViewportView(foodTable);
+		
+		JLabel carbsLabel = new JLabel("Carbohydrates");
+		carbsLabel.setFont(Constants.HEADING1);
+		carbsLabel.setBounds(167, 94, 145, 26);
+		mainPnl.add(carbsLabel);
+		
+		JLabel proteinsLabel = new JLabel("Proteins");
+		proteinsLabel.setFont(Constants.HEADING1);
+		proteinsLabel.setBounds(459, 92, 82, 30);
+		mainPnl.add(proteinsLabel);
+		
+		JLabel fatsLabel = new JLabel("Fats");
+		fatsLabel.setFont(Constants.HEADING1);
+		fatsLabel.setBounds(742, 92, 50, 30);
+		mainPnl.add(fatsLabel);
 		
 		JPanel topPnl = new JPanel();
 		topPnl.setPreferredSize(new Dimension(10, 30));

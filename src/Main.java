@@ -1,14 +1,4 @@
-import gui.BodyDataFrame;
-import gui.FoodsFrame;
-import gui.LogInFrm;
 import gui.LoginFrame;
-import gui.PasswordFrame;
-import gui.RegisterFrame;
-import gui.SettingFrame;
-import gui.StartFrame;
-import gui.SupplementFrame;
-import gui.TrackingFrame;
-import gui.WorkoutFrame;
 
 public class Main {
 

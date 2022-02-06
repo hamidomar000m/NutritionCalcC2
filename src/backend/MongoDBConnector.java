@@ -1,29 +1,19 @@
 package backend;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
 
 import gui.BodyDataFrame;
-import gui.FoodRecommendationFrame;
 import gui.FoodsFrame;
-import gui.LogInFrm;
 import gui.LoginFrame;
-import gui.MainFrame;
 import gui.MicronutrientsFrame;
 import gui.PasswordFrame;
 import gui.RegisterFrame;
-import gui.SettingFrame;
-import gui.SettingsFrame;
-import gui.SignUpFrame;
 import gui.StartFrame;
 import gui.SupplementFrame;
-import gui.SupplementsFrame;
 import gui.TrackingFrame;
 import gui.WorkoutFrame;
 
@@ -58,7 +48,7 @@ public class MongoDBConnector {
 	}
 
 	public MongoDBConnector(String _id, String userPassword, String userGender, String userAge, String userHeight,
-			String userWeight, String userGoal, String userActivity) { // , String userGoal, String userActivity)
+			String userWeight, String userGoal, String userActivity) {
 		super();
 		this._id = _id;
 		this.userPassword = userPassword;

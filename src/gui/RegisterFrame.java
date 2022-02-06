@@ -150,7 +150,7 @@ public class RegisterFrame extends Thread {
 		
 		JLabel lblLogin = new JLabel("REGISTRATION");
 		lblLogin.setFont(new Font("Century Gothic", Font.BOLD, 20));
-		lblLogin.setBounds(250, 262, 189, 36);
+		lblLogin.setBounds(250, 262, 213, 36);
 		lblLogin.setFont(Constants.HEADING);
 		mainPnl.add(lblLogin);
 		
@@ -185,17 +185,17 @@ public class RegisterFrame extends Thread {
 		
 		JLabel lblGender = new JLabel("GENDER");
 		lblGender.setFont(Constants.LOGINTEXT);
-		lblGender.setBounds(250, 420, 72, 23);
+		lblGender.setBounds(250, 420, 89, 23);
 		mainPnl.add(lblGender);
 		
 		JLabel lblAge = new JLabel("AGE");
 		lblAge.setFont(Constants.LOGINTEXT);
-		lblAge.setBounds(250, 465, 38, 23);
+		lblAge.setBounds(250, 465, 52, 23);
 		mainPnl.add(lblAge);
 		
 		JLabel lblHeight = new JLabel("HEIGHT (cm)");
 		lblHeight.setFont(Constants.LOGINTEXT);
-		lblHeight.setBounds(250, 510, 107, 23);
+		lblHeight.setBounds(250, 510, 128, 23);
 		mainPnl.add(lblHeight);
 		
 		JLabel lblWeightkg = new JLabel("WEIGHT (kg)");
@@ -210,7 +210,7 @@ public class RegisterFrame extends Thread {
 		
 		JLabel lblGoal_2 = new JLabel("GOAL");
 		lblGoal_2.setFont(Constants.LOGINTEXT);
-		lblGoal_2.setBounds(250, 645, 52, 23);
+		lblGoal_2.setBounds(250, 645, 63, 23);
 		mainPnl.add(lblGoal_2);
 		
 		lblBMI = new JLabel("BMI: ");

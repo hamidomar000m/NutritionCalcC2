@@ -24,7 +24,6 @@ import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 
 import backend.MongoDBConnector;
-import gui.SupplementsFrame.MyTableModel;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;

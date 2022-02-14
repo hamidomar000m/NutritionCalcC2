@@ -57,7 +57,7 @@ public class PasswordFrame {
 		parentPnl.add(sidePnl, BorderLayout.WEST);
 		
 		JLabel headingLbl = new JLabel("NutritionCalc");
-		headingLbl.setBounds(35, 50, 176, 36);
+		headingLbl.setBounds(35, 50, 194, 36);
 		headingLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
 		headingLbl.setForeground(Constants.LIGHTGRAY);
 		headingLbl.setFont(Constants.HEADING);
@@ -89,13 +89,14 @@ public class PasswordFrame {
 		sidePnl.add(passwordBtn);
 		
 		JButton bodydataBtn = new JButton("Change body data");
+		bodydataBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		bodydataBtn.setForeground(Constants.LIGHTGRAY);
 		bodydataBtn.setFont(Constants.BUTTONTEXT2);
 		bodydataBtn.setFocusPainted(false);
 		bodydataBtn.setBorderPainted(false);
 		bodydataBtn.setBorder(null);
 		bodydataBtn.setBackground(Constants.MIDGREEN);
-		bodydataBtn.setBounds(60, 664, 153, 21);
+		bodydataBtn.setBounds(60, 664, 169, 21);
 		bodydataBtn.addActionListener(new ActionListener() {
 			
 			@Override
@@ -109,13 +110,14 @@ public class PasswordFrame {
 		sidePnl.add(bodydataBtn);
 		
 		JButton deleteAccBtn = new JButton("Delete account");
+		deleteAccBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		deleteAccBtn.setForeground(Constants.LIGHTGRAY);
 		deleteAccBtn.setFont(Constants.BUTTONTEXT2);
 		deleteAccBtn.setFocusPainted(false);
 		deleteAccBtn.setBorderPainted(false);
 		deleteAccBtn.setBorder(null);
 		deleteAccBtn.setBackground(Constants.MIDGREEN);
-		deleteAccBtn.setBounds(60, 696, 126, 21);
+		deleteAccBtn.setBounds(60, 696, 138, 21);
 		sidePnl.add(deleteAccBtn);
 		
 		JButton btnSettings = new JButton("Settings");
@@ -138,7 +140,7 @@ public class PasswordFrame {
 		btnHome.setBorderPainted(false);
 		btnHome.setBorder(null);
 		btnHome.setBackground(Constants.MIDGREEN);
-		btnHome.setBounds(35, 175, 53, 23);
+		btnHome.setBounds(35, 175, 61, 23);
 		btnHome.addActionListener(new ActionListener() {
 
 			@Override
@@ -160,7 +162,7 @@ public class PasswordFrame {
 		foodRecBtn.setBackground(Constants.MIDGREEN);
 		foodRecBtn.setForeground(Constants.LIGHTGRAY);
 		foodRecBtn.setFont(Constants.BUTTONTEXT);
-		foodRecBtn.setBounds(35, 215, 45, 23);
+		foodRecBtn.setBounds(35, 215, 61, 23);
 		foodRecBtn.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -181,7 +183,7 @@ public class PasswordFrame {
 		supBtn.setBorderPainted(false);
 		supBtn.setBorder(null);
 		supBtn.setBackground(Constants.MIDGREEN);
-		supBtn.setBounds(35, 255, 113, 23);
+		supBtn.setBounds(35, 255, 126, 23);
 		supBtn.addActionListener(new ActionListener() {
 
 			@Override
@@ -196,13 +198,14 @@ public class PasswordFrame {
 		sidePnl.add(supBtn);
 		
 		JButton btnWorkout = new JButton("Workout");
+		btnWorkout.setHorizontalAlignment(SwingConstants.LEFT);
 		btnWorkout.setForeground(Constants.LIGHTGRAY);
 		btnWorkout.setFont(Constants.BUTTONTEXT);
 		btnWorkout.setFocusPainted(false);
 		btnWorkout.setBorderPainted(false);
 		btnWorkout.setBorder(null);
 		btnWorkout.setBackground(Constants.MIDGREEN);
-		btnWorkout.setBounds(35, 295, 79, 26);
+		btnWorkout.setBounds(35, 295, 84, 26);
 		btnWorkout.addActionListener(new ActionListener() {
 			
 			@Override
@@ -218,13 +221,14 @@ public class PasswordFrame {
 		sidePnl.add(btnWorkout);
 		
 		JButton btnTracking = new JButton("Tracking");
+		btnTracking.setHorizontalAlignment(SwingConstants.LEFT);
 		btnTracking.setForeground(Constants.LIGHTGRAY);
 		btnTracking.setFont(Constants.BUTTONTEXT);
 		btnTracking.setFocusPainted(false);
 		btnTracking.setBorderPainted(false);
 		btnTracking.setBorder(null);
 		btnTracking.setBackground(Constants.MIDGREEN);
-		btnTracking.setBounds(35, 335, 72, 23);
+		btnTracking.setBounds(35, 335, 84, 23);
 		btnTracking.addActionListener(new ActionListener() {
 			
 			@Override

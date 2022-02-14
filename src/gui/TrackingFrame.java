@@ -53,7 +53,7 @@ public class TrackingFrame {
 		parentPnl.add(sidePnl, BorderLayout.WEST);
 		
 		JLabel headingLbl = new JLabel("NutritionCalc");
-		headingLbl.setBounds(35, 50, 176, 36);
+		headingLbl.setBounds(35, 50, 189, 36);
 		headingLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
 		headingLbl.setForeground(Constants.LIGHTGRAY);
 		headingLbl.setFont(Constants.HEADING);
@@ -73,13 +73,14 @@ public class TrackingFrame {
 		sidePnl.add(versionLbl);
 		
 		passwordBtn = new JButton("Change password");
+		passwordBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		passwordBtn.setForeground(Constants.LIGHTGRAY);
 		passwordBtn.setFont(Constants.BUTTONTEXT2);
 		passwordBtn.setFocusPainted(false);
 		passwordBtn.setBorderPainted(false);
 		passwordBtn.setBorder(null);
 		passwordBtn.setBackground(Constants.MIDGREEN);
-		passwordBtn.setBounds(60, 632, 144, 21);
+		passwordBtn.setBounds(60, 632, 153, 21);
 		passwordBtn.setVisible(false);
 		passwordBtn.addActionListener(new ActionListener() {
 			
@@ -99,13 +100,14 @@ public class TrackingFrame {
 		sidePnl.add(passwordBtn);
 		
 		bodydataBtn = new JButton("Change body data");
+		bodydataBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		bodydataBtn.setForeground(Constants.LIGHTGRAY);
 		bodydataBtn.setFont(Constants.BUTTONTEXT2);
 		bodydataBtn.setFocusPainted(false);
 		bodydataBtn.setBorderPainted(false);
 		bodydataBtn.setBorder(null);
 		bodydataBtn.setBackground(Constants.MIDGREEN);
-		bodydataBtn.setBounds(60, 664, 153, 21);
+		bodydataBtn.setBounds(60, 664, 164, 21);
 		bodydataBtn.setVisible(false);
 		bodydataBtn.addActionListener(new ActionListener() {
 			
@@ -126,13 +128,14 @@ public class TrackingFrame {
 		sidePnl.add(bodydataBtn);
 		
 		deleteAccBtn = new JButton("Delete account");
+		deleteAccBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		deleteAccBtn.setForeground(Constants.LIGHTGRAY);
 		deleteAccBtn.setFont(Constants.BUTTONTEXT2);
 		deleteAccBtn.setFocusPainted(false);
 		deleteAccBtn.setBorderPainted(false);
 		deleteAccBtn.setBorder(null);
 		deleteAccBtn.setBackground(Constants.MIDGREEN);
-		deleteAccBtn.setBounds(60, 696, 126, 21);
+		deleteAccBtn.setBounds(60, 696, 132, 21);
 		deleteAccBtn.setVisible(false);
 		deleteAccBtn.addActionListener(new ActionListener() {
 			
@@ -184,7 +187,7 @@ public class TrackingFrame {
 		btnHome.setBorderPainted(false);
 		btnHome.setBorder(null);
 		btnHome.setBackground(Constants.MIDGREEN);
-		btnHome.setBounds(35, 175, 53, 23);
+		btnHome.setBounds(35, 175, 59, 23);
 		btnHome.addActionListener(new ActionListener() {
 
 			@Override
@@ -211,7 +214,7 @@ public class TrackingFrame {
 		foodRecBtn.setBackground(Constants.MIDGREEN);
 		foodRecBtn.setForeground(Constants.LIGHTGRAY);
 		foodRecBtn.setFont(Constants.BUTTONTEXT);
-		foodRecBtn.setBounds(35, 215, 45, 23);
+		foodRecBtn.setBounds(35, 215, 59, 23);
 		foodRecBtn.addActionListener(new ActionListener() {
 
 			@Override
@@ -238,7 +241,7 @@ public class TrackingFrame {
 		supBtn.setBorderPainted(false);
 		supBtn.setBorder(null);
 		supBtn.setBackground(Constants.MIDGREEN);
-		supBtn.setBounds(35, 255, 113, 23);
+		supBtn.setBounds(35, 255, 120, 23);
 		supBtn.addActionListener(new ActionListener() {
 
 			@Override
@@ -258,13 +261,14 @@ public class TrackingFrame {
 		sidePnl.add(supBtn);
 		
 		JButton btnWorkout = new JButton("Workout");
+		btnWorkout.setHorizontalAlignment(SwingConstants.LEFT);
 		btnWorkout.setForeground(Constants.LIGHTGRAY);
 		btnWorkout.setFont(Constants.BUTTONTEXT);
 		btnWorkout.setFocusPainted(false);
 		btnWorkout.setBorderPainted(false);
 		btnWorkout.setBorder(null);
 		btnWorkout.setBackground(Constants.MIDGREEN);
-		btnWorkout.setBounds(35, 295, 73, 23);
+		btnWorkout.setBounds(35, 295, 84, 23);
 		btnWorkout.addActionListener(new ActionListener() {
 			
 			@Override
@@ -284,13 +288,14 @@ public class TrackingFrame {
 		sidePnl.add(btnWorkout);
 		
 		JButton btnTracking = new JButton("Tracking");
+		btnTracking.setHorizontalAlignment(SwingConstants.LEFT);
 		btnTracking.setForeground(Constants.LIGHTGRAY);
 		btnTracking.setFont(Constants.BUTTONTEXTBOLD);
 		btnTracking.setFocusPainted(false);
 		btnTracking.setBorderPainted(false);
 		btnTracking.setBorder(null);
 		btnTracking.setBackground(Constants.MIDGREEN);
-		btnTracking.setBounds(35, 335, 83, 26);
+		btnTracking.setBounds(35, 335, 95, 26);
 		btnTracking.setEnabled(false);
 		sidePnl.add(btnTracking);
 		

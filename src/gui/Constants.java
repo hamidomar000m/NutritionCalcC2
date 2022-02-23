@@ -28,7 +28,16 @@ public class Constants {
 	public static Font BUTTONTEXT2 = new Font("Century Gothic", Font.PLAIN, 16);
 	public static Font BUTTONTEXTBOLD = new Font("Century Gothic", Font.BOLD, 20);
 	public static Font BUTTONTEXTBOLD2 = new Font("Century Gothic", Font.BOLD, 18);
+	public static Font BUTTONMUSCLETEXT = new Font("Century Gothic", Font.BOLD, 24);
 	public static Font HEADING = new Font("Century Gothic", Font.BOLD, 28);
 	public static Font HEADING1 = new Font("Century Gothic", Font.BOLD, 20);
+	
+	/*
+	 * IMAGES
+	 */
+	public static int imageWidth = 150;
+	public static int imageHeight = 300;
+	public static int imageExerciseWidth = 300;
+	public static int imageExerciseHeight = 175;
 	
 }

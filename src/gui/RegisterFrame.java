@@ -33,6 +33,7 @@ import backend.NutritionCalculator;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import java.awt.SystemColor;
+import javax.swing.SwingConstants;
 
 public class RegisterFrame extends Thread {
 
@@ -81,13 +82,14 @@ public class RegisterFrame extends Thread {
 		parentPnl.add(sidePnl, BorderLayout.WEST);
 		
 		JButton btnLogin = new JButton("Login");
+		btnLogin.setHorizontalAlignment(SwingConstants.LEFT);
 		btnLogin.setForeground(Constants.LIGHTGRAY);
 		btnLogin.setFont(Constants.BUTTONTEXTBOLD);
 		btnLogin.setFocusPainted(false);
 		btnLogin.setBorderPainted(false);
 		btnLogin.setBorder(null);
 		btnLogin.setBackground(Constants.MIDGREEN);
-		btnLogin.setBounds(35, 175, 51, 26);
+		btnLogin.setBounds(35, 175, 76, 26);
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -99,18 +101,19 @@ public class RegisterFrame extends Thread {
 		sidePnl.add(btnLogin);
 		
 		JButton btnRegister = new JButton("Register");
+		btnRegister.setHorizontalAlignment(SwingConstants.LEFT);
 		btnRegister.setForeground(Constants.LIGHTGRAY);
 		btnRegister.setFont(Constants.BUTTONTEXTBOLD);
 		btnRegister.setFocusPainted(false);
 		btnRegister.setBorderPainted(false);
 		btnRegister.setBorder(null);
 		btnRegister.setBackground(Constants.MIDGREEN);
-		btnRegister.setBounds(35, 215, 76, 26);
+		btnRegister.setBounds(35, 215, 87, 26);
 		btnRegister.setEnabled(false);
 		sidePnl.add(btnRegister);
 		
 		JLabel headingLbl = new JLabel("NutritionCalc");
-		headingLbl.setBounds(35, 50, 176, 36);
+		headingLbl.setBounds(35, 50, 205, 36);
 		headingLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
 		headingLbl.setForeground(Constants.LIGHTGRAY);
 		headingLbl.setFont(Constants.HEADING);
@@ -211,6 +214,7 @@ public class RegisterFrame extends Thread {
 		JLabel lblGoal_2 = new JLabel("GOAL");
 		lblGoal_2.setFont(Constants.LOGINTEXT);
 		lblGoal_2.setBounds(250, 645, 63, 23);
+		lblGoal_2.setBounds(250, 645, 69, 23);
 		mainPnl.add(lblGoal_2);
 		
 		lblBMI = new JLabel("BMI: ");

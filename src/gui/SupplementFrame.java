@@ -62,7 +62,7 @@ public class SupplementFrame implements MouseListener {
 		parentPnl.add(sidePnl, BorderLayout.WEST);
 		
 		JLabel headingLbl = new JLabel("NutritionCalc");
-		headingLbl.setBounds(35, 50, 176, 36);
+		headingLbl.setBounds(35, 50, 192, 36);
 		headingLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
 		headingLbl.setForeground(Constants.LIGHTGRAY);
 		headingLbl.setFont(Constants.HEADING);
@@ -82,13 +82,14 @@ public class SupplementFrame implements MouseListener {
 		sidePnl.add(versionLbl);
 		
 		passwordBtn = new JButton("Change password");
+		passwordBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		passwordBtn.setForeground(Constants.LIGHTGRAY);
 		passwordBtn.setFont(Constants.BUTTONTEXT2);
 		passwordBtn.setFocusPainted(false);
 		passwordBtn.setBorderPainted(false);
 		passwordBtn.setBorder(null);
 		passwordBtn.setBackground(Constants.MIDGREEN);
-		passwordBtn.setBounds(60, 632, 144, 21);
+		passwordBtn.setBounds(60, 632, 153, 21);
 		passwordBtn.setVisible(false);
 		passwordBtn.addActionListener(new ActionListener() {
 			
@@ -108,13 +109,14 @@ public class SupplementFrame implements MouseListener {
 		sidePnl.add(passwordBtn);
 		
 		bodydataBtn = new JButton("Change body data");
+		bodydataBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		bodydataBtn.setForeground(Constants.LIGHTGRAY);
 		bodydataBtn.setFont(Constants.BUTTONTEXT2);
 		bodydataBtn.setFocusPainted(false);
 		bodydataBtn.setBorderPainted(false);
 		bodydataBtn.setBorder(null);
 		bodydataBtn.setBackground(Constants.MIDGREEN);
-		bodydataBtn.setBounds(60, 664, 153, 21);
+		bodydataBtn.setBounds(60, 664, 167, 21);
 		bodydataBtn.setVisible(false);
 		bodydataBtn.addActionListener(new ActionListener() {
 			
@@ -135,13 +137,14 @@ public class SupplementFrame implements MouseListener {
 		sidePnl.add(bodydataBtn);
 		
 		deleteAccBtn = new JButton("Delete account");
+		deleteAccBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		deleteAccBtn.setForeground(Constants.LIGHTGRAY);
 		deleteAccBtn.setFont(Constants.BUTTONTEXT2);
 		deleteAccBtn.setFocusPainted(false);
 		deleteAccBtn.setBorderPainted(false);
 		deleteAccBtn.setBorder(null);
 		deleteAccBtn.setBackground(Constants.MIDGREEN);
-		deleteAccBtn.setBounds(60, 696, 126, 21);
+		deleteAccBtn.setBounds(60, 696, 138, 21);
 		deleteAccBtn.setVisible(false);
 		deleteAccBtn.addActionListener(new ActionListener() {
 			
@@ -193,7 +196,7 @@ public class SupplementFrame implements MouseListener {
 		btnHome.setBorderPainted(false);
 		btnHome.setBorder(null);
 		btnHome.setBackground(Constants.MIDGREEN);
-		btnHome.setBounds(35, 175, 53, 23);
+		btnHome.setBounds(35, 175, 73, 23);
 		btnHome.addActionListener(new ActionListener() {
 
 			@Override
@@ -220,7 +223,7 @@ public class SupplementFrame implements MouseListener {
 		foodRecBtn.setBackground(Constants.MIDGREEN);
 		foodRecBtn.setForeground(Constants.LIGHTGRAY);
 		foodRecBtn.setFont(Constants.BUTTONTEXT);
-		foodRecBtn.setBounds(35, 215, 45, 23);
+		foodRecBtn.setBounds(35, 215, 55, 23);
 		foodRecBtn.addActionListener(new ActionListener() {
 
 			@Override
@@ -247,18 +250,19 @@ public class SupplementFrame implements MouseListener {
 		supBtn.setBorderPainted(false);
 		supBtn.setBorder(null);
 		supBtn.setBackground(Constants.MIDGREEN);
-		supBtn.setBounds(35, 255, 125, 26);
+		supBtn.setBounds(35, 255, 138, 26);
 		supBtn.setEnabled(false);
 		sidePnl.add(supBtn);
 		
 		JButton btnWorkout = new JButton("Workout");
+		btnWorkout.setHorizontalAlignment(SwingConstants.LEFT);
 		btnWorkout.setForeground(Constants.LIGHTGRAY);
 		btnWorkout.setFont(Constants.BUTTONTEXT);
 		btnWorkout.setFocusPainted(false);
 		btnWorkout.setBorderPainted(false);
 		btnWorkout.setBorder(null);
 		btnWorkout.setBackground(Constants.MIDGREEN);
-		btnWorkout.setBounds(35, 295, 73, 23);
+		btnWorkout.setBounds(35, 295, 84, 23);
 		btnWorkout.addActionListener(new ActionListener() {
 			
 			@Override
@@ -278,13 +282,14 @@ public class SupplementFrame implements MouseListener {
 		sidePnl.add(btnWorkout);
 		
 		JButton btnTracking = new JButton("Tracking");
+		btnTracking.setHorizontalAlignment(SwingConstants.LEFT);
 		btnTracking.setForeground(Constants.LIGHTGRAY);
 		btnTracking.setFont(Constants.BUTTONTEXT);
 		btnTracking.setFocusPainted(false);
 		btnTracking.setBorderPainted(false);
 		btnTracking.setBorder(null);
 		btnTracking.setBackground(Constants.MIDGREEN);
-		btnTracking.setBounds(35, 335, 72, 23);
+		btnTracking.setBounds(35, 335, 84, 23);
 		btnTracking.addActionListener(new ActionListener() {
 			
 			@Override
@@ -350,12 +355,12 @@ public class SupplementFrame implements MouseListener {
 		
 		JLabel nameLabel = new JLabel("Name");
 		nameLabel.setFont(Constants.HEADING1);
-		nameLabel.setBounds(267, 194, 59, 26);
+		nameLabel.setBounds(267, 194, 67, 26);
 		mainPnl.add(nameLabel);
 		
 		JLabel descriptionLabel = new JLabel("Description");
 		descriptionLabel.setFont(Constants.HEADING1);
-		descriptionLabel.setBounds(640, 190, 108, 26);
+		descriptionLabel.setBounds(640, 190, 125, 26);
 		mainPnl.add(descriptionLabel);
 		
 		JPanel topPnl = new JPanel();

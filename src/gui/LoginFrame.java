@@ -60,18 +60,19 @@ public class LoginFrame {
 		parentPnl.add(sidePnl, BorderLayout.WEST);
 		
 		JButton btnLogin = new JButton("Login");
+		btnLogin.setHorizontalAlignment(SwingConstants.LEFT);
 		btnLogin.setForeground(Constants.LIGHTGRAY);
 		btnLogin.setFont(Constants.BUTTONTEXTBOLD);
 		btnLogin.setFocusPainted(false);
 		btnLogin.setBorderPainted(false);
 		btnLogin.setBorder(null);
 		btnLogin.setBackground(Constants.MIDGREEN);
-		btnLogin.setBounds(35, 175, 51, 26);
+		btnLogin.setBounds(35, 175, 83, 26);
 		btnLogin.setEnabled(false);
 		sidePnl.add(btnLogin);
 		
 		JLabel headingLbl = new JLabel("NutritionCalc");
-		headingLbl.setBounds(35, 50, 176, 36);
+		headingLbl.setBounds(35, 50, 195, 36);
 		headingLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
 		headingLbl.setForeground(Constants.LIGHTGRAY);
 		headingLbl.setFont(Constants.HEADING);
@@ -91,13 +92,14 @@ public class LoginFrame {
 		sidePnl.add(versionLbl);
 		
 		JButton btnRegister = new JButton("Register");
+		btnRegister.setHorizontalAlignment(SwingConstants.LEFT);
 		btnRegister.setForeground(Constants.LIGHTGRAY);
 		btnRegister.setFont(Constants.BUTTONTEXTBOLD);
 		btnRegister.setFocusPainted(false);
 		btnRegister.setBorderPainted(false);
 		btnRegister.setBorder(null);
 		btnRegister.setBackground(Constants.MIDGREEN);
-		btnRegister.setBounds(35, 215, 76, 26);
+		btnRegister.setBounds(35, 215, 88, 26);
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

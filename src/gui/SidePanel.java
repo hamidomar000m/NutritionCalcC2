@@ -15,12 +15,12 @@ import backend.MongoDBConnector;
 
 public class SidePanel extends JPanel {
 
-	public JButton passwordBtn;
-	public JButton btnSettings;
-	public JButton bodydataBtn;
-	public JButton deleteAccBtn;
+	public static JButton passwordBtn;
+	public static JButton btnSettings;
+	public static JButton bodydataBtn;
+	public static JButton deleteAccBtn;
 	
-	public SidePanel(String version) {
+	public static JPanel getSidePanel(String version) { //version can be either "main" or "login"
 		JPanel sidePnl = new JPanel();
 		sidePnl.setSize(new Dimension(250, 770));
 		sidePnl.setBackground(Constants.MIDGREEN);
@@ -71,7 +71,7 @@ public class SidePanel extends JPanel {
 
 				public void actionPerformed(ActionEvent e) {
 
-					MasterFrame.frame.setVisible(false);
+					//MasterFrame.frame.setVisible(false);
 					FoodsFrame.displayFrame();
 					btnSettings.setEnabled(true);
 					btnSettings.setFont(Constants.BUTTONTEXT);
@@ -98,7 +98,7 @@ public class SidePanel extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 
-					MasterFrame.frame.setVisible(false);
+					//MasterFrame.frame.setVisible(false);
 					SupplementFrame.displayFrame();
 					btnSettings.setEnabled(true);
 					btnSettings.setFont(Constants.BUTTONTEXT);
@@ -124,7 +124,7 @@ public class SidePanel extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 
-					MasterFrame.frame.setVisible(false);
+					//MasterFrame.frame.setVisible(false);
 					WorkoutFrame.displayFrame();
 					btnSettings.setEnabled(true);
 					btnSettings.setFont(Constants.BUTTONTEXT);
@@ -150,7 +150,7 @@ public class SidePanel extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 
-					MasterFrame.frame.setVisible(false);
+					//MasterFrame.frame.setVisible(false);
 					TrackingFrame.displayFrame();
 					btnSettings.setEnabled(true);
 					btnSettings.setFont(Constants.BUTTONTEXT);
@@ -203,7 +203,7 @@ public class SidePanel extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 
-					MasterFrame.frame.setVisible(false);
+					//MasterFrame.frame.setVisible(false);
 					PasswordFrame.displayFrame();
 					btnSettings.setEnabled(true);
 					btnSettings.setFont(Constants.BUTTONTEXT);
@@ -231,7 +231,7 @@ public class SidePanel extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 
-					MasterFrame.frame.setVisible(false);
+					//MasterFrame.frame.setVisible(false);
 					BodyDataFrame.displayFrame();
 					btnSettings.setEnabled(true);
 					btnSettings.setFont(Constants.BUTTONTEXT);
@@ -284,7 +284,7 @@ public class SidePanel extends JPanel {
 			btnLogin.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
-					MasterFrame.frame.setVisible(false);
+					//MasterFrame.frame.setVisible(false);
 					LoginFrame.displayFrame();
 					
 				}
@@ -305,6 +305,8 @@ public class SidePanel extends JPanel {
 		} else {
 			//irgendeine Fehlermeldung
 		}
+		
+		return sidePnl;
 	}
 
 }

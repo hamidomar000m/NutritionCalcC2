@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -21,7 +24,22 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
+
 import backend.MongoDBConnector;
+import javax.swing.JSplitPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JCalendar;
+import javax.swing.JSeparator;
+import java.awt.Color;
+import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.JProgressBar;
 
 public class TrackingFrame {
 
@@ -30,6 +48,9 @@ public class TrackingFrame {
 	public JButton btnSettings;
 	public JButton bodydataBtn;
 	public JButton deleteAccBtn;
+	private JTextField textField;
+	
+
 	
 	public TrackingFrame() {
 		initialize();
@@ -303,6 +324,122 @@ public class TrackingFrame {
 		parentPnl.add(mainPnl, BorderLayout.CENTER);
 		mainPnl.setLayout(null);
 		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setBounds(240, 172, 215, 35);
+		mainPnl.add(dateChooser);
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.setBounds(351, 589, 104, 23);
+		btnNewButton.setFont(Constants.BUTTONTEXT);
+		btnNewButton.setFocusPainted(false);
+		btnNewButton.setBorderPainted(false);
+		btnNewButton.setBorder(null);
+		btnNewButton.setBackground(Constants.LIGHTGRAY);
+		btnNewButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+				
+				String myFormattedDateString = dateFormat.format(dateChooser);
+				lblNewLabel.setText(myFormattedDateString);
+				System.out.println("Hi button");
+
+			}
+
+		});
+		mainPnl.add(btnNewButton);
+		
+		JSeparator trackSeparator = new JSeparator();
+		trackSeparator.setOrientation(SwingConstants.VERTICAL);
+		trackSeparator.setBounds(495, 11, 10, 748);
+		mainPnl.add(trackSeparator);
+		
+		JLabel trackEditHeading = new JLabel("Enter or edit your nutrition data");
+		trackEditHeading.setFont(Constants.HEADING);
+		trackEditHeading.setBounds(77, 40, 331, 55);
+		mainPnl.add(trackEditHeading);
+		
+		JLabel trackEditDate = new JLabel("Select date:");
+		trackEditDate.setBounds(30, 172, 78, 35);
+		trackEditHeading.setFont(Constants.LOGINTEXT);
+		mainPnl.add(trackEditDate);
+		
+		JLabel lblSelectFood = new JLabel("Select food:");
+		lblSelectFood.setBounds(30, 243, 78, 35);
+		mainPnl.add(lblSelectFood);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(240, 243, 215, 35);
+		mainPnl.add(comboBox);
+		
+		JLabel lblGiveTheCalorie = new JLabel("give the calorie: ");
+		lblGiveTheCalorie.setBounds(30, 402, 113, 35);
+		mainPnl.add(lblGiveTheCalorie);
+		
+		textField = new JTextField();
+		textField.setBounds(240, 402, 215, 35);
+		mainPnl.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("if not found in the list, give manuel");
+		lblNewLabel_1.setBounds(100, 318, 269, 44);
+		mainPnl.add(lblNewLabel_1);
+		
+		JLabel lblSelectTheMacronutrition = new JLabel("select the macronutrition:");
+		lblSelectTheMacronutrition.setBounds(30, 472, 142, 35);
+		mainPnl.add(lblSelectTheMacronutrition);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(240, 472, 215, 35);
+		mainPnl.add(comboBox_1);
+		
+		JLabel trackEditDate_1 = new JLabel("Select date:");
+		trackEditDate_1.setBounds(527, 172, 78, 35);
+		mainPnl.add(trackEditDate_1);
+		
+		JDateChooser dateChooser_1 = new JDateChooser();
+		dateChooser_1.setBounds(737, 172, 215, 35);
+		mainPnl.add(dateChooser_1);
+		
+		JLabel lblSeeYourProgress = new JLabel("See your progress");
+		lblSeeYourProgress.setFont(new Font("Century Gothic", Font.BOLD, 28));
+		lblSeeYourProgress.setBounds(623, 37, 248, 55);
+		mainPnl.add(lblSeeYourProgress);
+		
+		URL logoIconPath = this.getClass().getResource("/resources/logo.png");
+
+
+		// Creating the diagram
+		String[] macroNutrientsAndCalories = MongoDBConnector.getMacronutrientsAndCalories(MongoDBConnector._id);
+		DefaultPieDataset<String> pieDataSet = new DefaultPieDataset<String>();
+		pieDataSet.setValue("proteins", Double.parseDouble(macroNutrientsAndCalories[1]));
+		pieDataSet.setValue("carbohydrates", Double.parseDouble(macroNutrientsAndCalories[3]));
+		pieDataSet.setValue("fats", Double.parseDouble(macroNutrientsAndCalories[2]));
+		
+		JFreeChart pieChart = ChartFactory.createPieChart("Nutrient distribution", pieDataSet, true, true, true);
+		ChartPanel chartPnl = new ChartPanel(pieChart);
+		chartPnl.setBackground(new Color(154, 205, 50));
+		chartPnl.setBounds(613, 412, 339, 295);
+		chartPnl.setLayout(null);
+		mainPnl.add(chartPnl);
+		
+		JProgressBar progressBar = new JProgressBar();
+		progressBar.setValue(70);
+		progressBar.setBounds(613, 318, 339, 35);
+		mainPnl.add(progressBar);
+		
+		JLabel trackEditDate_1_1 = new JLabel("Calorie:");
+		trackEditDate_1_1.setBounds(515, 318, 78, 35);
+		mainPnl.add(trackEditDate_1_1);
+		
+		JLabel trackEditDate_1_1_1 = new JLabel("Macronutritons:");
+		trackEditDate_1_1_1.setBounds(515, 412, 78, 35);
+		mainPnl.add(trackEditDate_1_1_1);
+		
+
+		
 		JPanel topPnl = new JPanel();
 		topPnl.setPreferredSize(new Dimension(10, 30));
 		topPnl.setBackground(Constants.DARKGREEN);
@@ -379,5 +516,4 @@ public class TrackingFrame {
 	public static void displayFrame() {
 		frame.setVisible(true);
 	}
-	
 }

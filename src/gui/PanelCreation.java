@@ -305,30 +305,30 @@ public class PanelCreation {
 		});
 		sidePnl.add(btnTracking);
 		
-		JPanel chestPnl = new JPanel();
-		parentPnl.add(chestPnl, BorderLayout.CENTER);
-		chestPnl.setLayout(null);
+		JPanel absPnl = new JPanel();
+		parentPnl.add(absPnl, BorderLayout.CENTER);
+		absPnl.setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(35, 42, 955, 207);
-		chestPnl.add(panel);
+		absPnl.add(panel);
 		panel.setLayout(null);
 		
-		URL bankdruckenIconPath = this.getClass().getResource("/resources/Bankdrucken.png");
+		URL bankdruckenIconPath = this.getClass().getResource("/resources/RollIns.png");
 		BufferedImage bankdruckenIcon = null;
 		try {
 			bankdruckenIcon = ImageIO.read(bankdruckenIconPath);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		JLabel imgBenchpress = new JLabel(new ImageIcon(((new ImageIcon(bankdruckenIcon)).getImage()).getScaledInstance(Constants.imageExerciseWidth, Constants.imageExerciseHeight, java.awt.Image.SCALE_SMOOTH)));
-		imgBenchpress.setBounds(10, 21, Constants.imageExerciseWidth, Constants.imageExerciseHeight);
-		panel.add(imgBenchpress);
+		JLabel imgRollIns = new JLabel(new ImageIcon(((new ImageIcon(bankdruckenIcon)).getImage()).getScaledInstance(Constants.imageExerciseWidth, Constants.imageExerciseHeight, java.awt.Image.SCALE_SMOOTH)));
+		imgRollIns.setBounds(10, 21, Constants.imageExerciseWidth, Constants.imageExerciseHeight);
+		panel.add(imgRollIns);
 		
-		JLabel lblChestpress = new JLabel("Benchpress");
-		lblChestpress.setFont(Constants.HEADING1);
-		lblChestpress.setBounds(350, 11, 112, 26);
-		panel.add(lblChestpress);
+		JLabel lblRollIns = new JLabel("Roll Ins");
+		lblRollIns.setFont(Constants.HEADING1);
+		lblRollIns.setBounds(350, 11, 116, 26);
+		panel.add(lblRollIns);
 		
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
@@ -336,21 +336,21 @@ public class PanelCreation {
 		separator.setBounds(340, 11, 15, 185);
 		panel.add(separator);
 		
-		JLabel benchpressSets = new JLabel("S\u00E4tze: 5, Wiederholungen: 8-12");
-		benchpressSets.setFont(Constants.PLAINTEXT);
-		benchpressSets.setBounds(360, 40, 214, 19);
-		panel.add(benchpressSets);
+		JLabel rollInsSets = new JLabel("sets: 3, repetitions: 15-20");
+		rollInsSets.setFont(Constants.PLAINTEXT);
+		rollInsSets.setBounds(360, 40, 172, 19);
+		panel.add(rollInsSets);
 		
-		JTextArea benchpressTxtArea = new JTextArea();
-		benchpressTxtArea.setText("Lie on the bench and shape your body like a bridge, with your buttocks firmly on the\nbench and your feet firmly planted on the floor. Grip the bar wide enough so that\nyou're constantly working perpendicular to the floor as you press the bar. The elbows\nshould always be 45\u00B0 away from the body and the bar should be at chest height.\nGo down slowly and in a controlled manner and push up explosively.");
-		benchpressTxtArea.setFont(Constants.PLAINTEXT);
-		benchpressTxtArea.setBackground(Constants.MAINBACKGROUND);
-		benchpressTxtArea.setBounds(350, 62, 595, 134);
-		panel.add(benchpressTxtArea);
+		JTextArea rollInsTxtArea = new JTextArea();
+		rollInsTxtArea.setText("Hang from a chin-up bar with an overhand grip, shoulder-width apart, and bring\nyour knees up to your chest. Make sure to swing as little as possible and thus to reach\nthe top using only your abdominal muscles.");
+		rollInsTxtArea.setFont(Constants.PLAINTEXT);
+		rollInsTxtArea.setBackground(Constants.MAINBACKGROUND);
+		rollInsTxtArea.setBounds(350, 62, 595, 134);
+		panel.add(rollInsTxtArea);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(35, 282, 955, 207);
-		chestPnl.add(panel_1);
+		absPnl.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JSeparator separator_1 = new JSeparator();
@@ -359,38 +359,38 @@ public class PanelCreation {
 		separator_1.setBounds(340, 11, 15, 185);
 		panel_1.add(separator_1);
 		
-		JLabel lblPushups = new JLabel("Push Ups");
-		lblPushups.setFont(new Font("Century Gothic", Font.BOLD, 20));
-		lblPushups.setBounds(350, 11, 85, 26);
-		panel_1.add(lblPushups);
+		JLabel lblLegRaise = new JLabel("Leg Raise");
+		lblLegRaise.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		lblLegRaise.setBounds(350, 11, 254, 26);
+		panel_1.add(lblLegRaise);
 		
-		URL pushUpIconPath = this.getClass().getResource("/resources/Liegestutze2.png");
+		URL pushUpIconPath = this.getClass().getResource("/resources/LegRaise.png");
 		BufferedImage pushUpIcon = null;
 		try {
 			pushUpIcon = ImageIO.read(pushUpIconPath);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		JLabel imgPushups = new JLabel(new ImageIcon(((new ImageIcon(pushUpIcon)).getImage()).getScaledInstance(Constants.imageExerciseWidth, Constants.imageExerciseHeight, java.awt.Image.SCALE_SMOOTH)));
-		imgPushups.setText("");
-		imgPushups.setBounds(10, 21, Constants.imageExerciseWidth, Constants.imageExerciseHeight);
-		panel_1.add(imgPushups);
+		JLabel imgLegRaise = new JLabel(new ImageIcon(((new ImageIcon(pushUpIcon)).getImage()).getScaledInstance(Constants.imageExerciseWidth, Constants.imageExerciseHeight, java.awt.Image.SCALE_SMOOTH)));
+		imgLegRaise.setText("");
+		imgLegRaise.setBounds(10, 21, Constants.imageExerciseWidth, Constants.imageExerciseHeight);
+		panel_1.add(imgLegRaise);
 		
-		JLabel pushupsSets = new JLabel("S\u00E4tze: 4, Wiederholungen: maximal");
-		pushupsSets.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		pushupsSets.setBounds(360, 40, 244, 19);
-		panel_1.add(pushupsSets);
+		JLabel legRaiseSets = new JLabel("sets: 3, repetitions: 15-20");
+		legRaiseSets.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		legRaiseSets.setBounds(360, 40, 244, 19);
+		panel_1.add(legRaiseSets);
 		
-		JTextArea pushupsTextArea = new JTextArea();
-		pushupsTextArea.setText("Get into the push-up position. Make sure that your hands are on the floor at about\nchest height. To hit the chest perfectly, rotate your hands slightly outwards and reach\na little wider than shoulder-width. Now you go with your chest to the floor, hold\nbriefly and push yourself up explosively.");
-		pushupsTextArea.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		pushupsTextArea.setBackground(SystemColor.menu);
-		pushupsTextArea.setBounds(350, 62, 595, 134);
-		panel_1.add(pushupsTextArea);
+		JTextArea legRaiseTxtArea = new JTextArea();
+		legRaiseTxtArea.setText("Lie on the floor or mat with your back fully stretched. Place your arms or hands next\nto your body and do not lift them off the floor during the exercise. Now lift your head\nand start to move your stretched legs upwards until they are perpendicular to the\nfloor.");
+		legRaiseTxtArea.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		legRaiseTxtArea.setBackground(SystemColor.menu);
+		legRaiseTxtArea.setBounds(350, 62, 595, 134);
+		panel_1.add(legRaiseTxtArea);
 		
 		JPanel panel_1_1 = new JPanel();
 		panel_1_1.setBounds(35, 520, 955, 207);
-		chestPnl.add(panel_1_1);
+		absPnl.add(panel_1_1);
 		panel_1_1.setLayout(null);
 		
 		JSeparator separator_1_1 = new JSeparator();
@@ -399,34 +399,34 @@ public class PanelCreation {
 		separator_1_1.setBounds(340, 11, 15, 185);
 		panel_1_1.add(separator_1_1);
 		
-		JLabel lblButterfly = new JLabel("Butterfly");
-		lblButterfly.setFont(new Font("Century Gothic", Font.BOLD, 20));
-		lblButterfly.setBounds(350, 11, 130, 34);
-		panel_1_1.add(lblButterfly);
+		JLabel lblJackknife = new JLabel("Jackknife");
+		lblJackknife.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		lblJackknife.setBounds(350, 11, 222, 26);
+		panel_1_1.add(lblJackknife);
 		
-		URL butterflyIconPath = this.getClass().getResource("/resources/Butterfly.png");
+		URL butterflyIconPath = this.getClass().getResource("/resources/JackKnife2.png");
 		BufferedImage butterflyIcon = null;
 		try {
 			butterflyIcon = ImageIO.read(butterflyIconPath);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		JLabel imgButterfly = new JLabel(new ImageIcon(((new ImageIcon(butterflyIcon)).getImage()).getScaledInstance(Constants.imageExerciseWidth, Constants.imageExerciseHeight, java.awt.Image.SCALE_SMOOTH)));
-		imgButterfly.setText("");
-		imgButterfly.setBounds(10, 21, 300, 175);
-		panel_1_1.add(imgButterfly);
+		JLabel imgJackKnife = new JLabel(new ImageIcon(((new ImageIcon(butterflyIcon)).getImage()).getScaledInstance(Constants.imageExerciseWidth - 125, Constants.imageExerciseHeight, java.awt.Image.SCALE_SMOOTH)));
+		imgJackKnife.setText("");
+		imgJackKnife.setBounds(10, 21, 300, 175);
+		panel_1_1.add(imgJackKnife);
 		
-		JLabel butterflySets = new JLabel("S\u00E4tze: 4, Wiederholungen: maximal");
-		butterflySets.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		butterflySets.setBounds(360, 40, 244, 19);
-		panel_1_1.add(butterflySets);
+		JLabel jackknifeSets = new JLabel("sets: 3, repetitions: 15-20");
+		jackknifeSets.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		jackknifeSets.setBounds(360, 40, 190, 19);
+		panel_1_1.add(jackknifeSets);
 		
-		JTextArea butterflyTextArea = new JTextArea();
-		butterflyTextArea.setText("Stand in the middle of two pulleys so that you have a grip in each hand. The cables\nshould be at about chest height. Now push the two cable pulls forward and walk\nbackwards in a controlled manner with a slight stretch in your chest.");
-		butterflyTextArea.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-		butterflyTextArea.setBackground(SystemColor.menu);
-		butterflyTextArea.setBounds(350, 62, 595, 134);
-		panel_1_1.add(butterflyTextArea);
+		JTextArea jackknifeTxtArea = new JTextArea();
+		jackknifeTxtArea.setText("Lie with your back fully stretched on the floor or a mat. Now bring your legs up similar\nto the Leg Raises and try to touch the tips of your toes with your arms outstretched.");
+		jackknifeTxtArea.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+		jackknifeTxtArea.setBackground(SystemColor.menu);
+		jackknifeTxtArea.setBounds(350, 62, 595, 134);
+		panel_1_1.add(jackknifeTxtArea);
 		
 		URL returnIconPath = this.getClass().getResource("/resources/exit.png");
 		BufferedImage returnIcon = null;
@@ -449,14 +449,14 @@ public class PanelCreation {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				WorkoutFrame.parentPnl.remove(chestPnl);
+				WorkoutFrame.parentPnl.remove(absPnl);
 				WorkoutFrame.parentPnl.add(WorkoutFrame.mainPnl);
 				frame.repaint();
 				frame.revalidate();
 				
 			}
 		});
-		chestPnl.add(returnBtn);
+		absPnl.add(returnBtn);
 		
 		JPanel topPnl = new JPanel();
 		topPnl.setPreferredSize(new Dimension(10, 30));

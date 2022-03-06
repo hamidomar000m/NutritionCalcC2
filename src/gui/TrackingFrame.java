@@ -14,6 +14,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -41,7 +42,7 @@ import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JProgressBar;
 
-public class TrackingFrame {
+public class TrackingFrame extends Thread {
 
 	private static JFrame frame;
 	public JButton passwordBtn;
@@ -49,10 +50,21 @@ public class TrackingFrame {
 	public JButton bodydataBtn;
 	public JButton deleteAccBtn;
 	private JTextField textField;
+	private JDateChooser dateChooser_1;
+	private String formattedDateChooser_1 = "01-01-2022";
+	private double proteinCalPercent = 0.0;
+	private double carboCalPercent = 0.0;
+	private double fatCalPercent = 0.0;
 	
-
+	private int proteinGram = 0;
+	private int carboGram = 0;
+	private int fatGram = 0;
+	private String[] trackedMacroData;
+	private boolean isRunning;
 	
 	public TrackingFrame() {
+		isRunning = true;
+		trackedMacroData = MongoDBConnector.getTrackedData(formattedDateChooser_1);
 		initialize();
 	}
 
@@ -322,29 +334,7 @@ public class TrackingFrame {
 		JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setBounds(240, 172, 215, 35);
 		mainPnl.add(dateChooser);
-		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(351, 589, 104, 23);
-		btnNewButton.setFont(Constants.BUTTONTEXT);
-		btnNewButton.setFocusPainted(false);
-		btnNewButton.setBorderPainted(false);
-		btnNewButton.setBorder(null);
-		btnNewButton.setBackground(Constants.LIGHTGRAY);
-		btnNewButton.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-				
-				String myFormattedDateString = dateFormat.format(dateChooser);
-				lblNewLabel.setText(myFormattedDateString);
-				System.out.println("Hi button");
-
-			}
-
-		});
-		mainPnl.add(btnNewButton);
 		
 		JSeparator trackSeparator = new JSeparator();
 		trackSeparator.setOrientation(SwingConstants.VERTICAL);
@@ -391,12 +381,48 @@ public class TrackingFrame {
 		mainPnl.add(comboBox_1);
 		
 		JLabel trackEditDate_1 = new JLabel("Select date:");
-		trackEditDate_1.setBounds(527, 172, 78, 35);
+		trackEditDate_1.setBounds(515, 172, 78, 35);
 		mainPnl.add(trackEditDate_1);
 		
 		JDateChooser dateChooser_1 = new JDateChooser();
-		dateChooser_1.setBounds(737, 172, 215, 35);
+		dateChooser_1.setBounds(668, 172, 310, 35);
+		((JTextField)dateChooser_1.getDateEditor().getUiComponent()).setText("Jan 1, 2022");
 		mainPnl.add(dateChooser_1);
+		
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.setBounds(351, 589, 104, 23);
+		btnNewButton.setFont(Constants.BUTTONTEXT);
+		btnNewButton.setFocusPainted(false);
+		btnNewButton.setBorderPainted(false);
+		btnNewButton.setBorder(null);
+		btnNewButton.setBackground(Constants.LIGHTGRAY);
+		btnNewButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+				
+				String myFormattedDateString = dateFormat.format(dateChooser.getDate());       
+				//lblNewLabel.setText(myFormattedDateString);
+				//double[] da = MongoDBConnector.getTrackedData(myFormattedDateString);
+				//System.out.println("Hi button"+ da.toString());
+				//MongoDBConnector.getTrackedData(myFormattedDateString);
+
+				
+				SimpleDateFormat dateFormat_1 = new SimpleDateFormat("dd-MM-yyyy");
+				String formattedDateChooser_1 = dateFormat_1.format(dateChooser_1.getDate());
+				System.out.println(formattedDateChooser_1);
+				if (formattedDateChooser_1 != null && !formattedDateChooser_1.isEmpty()) {
+					System.out.println("hi");
+					MongoDBConnector.getTrackedData(formattedDateChooser_1);
+				}
+
+			}
+
+		});
+		mainPnl.add(btnNewButton);
 		
 		JLabel lblSeeYourProgress = new JLabel("See your progress");
 		lblSeeYourProgress.setFont(new Font("Century Gothic", Font.BOLD, 28));
@@ -408,30 +434,90 @@ public class TrackingFrame {
 
 		// Creating the diagram
 		String[] macroNutrientsAndCalories = MongoDBConnector.getMacronutrientsAndCalories(MongoDBConnector._id);
-		DefaultPieDataset<String> pieDataSet = new DefaultPieDataset<String>();
-		pieDataSet.setValue("proteins", Double.parseDouble(macroNutrientsAndCalories[1]));
-		pieDataSet.setValue("carbohydrates", Double.parseDouble(macroNutrientsAndCalories[3]));
-		pieDataSet.setValue("fats", Double.parseDouble(macroNutrientsAndCalories[2]));
+		//DefaultPieDataset<String> pieDataSet = new DefaultPieDataset<String>();
 		
-		JFreeChart pieChart = ChartFactory.createPieChart("Nutrient distribution", pieDataSet, true, true, true);
+		//proteinCalPercent = Double.parseDouble(macroNutrientsAndCalories[1])*4/Double.parseDouble(macroNutrientsAndCalories[0]);
+		//carboCalPercent = Double.parseDouble(macroNutrientsAndCalories[3])*4/Double.parseDouble(macroNutrientsAndCalories[0]);
+		//fatCalPercent = Double.parseDouble(macroNutrientsAndCalories[2])*9/Double.parseDouble(macroNutrientsAndCalories[0]);
+		
+		//proteinCalPercent = Double.parseDouble(macroNutrientsAndCalories[1])*4/Double.parseDouble(macroNutrientsAndCalories[0]);
+		//carboCalPercent = Double.parseDouble(macroNutrientsAndCalories[3])*4/Double.parseDouble(macroNutrientsAndCalories[0]);
+		//fatCalPercent = Double.parseDouble(macroNutrientsAndCalories[2])*9/Double.parseDouble(macroNutrientsAndCalories[0]);
+
+
+		
+		
+		DefaultPieDataset<String> pieDataSet = new DefaultPieDataset<String>();
+		
+		//pieDataSet.setValue("proteins", Double.parseDouble(trackedMacroData[6])*4/Double.parseDouble(trackedMacroData[2]));
+		//pieDataSet.setValue("carbohydrates", Double.parseDouble(trackedMacroData[3])*4/Double.parseDouble(trackedMacroData[2]));
+		//pieDataSet.setValue("fats", Double.parseDouble(trackedMacroData[5])*9/Double.parseDouble(trackedMacroData[2]));
+		
+		proteinCalPercent = Double.parseDouble(trackedMacroData[6])*4;
+		carboCalPercent = Double.parseDouble(trackedMacroData[3])*4;
+		fatCalPercent = Double.parseDouble(trackedMacroData[5])*9;
+
+		double caloriesToEat = Double.parseDouble(macroNutrientsAndCalories[0])-proteinCalPercent-carboCalPercent-fatCalPercent;
+		
+		proteinGram = (int)Double.parseDouble(trackedMacroData[6]);
+		carboGram = (int)Double.parseDouble(trackedMacroData[3]);
+		fatGram = (int)Double.parseDouble(trackedMacroData[5]);
+		
+		pieDataSet.setValue("proteins (kcal)", proteinCalPercent);
+		pieDataSet.setValue("carbohydrates (kcal)", carboCalPercent);
+		pieDataSet.setValue("fats (kcal)", fatCalPercent);
+		pieDataSet.setValue("calories to eat", caloriesToEat);
+		
+		
+		JFreeChart pieChart = ChartFactory.createPieChart("Calorie Distribution", pieDataSet, true, true, true);
 		ChartPanel chartPnl = new ChartPanel(pieChart);
 		chartPnl.setBackground(new Color(154, 205, 50));
-		chartPnl.setBounds(613, 412, 339, 295);
+		chartPnl.setBounds(552, 420, 394, 295);
 		chartPnl.setLayout(null);
 		mainPnl.add(chartPnl);
 		
-		JProgressBar progressBar = new JProgressBar();
-		progressBar.setValue(70);
-		progressBar.setBounds(613, 318, 339, 35);
-		mainPnl.add(progressBar);
 		
-		JLabel trackEditDate_1_1 = new JLabel("Calorie:");
-		trackEditDate_1_1.setBounds(515, 318, 78, 35);
+		JLabel trackEditDate_1_1 = new JLabel("Carbohydrate:");
+		trackEditDate_1_1.setBounds(515, 259, 119, 35);
 		mainPnl.add(trackEditDate_1_1);
 		
-		JLabel trackEditDate_1_1_1 = new JLabel("Macronutritons:");
-		trackEditDate_1_1_1.setBounds(515, 412, 78, 35);
-		mainPnl.add(trackEditDate_1_1_1);
+		JProgressBar progressBar = new JProgressBar(0,(int) Double.parseDouble(macroNutrientsAndCalories[3]));
+		progressBar.setStringPainted(true);
+		progressBar.setValue(carboGram);
+		//progressBar.setMaximum((int) Double.parseDouble(macroNutrientsAndCalories[3]));
+		progressBar.setBounds(668, 259, 310, 23);
+		progressBar.setString(carboGram+" g / "+macroNutrientsAndCalories[3]+ " g");
+		mainPnl.add(progressBar);
+		
+		
+
+		JLabel trackEditDate_1_1_2 = new JLabel("Protein:");
+		trackEditDate_1_1_2.setBounds(515, 308, 119, 35);
+		mainPnl.add(trackEditDate_1_1_2);
+
+		
+		JProgressBar progressBar_1 = new JProgressBar(0,(int) Double.parseDouble(macroNutrientsAndCalories[1]));
+		progressBar_1.setStringPainted(true);
+		progressBar_1.setValue(proteinGram);
+		progressBar_1.setBounds(668, 308, 310, 23);
+		progressBar_1.setString(proteinGram+" g / "+macroNutrientsAndCalories[1]+ " g");
+		mainPnl.add(progressBar_1);
+		
+		
+		JLabel trackEditDate_1_1_3 = new JLabel("Fat:");
+		trackEditDate_1_1_3.setBounds(515, 360, 119, 35);
+		mainPnl.add(trackEditDate_1_1_3);
+		
+		JProgressBar progressBar_2 = new JProgressBar(0, (int) Double.parseDouble(macroNutrientsAndCalories[2]));
+		progressBar_2.setStringPainted(true);
+		progressBar_2.setForeground(Color.DARK_GRAY);
+		progressBar_2.setValue(fatGram);
+		progressBar_2.setBounds(668, 360, 310, 23);
+		mainPnl.add(progressBar_2);
+		
+
+		//here ends the right side of tracking main panel
+
 		
 
 		
@@ -510,5 +596,22 @@ public class TrackingFrame {
 	
 	public static void displayFrame() {
 		frame.setVisible(true);
+	}
+	
+	public void run() {
+		while (isRunning) {
+			System.out.println("running");
+			try {
+				System.out.println("inside try in thread");
+				SimpleDateFormat dateFormat_1 = new SimpleDateFormat("dd-MM-yyyy");
+				formattedDateChooser_1 = dateFormat_1.format(dateChooser_1.getDate());
+				System.out.println(dateChooser_1.getDate());
+				MongoDBConnector.getTrackedData(formattedDateChooser_1);
+				//isRunning = false;
+			} catch (Exception e) {
+				System.out.println("error in thread");
+			}
+
+		}
 	}
 }

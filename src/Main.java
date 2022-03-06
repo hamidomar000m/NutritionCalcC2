@@ -24,7 +24,7 @@ public class Main {
 //		PasswordFrame passwordDevFrame = new PasswordFrame();
 //		BodyDataFrame bodydataDevFrame = new BodyDataFrame();
 		LoginFrame loginDevFrame = new LoginFrame();
-		
+
 	}
 
 }

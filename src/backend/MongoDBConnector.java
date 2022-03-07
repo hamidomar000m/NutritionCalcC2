@@ -517,29 +517,31 @@ public class MongoDBConnector {
 	public static String[] getTrackedData(String date) {
 
 		String[] trackedData = new String[7];
-		//ArrayList<String> dateArrayList = new ArrayList<String>();
-		//dateArrayList.add(date);
-		//System.out.println( dateArrayList.get(0) + "mongodbcon - datearrylist 522");
 		ArrayList<String> trackedDataList = new ArrayList<String>();
 		// trackedDataList = [_id, username, calorie_amout, carbo_amount, date, fat_amount, protein_amount]
 		try {
+			
 			BasicDBObject searchQuery_id = new BasicDBObject();
 			List<BasicDBObject> obj = new ArrayList<BasicDBObject>();
 			obj.add(new BasicDBObject("username", _id));
 		    obj.add(new BasicDBObject("date", date));
 			searchQuery_id.put("$and", obj); //this find find documents matching multiple fields
 
-
 			MongoCursor<Document> cursor = mongoClient.getDatabase("ernaehrungstracker-app-db")
 					.getCollection("tracked-nutrients").find(searchQuery_id).iterator();
-
+			
+			if (!cursor.hasNext()) {
+				JOptionPane.showMessageDialog(null, "No data for this date!", "INFO", JOptionPane.ERROR_MESSAGE);
+			}
+			
 			while (cursor.hasNext()) {
 
 				Document document = cursor.next();
 				Set<String> keys = document.keySet();
 				Iterator iterator = keys.iterator();
+
 				while (iterator.hasNext()) {
-					
+
 					String key = (String) iterator.next();
 					String value = (String) document.get(key).toString();
 					trackedDataList.add(value);
@@ -549,20 +551,17 @@ public class MongoDBConnector {
 				for (int i = 0; i < keys.size(); i++) {
 
 					trackedData[i] = trackedDataList.get(i);
-				}
-				System.out.println( Arrays.toString(trackedData) + "mongodbcon - getTrackedData");
-
+				}	
 			}
 
+			
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "No data for this date!", "INFO", JOptionPane.ERROR_MESSAGE);
-			System.out.println("error");
+			JOptionPane.showMessageDialog(null, "Something went wrong!", "INFO", JOptionPane.ERROR_MESSAGE);
+
 		}
 
 		return trackedData; // trackedDataList = [_id, username, calorie_amout, carbo_amount, date, fat_amount, protein_amount]
 
 	}
 	
-	
-
 }

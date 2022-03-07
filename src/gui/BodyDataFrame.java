@@ -581,6 +581,9 @@ public class BodyDataFrame {
 		
 		MicronutrientsFrame.frame.dispose();
 		MicronutrientsFrame reloadedMicronutrientsFrame = new MicronutrientsFrame();
+		
+		TrackingFrame.disposeFrame();
+		TrackingFrame reloadedTrackingFrame = new TrackingFrame();
 	}
 
 	public static boolean isNumeric(String str) {

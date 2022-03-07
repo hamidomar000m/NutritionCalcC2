@@ -517,6 +517,9 @@ public class MongoDBConnector {
 	public static String[] getTrackedData(String date) {
 
 		String[] trackedData = new String[7];
+		//ArrayList<String> dateArrayList = new ArrayList<String>();
+		//dateArrayList.add(date);
+		//System.out.println( dateArrayList.get(0) + "mongodbcon - datearrylist 522");
 		ArrayList<String> trackedDataList = new ArrayList<String>();
 		// trackedDataList = [_id, username, calorie_amout, carbo_amount, date, fat_amount, protein_amount]
 		try {
@@ -552,11 +555,14 @@ public class MongoDBConnector {
 			}
 
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "No data for this date!", "INFO", JOptionPane.ERROR_MESSAGE);
 			System.out.println("error");
 		}
 
 		return trackedData; // trackedDataList = [_id, username, calorie_amout, carbo_amount, date, fat_amount, protein_amount]
 
 	}
+	
+	
 
 }

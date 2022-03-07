@@ -46,7 +46,7 @@ import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JProgressBar;
 
-public class TrackingFrame extends Thread {
+public class ExtraTracking {
 
 	private static JFrame frame;
 	public JButton passwordBtn;
@@ -63,19 +63,19 @@ public class TrackingFrame extends Thread {
 	private int proteinGram = 0;
 	private int carboGram = 0;
 	private int fatGram = 0;
-	private static String[] trackedMacroData;
+	private String[] trackedMacroData;
 	private boolean isRunning;
 	private JPanel mainPnl;
 	private JDateChooser dateChooser;
 	
-	public TrackingFrame() {
-		//trackedMacroData = MongoDBConnector.getTrackedData(formattedDateChooser_1);
-		//System.out.println(Arrays.toString(trackedMacroData) + "trackframe inside constructor 73");
+	public ExtraTracking() {
+		trackedMacroData = MongoDBConnector.getTrackedData(formattedDateChooser_1);
+		System.out.println(Arrays.toString(trackedMacroData) + "frame");
 		initialize();
 	}
 
 	private void initialize() {
-		System.out.println("trackframe initilize started 78");
+		System.out.println("started");
 		frame = new JFrame("Tracking");
 		frame.setUndecorated(true);
 		frame.setBounds(100, 100, 1250, 800);
@@ -446,12 +446,12 @@ public class TrackingFrame extends Thread {
 
 				SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 				
-				String myFormattedDateString = dateFormat.format(dateChooser_1.getDate());       
+				String myFormattedDateString = dateFormat.format(dateChooser.getDate());       
 				//lblNewLabel.setText(myFormattedDateString);
 				//double[] da = MongoDBConnector.getTrackedData(myFormattedDateString);
 				//System.out.println("Hi button"+ da.toString());
 				trackedMacroData = MongoDBConnector.getTrackedData(myFormattedDateString);
-				System.out.println(Arrays.toString(trackedMacroData) + "trackframe getting trackedMacroData by button 454");
+				System.out.println(Arrays.toString(trackedMacroData) + "button");
 				
 				//SimpleDateFormat dateFormat_1 = new SimpleDateFormat("dd-MM-yyyy");
 				//String formattedDateChooser_1 = dateFormat_1.format(dateChooser_1.getDate());
@@ -462,31 +462,14 @@ public class TrackingFrame extends Thread {
 				//}
 				//searchTrackDate();
 				//showCharts();
-				
-				reloadTrackingFrame();
 
 			}
 
 		});
 		mainPnl.add(btnNewButton);
 		
-		try {
-			showCharts();
-		} catch (Exception e) {
-			//JOptionPane.showMessageDialog(null, "No data for this date!", "INFO", JOptionPane.ERROR_MESSAGE);
-			//System.out.println("trackframe try catch for showCharts() 476");
-			
-			JLabel noDataMessageLabel = new JLabel("Select a valid date to see the charts");
-			noDataMessageLabel.setFont(new Font("Century Gothic", Font.BOLD, 18));
-			noDataMessageLabel.setBounds(584, 341, 394, 50);
-			mainPnl.add(noDataMessageLabel);
-			
-			
-		}
-		
 
-	
-
+		showCharts();
 
 		//here ends the right side of tracking frame's main panel
 
@@ -592,6 +575,8 @@ public class TrackingFrame extends Thread {
 	public void showCharts() {
 		System.out.println("charts start");
 		
+
+		// Creating the diagram
 		String[] macroNutrientsAndCalories = MongoDBConnector.getMacronutrientsAndCalories(MongoDBConnector._id);
 		
 		DefaultPieDataset<String> pieDataSet = new DefaultPieDataset<String>();
@@ -602,8 +587,6 @@ public class TrackingFrame extends Thread {
 
 		double caloriesToEat = Double.parseDouble(macroNutrientsAndCalories[0])-proteinCalPercent-carboCalPercent-fatCalPercent;
 		
-
-		System.out.println(caloriesToEat + " trackframe calorie to eat 598");
 		proteinGram = (int)Double.parseDouble(trackedMacroData[6]);
 		carboGram = (int)Double.parseDouble(trackedMacroData[3]);
 		fatGram = (int)Double.parseDouble(trackedMacroData[5]);
@@ -659,31 +642,8 @@ public class TrackingFrame extends Thread {
 		progressBar_2.setValue(fatGram);
 		progressBar_2.setBounds(668, 360, 310, 23);
 		mainPnl.add(progressBar_2);
-		
-
-
-
-		
-		if (caloriesToEat <= 0) {
-			//JOptionPane.showMessageDialog(frame, "Value is not allowed to be the same!", "INFO", JOptionPane.ERROR_MESSAGE);
-			JLabel lblNewLabel = new JLabel("The calorie limit for "+formattedDateChooser_1+" was breached!!!");
-			lblNewLabel.setBounds(642, 726, 316, 33);
-			mainPnl.add(lblNewLabel);
-			System.out.println("trackframe if calorie to eat is negative 657");
-		}
-		
-		System.out.println("charts end 659");
+		System.out.println("charts end");
 	}
-	
-	
-	
-	public static void reloadTrackingFrame() {
-		frame.dispose();
-		TrackingFrame reloadedTrackingFrame = new TrackingFrame();
-		reloadedTrackingFrame.displayFrame();
-		
-	}
-	
 	
 	public void run1() {
 		while (isRunning) {
@@ -720,4 +680,5 @@ public class TrackingFrame extends Thread {
 		}
 	}
 }
+
 

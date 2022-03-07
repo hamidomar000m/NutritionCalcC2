@@ -3,48 +3,31 @@ package gui;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
-import javax.swing.border.AbstractBorder;
-import javax.swing.border.Border;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.general.DefaultPieDataset;
 
 import backend.MongoDBConnector;
 
 import java.awt.Color;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 
 import java.awt.Component;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Frame;
 
-import javax.swing.Icon;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 
-public class StartFrame {
+public class ImprintFrame {
 
 	private static JFrame frame;
 	public JButton passwordBtn;
@@ -52,25 +35,18 @@ public class StartFrame {
 	public JButton bodydataBtn;
 	public JButton deleteAccBtn;
 
-	/**
-	 * Create the application.
-	 */
-	public StartFrame() {
+	
+	public ImprintFrame() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
-		frame = new JFrame("Home");
+		frame = new JFrame("Imprint");
 		frame.setUndecorated(true);
 		frame.setBounds(100, 100, 1250, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
-
-		String[] macroNutrientsAndCalories = MongoDBConnector.getMacronutrientsAndCalories(MongoDBConnector._id);
 
 		JPanel parentPnl = new JPanel();
 		frame.getContentPane().add(parentPnl, BorderLayout.NORTH);
@@ -99,8 +75,8 @@ public class StartFrame {
 		sidePnl.setLayout(null);
 		sidePnl.add(headingLbl);
 		sidePnl.add(uHeadingLbl);
-		sidePnl.add(versionLbl);
-
+		sidePnl.add(versionLbl);		
+		
 		passwordBtn = new JButton("Change password");
 		passwordBtn.setHorizontalAlignment(SwingConstants.LEFT);
 		passwordBtn.setForeground(Constants.LIGHTGRAY);
@@ -213,13 +189,28 @@ public class StartFrame {
 		JButton btnHome = new JButton("Home");
 		btnHome.setHorizontalAlignment(SwingConstants.LEFT);
 		btnHome.setForeground(Constants.LIGHTGRAY);
-		btnHome.setFont(Constants.BUTTONTEXTBOLD);
+		btnHome.setFont(Constants.BUTTONTEXT);
 		btnHome.setFocusPainted(false);
 		btnHome.setBorderPainted(false);
 		btnHome.setBorder(null);
 		btnHome.setBackground(Constants.MIDGREEN);
-		btnHome.setBounds(35, 175, 73, 26);
-		btnHome.setEnabled(false);
+		btnHome.setBounds(35, 175, 60, 23);
+		btnHome.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				frame.setVisible(false);
+				StartFrame.displayFrame();
+				btnSettings.setEnabled(true);
+				btnSettings.setFont(Constants.BUTTONTEXT);
+				passwordBtn.setVisible(false);
+				bodydataBtn.setVisible(false);
+				deleteAccBtn.setVisible(false);
+				
+			}
+			
+		});
 		sidePnl.add(btnHome);
 
 		JButton foodRecBtn = new JButton("Food");
@@ -328,125 +319,22 @@ public class StartFrame {
 
 		});
 		sidePnl.add(btnTracking);
-
+		
 		JButton btnImprint = new JButton("Imprint");
 		btnImprint.setHorizontalAlignment(SwingConstants.LEFT);
 		btnImprint.setForeground(Constants.LIGHTGRAY);
-		btnImprint.setFont(Constants.BUTTONTEXT);
+		btnImprint.setFont(Constants.BUTTONTEXTBOLD);
 		btnImprint.setFocusPainted(false);
 		btnImprint.setBorderPainted(false);
 		btnImprint.setBorder(null);
 		btnImprint.setBackground(Constants.MIDGREEN);
 		btnImprint.setBounds(35, 558, 78, 23);
-		btnImprint.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				frame.setVisible(false);
-				ImprintFrame.displayFrame();
-				btnSettings.setEnabled(true);
-				btnSettings.setFont(Constants.BUTTONTEXT);
-				passwordBtn.setVisible(false);
-				bodydataBtn.setVisible(false);
-				deleteAccBtn.setVisible(false);
-
-			}
-
-		});
+		btnImprint.setEnabled(false);
 		sidePnl.add(btnImprint);
-		
+
 		JPanel mainPnl = new JPanel();
 		parentPnl.add(mainPnl, BorderLayout.CENTER);
 		mainPnl.setLayout(null);
-
-		JSeparator separator = new JSeparator();
-		separator.setBackground(Constants.LIGHTGRAY);
-		separator.setOrientation(SwingConstants.VERTICAL);
-		separator.setBounds(492, 135, 15, 500);
-		mainPnl.add(separator);
-
-		// Creating the diagram
-		DefaultPieDataset<String> pieDataSet = new DefaultPieDataset<String>();
-		pieDataSet.setValue("proteins", Double.parseDouble(macroNutrientsAndCalories[1]));
-		pieDataSet.setValue("carbohydrates", Double.parseDouble(macroNutrientsAndCalories[3]));
-		pieDataSet.setValue("fats", Double.parseDouble(macroNutrientsAndCalories[2]));
-
-		JFreeChart pieChart = ChartFactory.createPieChart("Nutrient distribution", pieDataSet, true, true, true);
-		ChartPanel chartPnl = new ChartPanel(pieChart);
-		chartPnl.setBackground(new Color(154, 205, 50));
-		chartPnl.setBounds(49, 170, 412, 419);
-		chartPnl.setLayout(null);
-		mainPnl.add(chartPnl);
-
-		Calendar calendar = Calendar.getInstance();
-		Date date = calendar.getTime();
-		Date today = new Date();
-		calendar.setTime(today);
-		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
-		//System.out.println(dayOfWeek);
-		double caloriesLeftForWeek = Double.parseDouble(macroNutrientsAndCalories[0])*7 - Double.parseDouble(macroNutrientsAndCalories[0])*dayOfWeek;
-
-		JLabel dayLbl = new JLabel(new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.getTime()));
-		dayLbl.setFont(Constants.HEADING);
-		dayLbl.setBounds(522, 156, 171, 33);
-		mainPnl.add(dayLbl);
-
-		JLabel caloriesDayLbl = new JLabel("calories left for today: " + macroNutrientsAndCalories[0] + "kcal");
-		caloriesDayLbl.setFont(Constants.PLAINTEXT);
-		caloriesDayLbl.setBounds(522, 200, 342, 19);
-		mainPnl.add(caloriesDayLbl);
-
-		JLabel caloriesWeekLbl = new JLabel("calories left for the week: " + caloriesLeftForWeek + "kcal");
-		caloriesWeekLbl.setFont(Constants.PLAINTEXT);
-		caloriesWeekLbl.setBounds(522, 230, 405, 19);
-		mainPnl.add(caloriesWeekLbl);
-
-		// More content for MainPnl
-		JLabel makronährstoffeLbl = new JLabel("Macronutrients");
-		makronährstoffeLbl.setFont(Constants.HEADING1);
-		makronährstoffeLbl.setBounds(522, 289, 144, 21);
-		mainPnl.add(makronährstoffeLbl);
-
-		JLabel carbohydratesLbl = new JLabel("carbohydrates: " + macroNutrientsAndCalories[3] + "g");
-		carbohydratesLbl.setFont(Constants.PLAINTEXT);
-		carbohydratesLbl.setBounds(522, 319, 306, 19);
-		mainPnl.add(carbohydratesLbl);
-
-		JLabel proteinsLbl = new JLabel("proteins: " + macroNutrientsAndCalories[1] + "g");
-		proteinsLbl.setFont(Constants.PLAINTEXT);
-		proteinsLbl.setBounds(522, 349, 233, 19);
-		mainPnl.add(proteinsLbl);
-
-		JLabel fatsLbl = new JLabel("fats: " + macroNutrientsAndCalories[2] + "g");
-		fatsLbl.setFont(Constants.PLAINTEXT);
-		fatsLbl.setBounds(522, 379, 171, 19);
-		mainPnl.add(fatsLbl);
-
-		JLabel micronutrientsLbl = new JLabel("Micronutrients");
-		micronutrientsLbl.setFont(Constants.HEADING1);
-		micronutrientsLbl.setBounds(522, 422, 138, 21);
-		mainPnl.add(micronutrientsLbl);
-
-		JButton btnSeeMore = new JButton("See more");
-		btnSeeMore.setBounds(522, 454, 104, 23);
-		btnSeeMore.setFont(Constants.BUTTONTEXT);
-		btnSeeMore.setFocusPainted(false);
-		btnSeeMore.setBorderPainted(false);
-		btnSeeMore.setBorder(null);
-		btnSeeMore.setBackground(Constants.LIGHTGRAY);
-		btnSeeMore.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				frame.setEnabled(false);
-				MicronutrientsFrame.displayFrame();
-
-			}
-
-		});
-		mainPnl.add(btnSeeMore);
 
 		JPanel topPnl = new JPanel();
 		topPnl.setPreferredSize(new Dimension(10, 30));
@@ -501,6 +389,7 @@ public class StartFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		JButton closeBtn = new JButton(new ImageIcon(closeIcon));
 		closeBtn.setForeground(Constants.LIGHTGRAY);
 		closeBtn.setFont(new Font("Century Gothic", Font.PLAIN, 16));
@@ -517,7 +406,38 @@ public class StartFrame {
 		});
 		actionPnl.add(closeBtn, BorderLayout.EAST);
 
-		frame.setVisible(true);
+		URL logoIconPath = this.getClass().getResource("/resources/logo.png");
+		JLabel logo = new JLabel(new ImageIcon(logoIconPath));
+		logo.setBounds(298, -5, 403, 247);
+		mainPnl.add(logo);
+		
+		JLabel HeaderLbl = new JLabel("Imprint");
+		HeaderLbl.setBounds(250, 263, 107, 30);
+		HeaderLbl.setFont(Constants.HEADING);
+		mainPnl.add(HeaderLbl);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBackground(new Color(204, 204, 204));
+		separator.setBounds(250, 301, 499, 15);
+		mainPnl.add(separator);
+		
+		JTextArea descriptionTxtArea = new JTextArea();
+		descriptionTxtArea.setText("Welcome to NutritionCalc!\n" 
+				+ "This application is part of a study project. The aim of this project is to\n"
+				+ "give people easy access to healthy food in combination with sports.\n"
+				+ "Developers are Marc Andresen, Marten Kaffler, Mohammad Hamid\n"
+				+ "Omar and Robert Witzke. For questions or suggestions please reach\n"
+				+ "out to nutritioncalcswe@gmail.com"
+				+ "\n"
+				+ "\n"
+				+ "The pictures of the workout recommendation are from the website\n"
+				+ "https://modusx.de/fitness-uebungen");
+		descriptionTxtArea.setFont(Constants.PLAINTEXT);
+		descriptionTxtArea.setBackground(Constants.MAINBACKGROUND);
+		descriptionTxtArea.setBounds(250, 327, 499, 173);
+		mainPnl.add(descriptionTxtArea);
+		
+		frame.setVisible(false);
 
 	}
 
@@ -532,5 +452,4 @@ public class StartFrame {
 	public static void disposeFrame() {
 		frame.dispose();
 	}
-
 }

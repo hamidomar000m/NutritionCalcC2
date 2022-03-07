@@ -12,6 +12,7 @@ import com.mongodb.client.MongoDatabase;
 import gui.BodyDataFrame;
 import gui.FoodRecommendationFrame;
 import gui.FoodsFrame;
+import gui.ImprintFrame;
 import gui.LogInFrm;
 import gui.LoginFrame;
 import gui.MainFrame;
@@ -77,7 +78,7 @@ public class MongoDBConnector {
 			String url = "mongodb+srv://HamidO:123Hamid123@cluster0.f2htr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 			mongoClient = MongoClients.create(url);
 
-			System.out.println("Connectionn created");
+			System.out.println("Connection created");
 
 		} catch (Exception e) {
 			System.out.println("Error : " + e);
@@ -151,6 +152,7 @@ public class MongoDBConnector {
 					TrackingFrame trackingFrame = new TrackingFrame();
 					PasswordFrame passwordFrame = new PasswordFrame();
 					BodyDataFrame bodyDataFrame = new BodyDataFrame();
+					ImprintFrame imprintFrame = new ImprintFrame();
 
 					LoginFrame.hideFrame();
 					RegisterFrame.hideFrame();
@@ -168,7 +170,7 @@ public class MongoDBConnector {
 
 			}
 		} catch (Exception e) {
-			System.out.println("log in didnt work");
+			System.out.println("");
 
 		}
 

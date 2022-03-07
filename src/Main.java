@@ -9,6 +9,7 @@ import gui.StartFrame;
 import gui.SupplementFrame;
 import gui.TrackingFrame;
 import gui.WorkoutFrame;
+import gui.ImprintFrame;
 
 public class Main {
 
@@ -24,6 +25,7 @@ public class Main {
 //		PasswordFrame passwordDevFrame = new PasswordFrame();
 //		BodyDataFrame bodydataDevFrame = new BodyDataFrame();
 		LoginFrame loginDevFrame = new LoginFrame();
+//		ImprintFrame imprintDevFrame = new ImprintFrame();
 		
 	}
 

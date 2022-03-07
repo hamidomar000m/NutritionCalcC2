@@ -433,7 +433,6 @@ public class TrackingFrame extends Thread {
 					SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 					String myFormattedDateString = dateFormat.format(progressDateChooser.getDate());       
 					trackedMacroData = MongoDBConnector.getTrackedData(myFormattedDateString);
-					System.out.println(Arrays.toString(trackedMacroData));
 					
 					if (trackedMacroData[0] != null) {
 						reloadTrackingFrame();
@@ -442,7 +441,6 @@ public class TrackingFrame extends Thread {
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "No date chosen!", "INFO", JOptionPane.ERROR_MESSAGE);
 				}
-
 			}
 
 		});
@@ -456,7 +454,6 @@ public class TrackingFrame extends Thread {
 			noDataMessageLabel.setFont(new Font("Century Gothic", Font.BOLD, 16));
 			noDataMessageLabel.setBounds(504, 341, 486, 50);
 			noDataMessageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			//noDataMessageLabel.setFont(Constants.HEADING);
 			mainPnl.add(noDataMessageLabel);
 			
 		}
@@ -550,26 +547,7 @@ public class TrackingFrame extends Thread {
 	}
 	
 	
-	//Thread to automatically run when a date is chosen from right side of main panel 
-	
-	public void searchTrackDate() {
-
-		try {
-			SimpleDateFormat dateFormat_1 = new SimpleDateFormat("dd-MM-yyyy");
-			System.out.println("ho");
-			formattedprogressDateChooser = dateFormat_1.format(progressDateChooser.getDate());
-			System.out.println("hi");
-
-		} catch (Exception e) {
-			System.out.println("date catch didnt work");
-		}
-		trackedMacroData = MongoDBConnector.getTrackedData(formattedprogressDateChooser);
-		System.out.println(formattedprogressDateChooser);
-		
-	}
-	
 	public void showCharts() {
-		System.out.println("charts start");
 		
 		String[] macroNutrientsAndCalories = MongoDBConnector.getMacronutrientsAndCalories(MongoDBConnector._id);
 		
@@ -647,17 +625,16 @@ public class TrackingFrame extends Thread {
 
 		
 		if (caloriesToEat <= 0) {
-			//JOptionPane.showMessageDialog(frame, "Value is not allowed to be the same!", "INFO", JOptionPane.ERROR_MESSAGE);
+
 			JLabel negativeCalAlertLabel = new JLabel("The calorie limit for "+formattedprogressDateChooser+" was exceeded by "+Math.abs(caloriesToEat)+" kcal !!!");
 			negativeCalAlertLabel.setBounds(506, 726, 484, 33);
 			negativeCalAlertLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			negativeCalAlertLabel.setFont(Constants.PLAINTEXT);
 			mainPnl.add(negativeCalAlertLabel);
-			System.out.println("trackframe if calorie to eat is negative 657");
+
 		}
 
 		
-		System.out.println("charts end 659");
 	}
 	
 	
@@ -669,8 +646,9 @@ public class TrackingFrame extends Thread {
 		
 	}
 	
+	//Thread to automatically run when a date is chosen from right side of main panel 
 	
-	public void run1() {
+	public void run() {
 		while (isRunning) {
 			System.out.println("running");
 

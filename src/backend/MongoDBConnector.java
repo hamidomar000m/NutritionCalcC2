@@ -61,8 +61,9 @@ public class MongoDBConnector {
 		connectDB();
 	}
 
+	
+	
 	private static void connectDB() {
-
 		try {
 			String url = "mongodb+srv://HamidO:123Hamid123@cluster0.f2htr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 			mongoClient = MongoClients.create(url);
@@ -72,11 +73,11 @@ public class MongoDBConnector {
 		} catch (Exception e) {
 			System.out.println("Error : " + e);
 		}
-
 	}
 
+	
+	
 	public static void signUpUser() {
-
 		try {
 			BasicDBObject searchQuery = new BasicDBObject();
 			searchQuery.put("_id", _id);
@@ -106,19 +107,17 @@ public class MongoDBConnector {
 					System.out.println("Something went wrong : " + e);
 					notAlreadyRegistered = false;
 					JOptionPane.showMessageDialog(null, "User already exists!", "ERROR", JOptionPane.ERROR_MESSAGE);
-
 				}
-
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Invalid data or user already exists!", "ERROR",
 					JOptionPane.ERROR_MESSAGE);
 		}
-
 	}
 
+	
+	
 	public static void logInUser() {
-
 		try {
 			BasicDBObject searchQuery_id = new BasicDBObject();
 
@@ -155,17 +154,15 @@ public class MongoDBConnector {
 
 				JOptionPane.showMessageDialog(null, "User does not exist! Please, register!", "ERROR",
 						JOptionPane.ERROR_MESSAGE);
-
 			}
 		} catch (Exception e) {
 			System.out.println("log in didnt work");
-
 		}
-
 	}
+	
+	
 
 	public static boolean isUserRegistered(final String userName) {
-
 		boolean isRegistered = false;
 		try {
 			
@@ -188,11 +185,11 @@ public class MongoDBConnector {
 
 		System.out.println(isRegistered);
 		return isRegistered;
-
 	}
+	
+	
 
 	public static void insertNutrients(String _id, double[] nutritionalValues, String[] names, String[] nutrients) {
-
 		MongoCollection collection = mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("nutrients");
 
 		try {
@@ -204,15 +201,34 @@ public class MongoDBConnector {
 			}
 			collection.insertOne(document);
 
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
 
-		System.out.println("Nutrients saved");
-
+		//System.out.println("Nutrients saved");
 	}
-
+	
+	
+	
+	public static void saveTrackingData(String username, String[] names, Object[] trackingData) {
+		MongoCollection collection = mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("tracked-nutrients");
+	}
+	
+	
+	
+	public static void saveNewFoodData(String username, String[] names, Object[] foodData) {
+		MongoCollection collection = mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("saved-foods");
+		
+		try {
+			Document document = new Document("username", username);
+			for(int i = 0; i < foodData.length; i++) {
+				document.append(names[i], foodData[i]);
+			}
+			collection.insertOne(document);
+		} catch(Exception e) {}
+	}
+	
+	
+	
 	public static ArrayList<String> getFoodRecommendation(final String column) {
-
 		ArrayList<String> data = new ArrayList<String>();
 
 		try {
@@ -227,11 +243,12 @@ public class MongoDBConnector {
 				data.add((String) cursor.next().get("product"));
 			}
 
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
 		return data;
 	}
 
+	
+	
 	public static String[][] getSupplements(final String aim) {
 
 		ArrayList<String> supDataList = new ArrayList<String>();
@@ -264,12 +281,13 @@ public class MongoDBConnector {
 				counter++;
 			}
 
-		} catch (Exception e) {
-		}
+		} catch (Exception e) {}
 
 		return supData;
 	}
 
+	
+	
 	public static String[] getMacronutrientsAndCalories(final String userName) {
 
 		String[] data = new String[4];
@@ -307,9 +325,10 @@ public class MongoDBConnector {
 		}
 
 		return data;
-
 	}
 
+	
+	
 	public static String[][] getMicronutrients(final String userName) {
 
 		String[][] nutrientData = new String[34][2];
@@ -344,23 +363,18 @@ public class MongoDBConnector {
 
 					nutrientData[counter][0] = nutrientList.get(i);
 					nutrientData[counter][1] = amountList.get(i);
-
 					counter++;
 
 				}
-
 			}
-
-		} catch (Exception e) {
-
-		}
+		} catch (Exception e) {}
 
 		return nutrientData;
-
 	}
 
+	
+	
 	public static String getAim(final String userName) {
-
 		String goal = "";
 
 		try {
@@ -374,14 +388,14 @@ public class MongoDBConnector {
 				goal = (String) cursor.next().get("userGoal");
 			}
 
-		} catch (Exception e) {
-			
-		}
+		} catch (Exception e) {}
+		
 		return goal;
 	}
 	
+	
+	
 	public static void changePassword(final String userName, final String userPassword) {
-		
 		try {
 			BasicDBObject searchQuery_id = new BasicDBObject();
 			searchQuery_id.put("_id", userName);
@@ -394,14 +408,12 @@ public class MongoDBConnector {
 			
 			mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users").updateOne(searchQuery_id, updateObject);
 
-		} catch (Exception e) {
-			
-		}
-		
+		} catch (Exception e) {}
 	}
 	
+	
+	
 	public static void changeValue(final String userName, final String property, final String value) {
-		
 		try {
 			
 			BasicDBObject searchQuery_id = new BasicDBObject();
@@ -415,14 +427,12 @@ public class MongoDBConnector {
 			
 			mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users").updateOne(searchQuery_id, updateObject);
 			
-		} catch (Exception e) {
-			
-		}
-		
+		} catch (Exception e) {}
 	}
 	
+	
+	
 	public static void deleteAccount(final String userName) {
-		
 		try {
 			BasicDBObject searchQuery_id = new BasicDBObject();
 			searchQuery_id.put("_id", userName);
@@ -432,11 +442,11 @@ public class MongoDBConnector {
 		} catch (Exception e) {
 			
 		}
-		
 	}
 	
+	
+	
 	public static void deleteNutrients(final String userName) {
-		
 		try {
 			BasicDBObject searchQuery_id = new BasicDBObject();
 			searchQuery_id.put("_id", userName);
@@ -446,11 +456,11 @@ public class MongoDBConnector {
 		} catch (Exception e) {
 			
 		}
-		
 	}
 	
+	
+	
 	public static String getUserValue(final String userName, final String property) {
-		
 		String value = "";
 		
 		try {
@@ -464,16 +474,14 @@ public class MongoDBConnector {
 				value = (String) cursor.next().get("user" + property);
 			}
 			
-		} catch (Exception e) {
-			
-		}
+		} catch (Exception e) {}
 		
 		return value;
-		
 	}
 	
+	
+	
 	public static void reloadNutritionCalculation(final String userName) {
-		
 		try {
 
 			NutritionCalculator n = new NutritionCalculator(getUserValue(userName, "Gender"), Integer.parseInt(getUserValue(userName, "Age")),
@@ -486,10 +494,7 @@ public class MongoDBConnector {
 			deleteNutrients(userName);
 			insertNutrients(userName, nutritionalValues, names, nutrients);
 
-		} catch (Exception e) {
-			
-		}
-		
+		} catch (Exception e) {}
 	}
 
 }

@@ -533,6 +533,18 @@ public class NutritionCalculator {
 
 		System.out.println("Nutrients calculated");
 	}
+	
+	
+	
+	/*
+	 * calculates the overall nutritional values
+	 * based on the user input in the tracking frame
+	 */
+	public static void calculateTrackingValues(double[] trackingData) {
+		
+	}
+	
+	
 
 	/*
 	 * return the results of the calculation

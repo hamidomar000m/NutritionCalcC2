@@ -33,6 +33,7 @@ import backend.MongoDBConnector;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import java.util.Date;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JCalendar;
 import javax.swing.JSeparator;
@@ -40,6 +41,7 @@ import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JProgressBar;
+import javax.swing.JCheckBox;
 
 public class TrackingFrame {
 
@@ -48,9 +50,24 @@ public class TrackingFrame {
 	public JButton btnSettings;
 	public JButton bodydataBtn;
 	public JButton deleteAccBtn;
-	private JTextField textField;
+	private JTextField foodNameField;
+	private JTextField gramsField_1;
+	private JTextField gramsField_2;
+	private JTextField caloriesField;
+	private JTextField fatField;
+	private JTextField carbsField;
+	private JTextField proteinsField;
+	private JCheckBox chckbxFoodNotFound;
+	private JDateChooser dateChooserLeft;
+	private JComboBox comboBoxFood;
 	
-
+	private Date date;
+	private String foodname;
+	private double amount;
+	private double calories;
+	private double fats;
+	private double carbs;
+	private double proteins;
 	
 	public TrackingFrame() {
 		initialize();
@@ -324,76 +341,72 @@ public class TrackingFrame {
 		parentPnl.add(mainPnl, BorderLayout.CENTER);
 		mainPnl.setLayout(null);
 		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(240, 172, 215, 35);
-		mainPnl.add(dateChooser);
+		dateChooserLeft = new JDateChooser();
+		dateChooserLeft.setBounds(224, 123, 231, 26);
+		mainPnl.add(dateChooserLeft);
 		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(351, 589, 104, 23);
-		btnNewButton.setFont(Constants.BUTTONTEXT);
-		btnNewButton.setFocusPainted(false);
-		btnNewButton.setBorderPainted(false);
-		btnNewButton.setBorder(null);
-		btnNewButton.setBackground(Constants.LIGHTGRAY);
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton submitButton = new JButton("Submit");
+		submitButton.setBounds(351, 684, 104, 23);
+		submitButton.setFont(Constants.BUTTONTEXT);
+		submitButton.setFocusPainted(false);
+		submitButton.setBorderPainted(false);
+		submitButton.setBorder(null);
+		submitButton.setBackground(Constants.LIGHTGRAY);
+		submitButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-				
-				String myFormattedDateString = dateFormat.format(dateChooser);
-				lblNewLabel.setText(myFormattedDateString);
-				System.out.println("Hi button");
+				if(validTrackingData()) {
+					if(chckbxFoodNotFound.isSelected()) {
+						MongoDBConnector.saveNewFoodData(MongoDBConnector._id, getTrackingNames(), getTrackingData());
+					} else {
+						MongoDBConnector.saveTrackingData(MongoDBConnector._id, getTrackingNames(), getTrackingData());
+					}
+				}
 
 			}
 
 		});
-		mainPnl.add(btnNewButton);
+		mainPnl.add(submitButton);
 		
 		JSeparator trackSeparator = new JSeparator();
 		trackSeparator.setOrientation(SwingConstants.VERTICAL);
 		trackSeparator.setBounds(495, 11, 10, 748);
 		mainPnl.add(trackSeparator);
 		
-		JLabel trackEditHeading = new JLabel("Enter or edit your nutrition data");
+		JLabel trackEditHeading = new JLabel("Track your nutrition data:");
+		trackEditHeading.setHorizontalAlignment(SwingConstants.CENTER);
 		trackEditHeading.setFont(Constants.HEADING);
 		trackEditHeading.setBounds(77, 40, 331, 55);
 		mainPnl.add(trackEditHeading);
 		
-		JLabel trackEditDate = new JLabel("Select date:");
-		trackEditDate.setBounds(30, 172, 78, 35);
+		JLabel dateLabelLeft = new JLabel("Select date:");
+		dateLabelLeft.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		dateLabelLeft.setBounds(30, 123, 142, 26);
 		trackEditHeading.setFont(Constants.LOGINTEXT);
-		mainPnl.add(trackEditDate);
+		mainPnl.add(dateLabelLeft);
 		
-		JLabel lblSelectFood = new JLabel("Select food:");
-		lblSelectFood.setBounds(30, 243, 78, 35);
-		mainPnl.add(lblSelectFood);
+		JLabel foodComboboxLabel = new JLabel("Select food from list:");
+		foodComboboxLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		foodComboboxLabel.setBounds(30, 203, 186, 26);
+		mainPnl.add(foodComboboxLabel);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(240, 243, 215, 35);
-		mainPnl.add(comboBox);
+		comboBoxFood = new JComboBox();
+		comboBoxFood.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		comboBoxFood.setBounds(224, 203, 231, 26);
+		mainPnl.add(comboBoxFood);
 		
-		JLabel lblGiveTheCalorie = new JLabel("give the calorie: ");
-		lblGiveTheCalorie.setBounds(30, 402, 113, 35);
-		mainPnl.add(lblGiveTheCalorie);
+		JLabel foodNameLabel = new JLabel("food name:");
+		foodNameLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		foodNameLabel.setBounds(30, 389, 186, 26);
+		mainPnl.add(foodNameLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(240, 402, 215, 35);
-		mainPnl.add(textField);
-		textField.setColumns(10);
-		
-		JLabel lblNewLabel_1 = new JLabel("if not found in the list, give manuel");
-		lblNewLabel_1.setBounds(100, 318, 269, 44);
-		mainPnl.add(lblNewLabel_1);
-		
-		JLabel lblSelectTheMacronutrition = new JLabel("select the macronutrition:");
-		lblSelectTheMacronutrition.setBounds(30, 472, 142, 35);
-		mainPnl.add(lblSelectTheMacronutrition);
-		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(240, 472, 215, 35);
-		mainPnl.add(comboBox_1);
+		foodNameField = new JTextField();
+		foodNameField.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		foodNameField.setBounds(224, 389, 231, 26);
+		mainPnl.add(foodNameField);
+		foodNameField.setColumns(10);
 		
 		JLabel trackEditDate_1 = new JLabel("Select date:");
 		trackEditDate_1.setBounds(527, 172, 78, 35);
@@ -438,7 +451,76 @@ public class TrackingFrame {
 		trackEditDate_1_1_1.setBounds(515, 412, 78, 35);
 		mainPnl.add(trackEditDate_1_1_1);
 		
-
+		JLabel gramsLabel_1 = new JLabel("amount in grams:");
+		gramsLabel_1.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		gramsLabel_1.setBounds(30, 248, 186, 26);
+		mainPnl.add(gramsLabel_1);
+		
+		gramsField_1 = new JTextField();
+		gramsField_1.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		gramsField_1.setColumns(10);
+		gramsField_1.setBounds(224, 248, 231, 26);
+		mainPnl.add(gramsField_1);
+		
+		JLabel caloriesLabel = new JLabel("calories per 100g:");
+		caloriesLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		caloriesLabel.setBounds(30, 434, 186, 26);
+		mainPnl.add(caloriesLabel);
+		
+		caloriesField = new JTextField();
+		caloriesField.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		caloriesField.setColumns(10);
+		caloriesField.setBounds(224, 434, 231, 26);
+		mainPnl.add(caloriesField);
+		
+		JLabel fatLabel = new JLabel("fat per 100g:");
+		fatLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		fatLabel.setBounds(30, 479, 186, 26);
+		mainPnl.add(fatLabel);
+		
+		fatField = new JTextField();
+		fatField.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		fatField.setColumns(10);
+		fatField.setBounds(224, 479, 231, 26);
+		mainPnl.add(fatField);
+		
+		JLabel carbsLabel = new JLabel("carbs per 100g:");
+		carbsLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		carbsLabel.setBounds(30, 524, 186, 26);
+		mainPnl.add(carbsLabel);
+		
+		carbsField = new JTextField();
+		carbsField.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		carbsField.setColumns(10);
+		carbsField.setBounds(224, 524, 231, 26);
+		mainPnl.add(carbsField);
+		
+		JLabel proteinsLabel = new JLabel("proteins per 100g:");
+		proteinsLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		proteinsLabel.setBounds(30, 569, 186, 26);
+		mainPnl.add(proteinsLabel);
+		
+		proteinsField = new JTextField();
+		proteinsField.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		proteinsField.setColumns(10);
+		proteinsField.setBounds(224, 569, 231, 26);
+		mainPnl.add(proteinsField);
+		
+		chckbxFoodNotFound = new JCheckBox("Didn't find your food in the list? Enter manually:");
+		chckbxFoodNotFound.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		chckbxFoodNotFound.setBounds(30, 328, 425, 26);
+		mainPnl.add(chckbxFoodNotFound);
+		
+		JLabel gramsLabel_2 = new JLabel("amount in grams:");
+		gramsLabel_2.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		gramsLabel_2.setBounds(30, 614, 186, 26);
+		mainPnl.add(gramsLabel_2);
+		
+		gramsField_2 = new JTextField();
+		gramsField_2.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		gramsField_2.setColumns(10);
+		gramsField_2.setBounds(224, 614, 231, 26);
+		mainPnl.add(gramsField_2);
 		
 		JPanel topPnl = new JPanel();
 		topPnl.setPreferredSize(new Dimension(10, 30));
@@ -515,5 +597,61 @@ public class TrackingFrame {
 	
 	public static void displayFrame() {
 		frame.setVisible(true);
+	}
+	
+	
+	
+	/*
+	 * check wheter the input in the tracking frame is valid
+	 */
+	public boolean validTrackingData() {
+		try {
+			date = dateChooserLeft.getDate();
+			
+			if(!chckbxFoodNotFound.isSelected()) {
+				foodname = comboBoxFood.getSelectedItem().toString();
+				amount = Double.parseDouble(gramsField_1.getText());
+			} else {
+				foodname = foodNameField.getText();
+				calories = Double.parseDouble(caloriesField.getText());
+				fats = Double.parseDouble(fatField.getText());
+				carbs = Double.parseDouble(carbsField.getText());
+				proteins = Double.parseDouble(proteinsField.getText());
+				amount = Double.parseDouble(gramsField_2.getText());
+			}
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
+	}
+	
+	
+	
+	/*
+	 * returns a String-Array that contains the names of the tracked data
+	 */
+	public String[] getTrackingNames() {
+		if(!chckbxFoodNotFound.isSelected()) {
+			String[] trackingData = {"food name", "amount"};
+			return trackingData;
+		} else {
+			String[] trackingData = {"food name", "calories", "fats", "carbs", "proteins", "amount"};
+			return trackingData;
+		}
+	}
+	
+	
+	
+	/*
+	 * returns an Object-Array that contains the values of the user input
+	 */
+	public Object[] getTrackingData() {		
+		if(!chckbxFoodNotFound.isSelected()) {
+			Object[] trackingData = {foodname, amount};
+			return trackingData;
+		} else {
+			Object[] trackingData = {foodname, calories, fats, carbs, proteins, amount};
+			return trackingData;
+		}
 	}
 }

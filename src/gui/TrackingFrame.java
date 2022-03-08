@@ -11,9 +11,12 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -30,6 +33,8 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 
 import backend.MongoDBConnector;
+
+
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -43,7 +48,7 @@ import javax.swing.JList;
 import javax.swing.JProgressBar;
 import javax.swing.JCheckBox;
 
-public class TrackingFrame {
+public class TrackingFrame extends Thread {
 
 	private static JFrame frame;
 	public JButton passwordBtn;
@@ -60,7 +65,12 @@ public class TrackingFrame {
 	private JCheckBox chckbxFoodNotFound;
 	private JDateChooser dateChooserLeft;
 	private JComboBox comboBoxFood;
-	
+	private JTextField textField;
+	private JDateChooser progressDateChooser;
+	private String formattedprogressDateChooser = "01-01-2022";
+	private double proteinCalPercent = 0.0;
+	private double carboCalPercent = 0.0;
+	private double fatCalPercent = 0.0;
 	private Date date;
 	private String foodname;
 	private double amount;
@@ -68,12 +78,20 @@ public class TrackingFrame {
 	private double fats;
 	private double carbs;
 	private double proteins;
+	private int proteinGram = 0;
+	private int carboGram = 0;
+	private int fatGram = 0;
+	private static String[] trackedMacroData;
+	private boolean isRunning;
+	private JPanel mainPnl;
+	private JDateChooser dateChooser;
 	
 	public TrackingFrame() {
 		initialize();
 	}
 
 	private void initialize() {
+		System.out.println("trackframe initilize started 78");
 		frame = new JFrame("Tracking");
 		frame.setUndecorated(true);
 		frame.setBounds(100, 100, 1250, 800);
@@ -337,7 +355,7 @@ public class TrackingFrame {
 		btnTracking.setEnabled(false);
 		sidePnl.add(btnTracking);
 		
-		JPanel mainPnl = new JPanel();
+		mainPnl = new JPanel();
 		parentPnl.add(mainPnl, BorderLayout.CENTER);
 		mainPnl.setLayout(null);
 		
@@ -360,6 +378,7 @@ public class TrackingFrame {
 				if(validTrackingData()) {
 					if(chckbxFoodNotFound.isSelected()) {
 						MongoDBConnector.saveNewFoodData(MongoDBConnector._id, getTrackingNames(), getTrackingData());
+						MongoDBConnector.saveTrackingData(MongoDBConnector._id, getTrackingNames(), getTrackingData());
 					} else {
 						MongoDBConnector.saveTrackingData(MongoDBConnector._id, getTrackingNames(), getTrackingData());
 					}
@@ -408,22 +427,80 @@ public class TrackingFrame {
 		mainPnl.add(foodNameField);
 		foodNameField.setColumns(10);
 		
-		JLabel trackEditDate_1 = new JLabel("Select date:");
-		trackEditDate_1.setBounds(527, 172, 78, 35);
-		mainPnl.add(trackEditDate_1);
+
 		
-		JDateChooser dateChooser_1 = new JDateChooser();
-		dateChooser_1.setBounds(737, 172, 215, 35);
-		mainPnl.add(dateChooser_1);
-		
-		JLabel lblSeeYourProgress = new JLabel("See your progress");
-		lblSeeYourProgress.setFont(new Font("Century Gothic", Font.BOLD, 28));
-		lblSeeYourProgress.setBounds(623, 37, 248, 55);
-		mainPnl.add(lblSeeYourProgress);
 		
 		URL logoIconPath = this.getClass().getResource("/resources/logo.png");
+		
+		
+		
+		
+		
+		//here begins the right side of tracking frame's main panel
+		
+		
+		
+		JLabel lblSeeYourProgress = new JLabel("SEE YOUR PROGRESS");
+		lblSeeYourProgress.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		lblSeeYourProgress.setBounds(506, 37, 484, 55);
+		lblSeeYourProgress.setFont(Constants.HEADING);
+		lblSeeYourProgress.setHorizontalAlignment(SwingConstants.CENTER);
+		mainPnl.add(lblSeeYourProgress);
+  
+		
+		JLabel progessDateLbl = new JLabel("Date");
+		progessDateLbl.setBounds(515, 172, 78, 35);
+		progessDateLbl.setFont(Constants.PLAINTEXT);
+		mainPnl.add(progessDateLbl);
+		
+		JDateChooser progressDateChooser = new JDateChooser();
+		progressDateChooser.setBounds(668, 172, 231, 26);	
+		//((JTextField)progressDateChooser.getDateEditor().getUiComponent()).setText("Jan 1, 2022"); this sets a default text for the dateChooser
+		mainPnl.add(progressDateChooser);
+		
+		
+		
+		JButton searchBtn = new JButton("Search");
+		searchBtn.setBounds(926, 172, 52, 26);
+		searchBtn.setFont(new Font("Century Gothic", Font.PLAIN, 11));
+		searchBtn.setFocusPainted(false);
+		searchBtn.setBorderPainted(false);
+		searchBtn.setBorder(null);
+		searchBtn.setBackground(Constants.LIGHTGRAY);
+		searchBtn.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+					String myFormattedDateString = dateFormat.format(progressDateChooser.getDate());       
+					trackedMacroData = MongoDBConnector.getTrackedData(myFormattedDateString);
+					
+					if (trackedMacroData[0] != null) {
+						reloadTrackingFrame();
+					}
 
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "No date chosen!", "INFO", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+
+		});
+		mainPnl.add(searchBtn);
+		
+		try {
+			showCharts();
+		} catch (Exception e) {
+
+			JLabel noDataMessageLabel = new JLabel("Select a valid date to see the your progress");
+			noDataMessageLabel.setFont(new Font("Century Gothic", Font.BOLD, 16));
+			noDataMessageLabel.setBounds(504, 341, 486, 50);
+			noDataMessageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			mainPnl.add(noDataMessageLabel);
+			
+		}
+
+		//here ends the right side of tracking frame's main panel
 		// Creating the diagram
 		String[] macroNutrientsAndCalories = MongoDBConnector.getMacronutrientsAndCalories(MongoDBConnector._id);
 		DefaultPieDataset<String> pieDataSet = new DefaultPieDataset<String>();
@@ -437,15 +514,6 @@ public class TrackingFrame {
 		chartPnl.setBounds(613, 412, 339, 295);
 		chartPnl.setLayout(null);
 		mainPnl.add(chartPnl);
-		
-		JProgressBar progressBar = new JProgressBar();
-		progressBar.setValue(70);
-		progressBar.setBounds(613, 318, 339, 35);
-		mainPnl.add(progressBar);
-		
-		JLabel trackEditDate_1_1 = new JLabel("Calorie:");
-		trackEditDate_1_1.setBounds(515, 318, 78, 35);
-		mainPnl.add(trackEditDate_1_1);
 		
 		JLabel trackEditDate_1_1_1 = new JLabel("Macronutritons:");
 		trackEditDate_1_1_1.setBounds(515, 412, 78, 35);
@@ -600,7 +668,6 @@ public class TrackingFrame {
 	}
 	
 	
-	
 	/*
 	 * check wheter the input in the tracking frame is valid
 	 */
@@ -654,4 +721,140 @@ public class TrackingFrame {
 			return trackingData;
 		}
 	}
+	
+	
+	
+	public static void enableFrame() {
+		frame.setEnabled(true);
+	}
+	
+	public static void disposeFrame() {
+		frame.dispose();
+	}
+	
+	
+	
+	public void showCharts() {
+		
+		String[] macroNutrientsAndCalories = MongoDBConnector.getMacronutrientsAndCalories(MongoDBConnector._id);
+		
+		DefaultPieDataset<String> pieDataSet = new DefaultPieDataset<String>();
+		
+		proteinCalPercent = Double.parseDouble(trackedMacroData[6])*4;
+		carboCalPercent = Double.parseDouble(trackedMacroData[3])*4;
+		fatCalPercent = Double.parseDouble(trackedMacroData[5])*9;
+
+		double caloriesToEat = Double.parseDouble(macroNutrientsAndCalories[0])-proteinCalPercent-carboCalPercent-fatCalPercent;
+		
+		System.out.println(caloriesToEat + " trackframe calorie to eat 598");
+		proteinGram = (int)Double.parseDouble(trackedMacroData[6]);
+		carboGram = (int)Double.parseDouble(trackedMacroData[3]);
+		fatGram = (int)Double.parseDouble(trackedMacroData[5]);
+		
+		pieDataSet.setValue("proteins (kcal)", proteinCalPercent);
+		pieDataSet.setValue("carbohydrates (kcal)", carboCalPercent);
+		pieDataSet.setValue("fats (kcal)", fatCalPercent);
+		pieDataSet.setValue("calories to eat", caloriesToEat);
+		
+		JFreeChart pieChart = ChartFactory.createPieChart("Calorie Distribution", pieDataSet, true, true, true);
+		ChartPanel chartPnl = new ChartPanel(pieChart);
+		chartPnl.setBackground(new Color(154, 205, 50));
+		chartPnl.setBounds(552, 420, 394, 295);
+		chartPnl.setLayout(null);
+		mainPnl.add(chartPnl);
+		
+		JLabel CarboProgLbl = new JLabel("CARBOHYDRATE");
+		CarboProgLbl.setBounds(515, 243, 119, 35);
+		CarboProgLbl.setFont(Constants.PLAINTEXT);
+		mainPnl.add(CarboProgLbl);
+		
+		JProgressBar CarboProgBar = new JProgressBar(0,(int) Double.parseDouble(macroNutrientsAndCalories[3]));
+		CarboProgBar.setStringPainted(true);
+		CarboProgBar.setValue(carboGram);
+		//CarboProgBar.setMaximum((int) Double.parseDouble(macroNutrientsAndCalories[3]));
+		CarboProgBar.setBounds(668, 250, 310, 23);
+		CarboProgBar.setString(carboGram+" g / "+macroNutrientsAndCalories[3]+ " g");
+		mainPnl.add(CarboProgBar);
+
+		JLabel proteinProgLbl = new JLabel("PROTEIN");
+		proteinProgLbl.setBounds(515, 299, 119, 35);
+		proteinProgLbl.setFont(Constants.PLAINTEXT);
+		mainPnl.add(proteinProgLbl);
+		
+		JProgressBar proteinProgBar = new JProgressBar(0,(int) Double.parseDouble(macroNutrientsAndCalories[1]));
+		proteinProgBar.setStringPainted(true);
+		proteinProgBar.setValue(proteinGram);
+		proteinProgBar.setBounds(668, 308, 310, 23);
+		proteinProgBar.setString(proteinGram+" g / "+macroNutrientsAndCalories[1]+ " g");
+		mainPnl.add(proteinProgBar);
+		
+		JLabel fatProgLbl = new JLabel("FAT");
+		fatProgLbl.setBounds(515, 351, 119, 35);
+		fatProgLbl.setFont(Constants.PLAINTEXT);
+		mainPnl.add(fatProgLbl);
+		
+		JProgressBar fatProgBar = new JProgressBar(0, (int) Double.parseDouble(macroNutrientsAndCalories[2]));
+		fatProgBar.setStringPainted(true);
+		fatProgBar.setForeground(Color.DARK_GRAY);
+		fatProgBar.setValue(fatGram);
+		fatProgBar.setBounds(668, 360, 310, 23);
+		mainPnl.add(fatProgBar);
+		
+		if (caloriesToEat <= 0) {
+
+			JLabel negativeCalAlertLabel = new JLabel("The calorie limit for "+formattedprogressDateChooser+" was exceeded by "+Math.abs(caloriesToEat)+" kcal !!!");
+			negativeCalAlertLabel.setBounds(506, 726, 484, 33);
+			negativeCalAlertLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			negativeCalAlertLabel.setFont(Constants.PLAINTEXT);
+			mainPnl.add(negativeCalAlertLabel);
+
+		}
+	}
+	
+	
+	
+	public static void reloadTrackingFrame() {
+		frame.dispose();
+		TrackingFrame reloadedTrackingFrame = new TrackingFrame();
+		reloadedTrackingFrame.displayFrame();
+	}
+	
+	
+	//Thread to automatically run when a date is chosen from right side of main panel 
+	
+	public void run() {
+		while (isRunning) {
+			System.out.println("running");
+
+			try {
+				System.out.println("running1");
+				//SimpleDateFormat dateFormat_1 = new SimpleDateFormat("dd-MM-yyyy");
+				String formattedDateString = "";
+				System.out.println("ho");
+				//progressDateChooser.getDate() != null && progressDateChooser.getDate().toString().isEmpty() &&
+				if ( formattedDateString != formattedprogressDateChooser) {
+					//System.out.println(progressDateChooser.getDate());
+					System.out.println("inside try in thread");
+					try {
+						//formattedDateString = dateFormat_1.format(progressDateChooser.getDate());
+					} catch (Exception e) {
+						System.out.println("date catch didnt work");
+					}
+					
+					System.out.println(progressDateChooser.getDate());
+
+					formattedprogressDateChooser = formattedDateString;
+					trackedMacroData = MongoDBConnector.getTrackedData(formattedprogressDateChooser);
+					isRunning = false;
+				}
+
+				System.out.println("hi");
+			} catch (Exception e) {
+				System.out.println("error in thread");
+				isRunning = false;
+			}
+
+		}
+	}
 }
+

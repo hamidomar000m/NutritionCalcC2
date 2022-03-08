@@ -535,16 +535,6 @@ public class NutritionCalculator {
 	}
 	
 	
-	
-	/*
-	 * calculates the overall nutritional values
-	 * based on the user input in the tracking frame
-	 */
-	public static void calculateTrackingValues(double[] trackingData) {
-		
-	}
-	
-	
 
 	/*
 	 * return the results of the calculation

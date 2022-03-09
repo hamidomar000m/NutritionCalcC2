@@ -71,13 +71,19 @@ public class TrackingFrame extends Thread {
 	private double proteinCalPercent = 0.0;
 	private double carboCalPercent = 0.0;
 	private double fatCalPercent = 0.0;
-	private Date date;
+	private String date;
 	private String foodname;
 	private double amount;
 	private double calories;
 	private double fats;
 	private double carbs;
 	private double proteins;
+	private String foodname2;
+	private double amount2;
+	private double calories2;
+	private double fats2;
+	private double carbs2;
+	private double proteins2;
 	private int proteinGram = 0;
 	private int carboGram = 0;
 	private int fatGram = 0;
@@ -383,6 +389,7 @@ public class TrackingFrame extends Thread {
 						MongoDBConnector.saveTrackingData(MongoDBConnector._id, getTrackingNames(), getTrackingData());
 					}
 				}
+				reloadTrackingFrame();
 
 			}
 
@@ -394,8 +401,9 @@ public class TrackingFrame extends Thread {
 		trackSeparator.setBounds(495, 11, 10, 748);
 		mainPnl.add(trackSeparator);
 		
-		JLabel trackEditHeading = new JLabel("Track your nutrition data:");
+		JLabel trackEditHeading = new JLabel("Track your nutrition data");
 		trackEditHeading.setHorizontalAlignment(SwingConstants.CENTER);
+		trackEditHeading.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		trackEditHeading.setFont(Constants.HEADING);
 		trackEditHeading.setBounds(77, 40, 331, 55);
 		mainPnl.add(trackEditHeading);
@@ -501,23 +509,7 @@ public class TrackingFrame extends Thread {
 		}
 
 		//here ends the right side of tracking frame's main panel
-		// Creating the diagram
-		String[] macroNutrientsAndCalories = MongoDBConnector.getMacronutrientsAndCalories(MongoDBConnector._id);
-		DefaultPieDataset<String> pieDataSet = new DefaultPieDataset<String>();
-		pieDataSet.setValue("proteins", Double.parseDouble(macroNutrientsAndCalories[1]));
-		pieDataSet.setValue("carbohydrates", Double.parseDouble(macroNutrientsAndCalories[3]));
-		pieDataSet.setValue("fats", Double.parseDouble(macroNutrientsAndCalories[2]));
-		
-		JFreeChart pieChart = ChartFactory.createPieChart("Nutrient distribution", pieDataSet, true, true, true);
-		ChartPanel chartPnl = new ChartPanel(pieChart);
-		chartPnl.setBackground(new Color(154, 205, 50));
-		chartPnl.setBounds(613, 412, 339, 295);
-		chartPnl.setLayout(null);
-		mainPnl.add(chartPnl);
-		
-		JLabel trackEditDate_1_1_1 = new JLabel("Macronutritons:");
-		trackEditDate_1_1_1.setBounds(515, 412, 78, 35);
-		mainPnl.add(trackEditDate_1_1_1);
+
 		
 		JLabel gramsLabel_1 = new JLabel("amount in grams:");
 		gramsLabel_1.setFont(new Font("Century Gothic", Font.PLAIN, 16));
@@ -673,18 +665,23 @@ public class TrackingFrame extends Thread {
 	 */
 	public boolean validTrackingData() {
 		try {
-			date = dateChooserLeft.getDate();
+			SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd-MM-yyyy");
+			date = dateFormat1.format(dateChooserLeft.getDate()); 
+			
+			
 			
 			if(!chckbxFoodNotFound.isSelected()) {
 				foodname = comboBoxFood.getSelectedItem().toString();
 				amount = Double.parseDouble(gramsField_1.getText());
+				
 			} else {
 				foodname = foodNameField.getText();
-				calories = Double.parseDouble(caloriesField.getText());
+				amount = Double.parseDouble(gramsField_2.getText());
 				fats = Double.parseDouble(fatField.getText());
 				carbs = Double.parseDouble(carbsField.getText());
 				proteins = Double.parseDouble(proteinsField.getText());
-				amount = Double.parseDouble(gramsField_2.getText());
+				calories = Double.parseDouble(caloriesField.getText());
+
 			}
 			return true;
 		}catch(Exception e) {
@@ -692,6 +689,7 @@ public class TrackingFrame extends Thread {
 		}
 	}
 	
+
 	
 	
 	/*
@@ -702,10 +700,12 @@ public class TrackingFrame extends Thread {
 			String[] trackingData = {"food name", "amount"};
 			return trackingData;
 		} else {
-			String[] trackingData = {"food name", "calories", "fats", "carbs", "proteins", "amount"};
+			String[] trackingData = {"food name", "calorie_amount", "fat_amount", "carbo_amount", "protein_amount", "date", "amount"};
 			return trackingData;
 		}
 	}
+	
+
 	
 	
 	
@@ -717,10 +717,12 @@ public class TrackingFrame extends Thread {
 			Object[] trackingData = {foodname, amount};
 			return trackingData;
 		} else {
-			Object[] trackingData = {foodname, calories, fats, carbs, proteins, amount};
+			Object[] trackingData = {foodname, calories, fats, carbs, proteins, date, amount};
 			return trackingData;
 		}
 	}
+	
+
 	
 	
 	
@@ -797,6 +799,7 @@ public class TrackingFrame extends Thread {
 		fatProgBar.setStringPainted(true);
 		fatProgBar.setForeground(Color.DARK_GRAY);
 		fatProgBar.setValue(fatGram);
+		fatProgBar.setString(fatGram+" g / "+macroNutrientsAndCalories[2]+ " g");
 		fatProgBar.setBounds(668, 360, 310, 23);
 		mainPnl.add(fatProgBar);
 		

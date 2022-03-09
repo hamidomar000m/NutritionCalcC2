@@ -520,9 +520,9 @@ public class MongoDBConnector {
 
 	public static String[] getTrackedData(String date) {
 
-		String[] trackedData = new String[7];
+		String[] trackedData = new String[8];
 		ArrayList<String> trackedDataList = new ArrayList<String>();
-		// trackedDataList = [_id, username, calorie_amout, carbo_amount, date, fat_amount, protein_amount]
+		
 		try {
 			
 			BasicDBObject searchQuery_id = new BasicDBObject();
@@ -563,8 +563,8 @@ public class MongoDBConnector {
 			JOptionPane.showMessageDialog(null, "Something went wrong!", "INFO", JOptionPane.ERROR_MESSAGE);
 
 		}
-
-		return trackedData; // trackedDataList = [_id, username, calorie_amout, carbo_amount, date, fat_amount, protein_amount]
+		System.out.println(trackedData + " mongo trackedata");
+		return trackedData; // trackedDataList = [_id, username, fat_amout, carbo_amount, protein_amount, date, amount, food_name]
 
 	}
 	

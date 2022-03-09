@@ -36,9 +36,6 @@ public class FoodsFrame {
 	public JButton deleteAccBtn;
 	
 	private ArrayList<String> dataList;
-	private String[] carbs;
-	private String[] proteins;
-	private String[] fats;
 
 	public FoodsFrame() {
 		initialize();
@@ -307,6 +304,33 @@ public class FoodsFrame {
 			
 		});
 		sidePnl.add(btnTracking);
+		
+		JButton btnImprint = new JButton("Imprint");
+		btnImprint.setHorizontalAlignment(SwingConstants.LEFT);
+		btnImprint.setForeground(Constants.LIGHTGRAY);
+		btnImprint.setFont(Constants.BUTTONTEXT);
+		btnImprint.setFocusPainted(false);
+		btnImprint.setBorderPainted(false);
+		btnImprint.setBorder(null);
+		btnImprint.setBackground(Constants.MIDGREEN);
+		btnImprint.setBounds(35, 558, 78, 23);
+		btnImprint.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				frame.setVisible(false);
+				ImprintFrame.displayFrame();
+				btnSettings.setEnabled(true);
+				btnSettings.setFont(Constants.BUTTONTEXT);
+				passwordBtn.setVisible(false);
+				bodydataBtn.setVisible(false);
+				deleteAccBtn.setVisible(false);
+
+			}
+
+		});
+		sidePnl.add(btnImprint);
 		
 		JPanel mainPnl = new JPanel();
 		parentPnl.add(mainPnl, BorderLayout.CENTER);

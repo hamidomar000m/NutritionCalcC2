@@ -56,14 +56,6 @@ public class WorkoutFrame {
 		frame.getContentPane().add(parentPnl, BorderLayout.NORTH);
 		parentPnl.setLayout(new BorderLayout(0, 0));
 		
-		/*
-		 * BEGINNING: Panel for chest
-		 */
-		
-		/*
-		 * END: Panel for chest
-		 */
-		
 		JPanel sidePnl = new JPanel();
 		sidePnl.setPreferredSize(new Dimension(250, 770));
 		sidePnl.setBackground(Constants.MIDGREEN);
@@ -315,6 +307,33 @@ public class WorkoutFrame {
 		});
 		sidePnl.add(btnTracking);
 		
+		JButton btnImprint = new JButton("Imprint");
+		btnImprint.setHorizontalAlignment(SwingConstants.LEFT);
+		btnImprint.setForeground(Constants.LIGHTGRAY);
+		btnImprint.setFont(Constants.BUTTONTEXT);
+		btnImprint.setFocusPainted(false);
+		btnImprint.setBorderPainted(false);
+		btnImprint.setBorder(null);
+		btnImprint.setBackground(Constants.MIDGREEN);
+		btnImprint.setBounds(35, 558, 78, 23);
+		btnImprint.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				frame.setVisible(false);
+				ImprintFrame.displayFrame();
+				btnSettings.setEnabled(true);
+				btnSettings.setFont(Constants.BUTTONTEXT);
+				passwordBtn.setVisible(false);
+				bodydataBtn.setVisible(false);
+				deleteAccBtn.setVisible(false);
+
+			}
+
+		});
+		sidePnl.add(btnImprint);
+		
 		mainPnl = new JPanel();
 		parentPnl.add(mainPnl, BorderLayout.CENTER);
 		mainPnl.setLayout(null);
@@ -346,7 +365,6 @@ public class WorkoutFrame {
 				parentPnl.revalidate();
 				parentPnl.repaint();
 				
-				
 			}
 		});
 		
@@ -369,6 +387,18 @@ public class WorkoutFrame {
 		btnBack.setBackground(Constants.MAINBACKGROUND);
 		btnBack.setContentAreaFilled(false);
 		btnBack.setBounds(412, 58, Constants.imageWidth, Constants.imageHeight);
+		btnBack.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				parentPnl.remove(mainPnl);
+				parentPnl.add(workoutPanel.getBackPanel(), BorderLayout.CENTER);
+				parentPnl.revalidate();
+				parentPnl.repaint();
+				
+			}
+		});
 		mainPnl.add(btnBack);
 		
 		URL legIconPath = this.getClass().getResource("/resources/Beine.png");
@@ -387,6 +417,18 @@ public class WorkoutFrame {
 		btnLegs.setBorder(null);
 		btnLegs.setBackground(Constants.MAINBACKGROUND);
 		btnLegs.setBounds(751, 58, Constants.imageWidth, Constants.imageHeight);
+		btnLegs.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				parentPnl.remove(mainPnl);
+				parentPnl.add(workoutPanel.getLegsPanel(), BorderLayout.CENTER);
+				parentPnl.revalidate();
+				parentPnl.repaint();
+				
+			}
+		});
 		mainPnl.add(btnLegs);
 		
 		URL absIconPath = this.getClass().getResource("/resources/Bauch.png");
@@ -405,6 +447,18 @@ public class WorkoutFrame {
 		btnAbs.setBorder(null);
 		btnAbs.setBackground(Constants.MAINBACKGROUND);
 		btnAbs.setBounds(93, 437, Constants.imageWidth, Constants.imageHeight);
+		btnAbs.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				parentPnl.remove(mainPnl);
+				parentPnl.add(workoutPanel.getAbsPanel(), BorderLayout.CENTER);
+				parentPnl.revalidate();
+				parentPnl.repaint();
+				
+			}
+		});
 		mainPnl.add(btnAbs);
 		
 		URL bicepsIconPath = this.getClass().getResource("/resources/Bizeps.png");
@@ -423,6 +477,18 @@ public class WorkoutFrame {
 		btnBiceps.setBorder(null);
 		btnBiceps.setBackground(Constants.MAINBACKGROUND);
 		btnBiceps.setBounds(412, 437, Constants.imageWidth, Constants.imageHeight);
+		btnBiceps.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				parentPnl.remove(mainPnl);
+				parentPnl.add(workoutPanel.getBicepsPanel(), BorderLayout.CENTER);
+				parentPnl.revalidate();
+				parentPnl.repaint();
+				
+			}
+		});
 		mainPnl.add(btnBiceps);
 		
 		URL tricepsIconPath = this.getClass().getResource("/resources/Trizeps.png");
@@ -441,6 +507,18 @@ public class WorkoutFrame {
 		btnTriceps.setBorder(null);
 		btnTriceps.setBackground(Constants.MAINBACKGROUND);
 		btnTriceps.setBounds(751, 437, Constants.imageWidth, Constants.imageHeight);
+		btnTriceps.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				parentPnl.remove(mainPnl);
+				parentPnl.add(workoutPanel.getTricepsPanel(), BorderLayout.CENTER);
+				parentPnl.revalidate();
+				parentPnl.repaint();
+				
+			}
+		});
 		mainPnl.add(btnTriceps);
 		
 		JPanel topPnl = new JPanel();

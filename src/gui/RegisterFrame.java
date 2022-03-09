@@ -153,7 +153,7 @@ public class RegisterFrame extends Thread {
 		
 		JLabel lblLogin = new JLabel("REGISTRATION");
 		lblLogin.setFont(new Font("Century Gothic", Font.BOLD, 20));
-		lblLogin.setBounds(250, 262, 213, 36);
+		lblLogin.setBounds(250, 262, 202, 36);
 		lblLogin.setFont(Constants.HEADING);
 		mainPnl.add(lblLogin);
 		

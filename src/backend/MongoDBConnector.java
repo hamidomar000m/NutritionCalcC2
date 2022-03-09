@@ -8,6 +8,8 @@ import com.mongodb.client.MongoCursor;
 
 import gui.BodyDataFrame;
 import gui.FoodsFrame;
+import gui.ImprintFrame;
+import gui.LogInFrm;
 import gui.LoginFrame;
 import gui.MicronutrientsFrame;
 import gui.PasswordFrame;
@@ -77,7 +79,7 @@ public class MongoDBConnector {
 			String url = "mongodb+srv://HamidO:123Hamid123@cluster0.f2htr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 			mongoClient = MongoClients.create(url);
 
-			System.out.println("Connectionn created");
+			System.out.println("Connection created");
 
 		} catch (Exception e) {
 			System.out.println("Error : " + e);
@@ -149,6 +151,7 @@ public class MongoDBConnector {
 					TrackingFrame trackingFrame = new TrackingFrame();
 					PasswordFrame passwordFrame = new PasswordFrame();
 					BodyDataFrame bodyDataFrame = new BodyDataFrame();
+					ImprintFrame imprintFrame = new ImprintFrame();
 
 					LoginFrame.hideFrame();
 					RegisterFrame.hideFrame();

@@ -1,7 +1,7 @@
 package backend;
 
 public class NutritionCalculator {
-
+	//test
 	// user data
 	private String gender;
 	private String goal;
@@ -533,6 +533,8 @@ public class NutritionCalculator {
 
 		System.out.println("Nutrients calculated");
 	}
+	
+	
 
 	/*
 	 * return the results of the calculation

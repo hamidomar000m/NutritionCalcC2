@@ -213,6 +213,7 @@ public class RegisterFrame extends Thread {
 		
 		JLabel lblGoal_2 = new JLabel("GOAL");
 		lblGoal_2.setFont(Constants.LOGINTEXT);
+		lblGoal_2.setBounds(250, 645, 63, 23);
 		lblGoal_2.setBounds(250, 645, 69, 23);
 		mainPnl.add(lblGoal_2);
 		

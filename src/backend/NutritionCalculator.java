@@ -79,15 +79,15 @@ public class NutritionCalculator {
 
 		// determine the activity factor:
 		double activityFactor;
-
+		
 		switch (activity) {
 		case "Exclusively seated/lying activities":
 			activityFactor = 1.2;
 			break;
-		case "Almost exclusively sedentary activities, almost no physical leisure activities":
+		case "Very often sedentary activities":
 			activityFactor = 1.4;
 			break;
-		case "Predominantly sedentary activities, occasional standing/walking activity":
+		case "Predominantly sedentary activities":
 			activityFactor = 1.65;
 			break;
 		case "Predominantly walking / standing activity":

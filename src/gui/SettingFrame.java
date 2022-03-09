@@ -1,25 +1,33 @@
 package gui;
 
-import java.awt.Color;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import backend.MongoDBConnector;
-import javax.swing.JComboBox;
 
-public class SettingsFrame {
+public class SettingFrame {
 
 	private static JFrame frame;
 	private JTextField textField;
@@ -29,78 +37,329 @@ public class SettingsFrame {
 	private boolean isVisibleBd = false;
 	private JTextField newValueTxt;
 
-	public SettingsFrame(final String _id) {
-		this.userName = _id;
+	public SettingFrame() {
 		initialize();
 	}
 
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 400, 700);
-		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		frame.getContentPane().setBackground(new Color(154, 205, 50));
-		frame.getContentPane().setLayout(null);
+		frame = new JFrame("Settings");
+		frame.setUndecorated(true);
+		frame.setBounds(100, 100, 1250, 800);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
+		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JLabel lblHeading = new JLabel("Settings");
-		lblHeading.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 36));
-		lblHeading.setBounds(125, 36, 146, 43);
-		frame.getContentPane().add(lblHeading);
+		JPanel parentPnl = new JPanel();
+		frame.getContentPane().add(parentPnl, BorderLayout.NORTH);
+		parentPnl.setLayout(new BorderLayout(0, 0));
+		
+		JPanel sidePnl = new JPanel();
+		sidePnl.setPreferredSize(new Dimension(250, 770));
+		sidePnl.setBackground(Constants.MIDGREEN);
+		parentPnl.add(sidePnl, BorderLayout.WEST);
+		
+		JLabel headingLbl = new JLabel("NutritionCalc");
+		headingLbl.setBounds(35, 50, 190, 36);
+		headingLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
+		headingLbl.setForeground(Constants.LIGHTGRAY);
+		headingLbl.setFont(Constants.HEADING);
+		
+		JLabel uHeadingLbl = new JLabel("Track your nutrition!");
+		uHeadingLbl.setBounds(35, 84, 138, 19);
+		uHeadingLbl.setForeground(Constants.LIGHTGRAY);
+		uHeadingLbl.setFont(Constants.PLAINTEXT);
+		
+		JLabel versionLbl = new JLabel(Constants.VERSION);
+		versionLbl.setForeground(Constants.LIGHTGRAY);
+		versionLbl.setFont(Constants.PLAINTEXT);
+		versionLbl.setBounds(191, 41, 49, 14);
+		sidePnl.setLayout(null);
+		sidePnl.add(headingLbl);
+		sidePnl.add(uHeadingLbl);
+		sidePnl.add(versionLbl);
+		
+		JButton btnHome = new JButton("Home");
+		btnHome.setHorizontalAlignment(SwingConstants.LEFT);
+		btnHome.setForeground(Constants.LIGHTGRAY);
+		btnHome.setFont(Constants.BUTTONTEXT);
+		btnHome.setFocusPainted(false);
+		btnHome.setBorderPainted(false);
+		btnHome.setBorder(null);
+		btnHome.setBackground(Constants.MIDGREEN);
+		btnHome.setBounds(35, 175, 73, 23);
+		btnHome.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				frame.setVisible(false);
+				StartFrame.displayFrame();
+				
+			}
+			
+		});
+		sidePnl.add(btnHome);
+		
+		JButton foodRecBtn = new JButton("Food");
+		foodRecBtn.setHorizontalAlignment(SwingConstants.LEFT);
+		foodRecBtn.setFocusPainted(false);
+		foodRecBtn.setBorderPainted(false);
+		foodRecBtn.setBorder(null);
+		foodRecBtn.setBackground(Constants.MIDGREEN);
+		foodRecBtn.setForeground(Constants.LIGHTGRAY);
+		foodRecBtn.setFont(Constants.BUTTONTEXT);
+		foodRecBtn.setBounds(35, 215, 61, 23);
+		foodRecBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				frame.setVisible(false);
+				FoodsFrame.displayFrame();
+				
+			}
+			
+		});
+		sidePnl.add(foodRecBtn);
+		
+		JButton supBtn = new JButton("Supplements");
+		supBtn.setHorizontalAlignment(SwingConstants.LEFT);
+		supBtn.setForeground(Constants.LIGHTGRAY);
+		supBtn.setFont(Constants.BUTTONTEXT);
+		supBtn.setFocusPainted(false);
+		supBtn.setBorderPainted(false);
+		supBtn.setBorder(null);
+		supBtn.setBackground(Constants.MIDGREEN);
+		supBtn.setBounds(35, 255, 138, 23);
+		supBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				frame.setVisible(false);
+				SupplementFrame.displayFrame();
+				
+			}
+			
+		});
+		sidePnl.add(supBtn);
+		
+		JButton btnWorkout = new JButton("Workout");
+		btnWorkout.setHorizontalAlignment(SwingConstants.LEFT);
+		btnWorkout.setForeground(Constants.LIGHTGRAY);
+		btnWorkout.setFont(Constants.BUTTONTEXT);
+		btnWorkout.setFocusPainted(false);
+		btnWorkout.setBorderPainted(false);
+		btnWorkout.setBorder(null);
+		btnWorkout.setBackground(Constants.MIDGREEN);
+		btnWorkout.setBounds(35, 295, 95, 23);
+		btnWorkout.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				frame.setVisible(false);
+				WorkoutFrame.displayFrame();
+				
+			}
+			
+		});
+		sidePnl.add(btnWorkout);
+		
+		JButton btnTracking = new JButton("Tracking");
+		btnTracking.setHorizontalAlignment(SwingConstants.LEFT);
+		btnTracking.setForeground(Constants.LIGHTGRAY);
+		btnTracking.setFont(Constants.BUTTONTEXT);
+		btnTracking.setFocusPainted(false);
+		btnTracking.setBorderPainted(false);
+		btnTracking.setBorder(null);
+		btnTracking.setBackground(Constants.MIDGREEN);
+		btnTracking.setBounds(35, 335, 95, 23);
+		btnTracking.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				frame.setVisible(false);
+				TrackingFrame.displayFrame();
+				
+			}
+			
+		});
+		sidePnl.add(btnTracking);
+		
+		JButton btnSettings = new JButton("Settings");
+		btnSettings.setHorizontalAlignment(SwingConstants.LEFT);
+		btnSettings.setForeground(Constants.LIGHTGRAY);
+		btnSettings.setFont(Constants.BUTTONTEXTBOLD);
+		btnSettings.setFocusPainted(false);
+		btnSettings.setBorderPainted(false);
+		btnSettings.setBorder(null);
+		btnSettings.setBackground(Constants.MIDGREEN);
+		btnSettings.setBounds(35, 600, 95, 26);
+		btnSettings.setEnabled(false);
+		sidePnl.add(btnSettings);
+		
+		JButton passwordBtn = new JButton("Change password");
+		passwordBtn.setHorizontalAlignment(SwingConstants.LEFT);
+		passwordBtn.setForeground(Constants.LIGHTGRAY);
+		passwordBtn.setFont(Constants.BUTTONTEXT2);
+		passwordBtn.setFocusPainted(false);
+		passwordBtn.setBorderPainted(false);
+		passwordBtn.setBorder(null);
+		passwordBtn.setBackground(Constants.MIDGREEN);
+		passwordBtn.setBounds(60, 632, 153, 21);
+		sidePnl.add(passwordBtn);
+		
+		JButton bodydataBtn = new JButton("Change body data");
+		bodydataBtn.setHorizontalAlignment(SwingConstants.LEFT);
+		bodydataBtn.setForeground(Constants.LIGHTGRAY);
+		bodydataBtn.setFont(Constants.BUTTONTEXT2);
+		bodydataBtn.setFocusPainted(false);
+		bodydataBtn.setBorderPainted(false);
+		bodydataBtn.setBorder(null);
+		bodydataBtn.setBackground(Constants.MIDGREEN);
+		bodydataBtn.setBounds(60, 664, 165, 21);
+		sidePnl.add(bodydataBtn);
+		
+		JButton deleteAccBtn = new JButton("Delete account");
+		deleteAccBtn.setHorizontalAlignment(SwingConstants.LEFT);
+		deleteAccBtn.setForeground(Constants.LIGHTGRAY);
+		deleteAccBtn.setFont(Constants.BUTTONTEXT2);
+		deleteAccBtn.setFocusPainted(false);
+		deleteAccBtn.setBorderPainted(false);
+		deleteAccBtn.setBorder(null);
+		deleteAccBtn.setBackground(Constants.MIDGREEN);
+		deleteAccBtn.setBounds(60, 696, 138, 21);
+		sidePnl.add(deleteAccBtn);
+		
+		JPanel mainPnl = new JPanel();
+		parentPnl.add(mainPnl, BorderLayout.CENTER);
+		mainPnl.setLayout(null);
+		
+		JPanel topPnl = new JPanel();
+		topPnl.setPreferredSize(new Dimension(10, 30));
+		topPnl.setBackground(Constants.DARKGREEN);
+		parentPnl.add(topPnl, BorderLayout.NORTH);
+		topPnl.setLayout(new BorderLayout(0, 0));
+		
+		JPanel titlePnl = new JPanel();
+		titlePnl.setPreferredSize(new Dimension(250, 10));
+		titlePnl.setBackground(Constants.DARKGREEN);
+		topPnl.add(titlePnl, BorderLayout.WEST);
+		
+		JPanel actionPnl = new JPanel();
+		actionPnl.setPreferredSize(new Dimension(50, 10));
+		actionPnl.setBackground(Constants.DARKGREEN);
+		topPnl.add(actionPnl, BorderLayout.EAST);
+		
+		JLabel currentWindowLbl = new JLabel(frame.getTitle());
+		currentWindowLbl.setAutoscrolls(true);
+		currentWindowLbl.setForeground(Constants.LIGHTGRAY);
+		currentWindowLbl.setFont(Constants.PLAINTEXT);
+		titlePnl.add(currentWindowLbl);
+		
+		URL minimizeIconPath = this.getClass().getResource("/resources/minimize.png");
+		BufferedImage minimizeIcon = null;
+		try {
+			minimizeIcon = ImageIO.read(minimizeIconPath);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		JButton minimizeBtn = new JButton(new ImageIcon(minimizeIcon));
+		minimizeBtn.setForeground(Constants.LIGHTGRAY);
+		minimizeBtn.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		minimizeBtn.setFocusPainted(false);
+		minimizeBtn.setBorderPainted(false);
+		minimizeBtn.setBorder(null);
+		minimizeBtn.setBackground(Constants.DARKGREEN);
+		minimizeBtn.setFocusPainted(false);
+		minimizeBtn.setContentAreaFilled(false);
+		minimizeBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.setState(Frame.ICONIFIED);
+			}
+		});
+		actionPnl.add(minimizeBtn, BorderLayout.EAST);
+		
+		URL closeIconPath = this.getClass().getResource("/resources/close.png");
+		BufferedImage closeIcon = null;
+		try {
+			closeIcon = ImageIO.read(closeIconPath);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		JButton closeBtn = new JButton(new ImageIcon(closeIcon));
+		closeBtn.setForeground(Constants.LIGHTGRAY);
+		closeBtn.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		closeBtn.setFocusPainted(false);
+		closeBtn.setBorderPainted(false);
+		closeBtn.setBorder(null);
+		closeBtn.setBackground(Constants.DARKGREEN);
+		closeBtn.setFocusPainted(false);
+		closeBtn.setContentAreaFilled(false);
+		closeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		actionPnl.add(closeBtn, BorderLayout.EAST);
 		
 		JLabel lblNewLabel = new JLabel("user data");
 		lblNewLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 18));
 		lblNewLabel.setBounds(156, 109, 84, 21);
-		frame.getContentPane().add(lblNewLabel);
+		mainPnl.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("enter new password");
 		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblNewLabel_1.setBounds(38, 248, 114, 14);
 		lblNewLabel_1.setVisible(false);
-		frame.getContentPane().add(lblNewLabel_1);
+		mainPnl.add(lblNewLabel_1);
 		
 		textField = new JTextField();
 		textField.setVisible(false);
 		textField.setBounds(38, 273, 212, 31);
-		frame.getContentPane().add(textField);
+		mainPnl.add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("confirm new password");
 		lblNewLabel_1_1.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblNewLabel_1_1.setBounds(38, 320, 126, 14);
 		lblNewLabel_1_1.setVisible(false);
-		frame.getContentPane().add(lblNewLabel_1_1);
+		mainPnl.add(lblNewLabel_1_1);
 		
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
 		textField_1.setBounds(38, 343, 212, 31);
 		textField_1.setVisible(false);
-		frame.getContentPane().add(textField_1);
+		mainPnl.add(textField_1);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] { "", "gender", "weight", "height", "age", "goal", "activity" }));
 		comboBox.setBounds(38, 273, 233, 31);
 		comboBox.setVisible(false);
-		frame.getContentPane().add(comboBox);
+		mainPnl.add(comboBox);
 		
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(38, 345, 348, 31);
 		comboBox_1.setVisible(false);
-		frame.getContentPane().add(comboBox_1);
+		mainPnl.add(comboBox_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Which data would you like to change?");
 		lblNewLabel_2.setBounds(38, 248, 233, 14);
 		lblNewLabel_2.setVisible(false);
-		frame.getContentPane().add(lblNewLabel_2);
+		mainPnl.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("enter new value");
 		lblNewLabel_3.setBounds(38, 320, 137, 14);
 		lblNewLabel_3.setVisible(false);
-		frame.getContentPane().add(lblNewLabel_3);
+		mainPnl.add(lblNewLabel_3);
 		
 		newValueTxt = new JTextField();
 		newValueTxt.setBounds(38, 345, 212, 29);
 		newValueTxt.setVisible(false);
-		frame.getContentPane().add(newValueTxt);
+		mainPnl.add(newValueTxt);
 		newValueTxt.setColumns(10);
 		
 		JButton submitPwBtn = new JButton("Submit");
@@ -138,7 +397,8 @@ public class SettingsFrame {
 			}
 			
 		});
-		frame.getContentPane().add(submitPwBtn);
+		System.out.println("Test");
+		mainPnl.add(submitPwBtn);
 		
 		JButton submitBdBtn = new JButton("Submit");
 		submitBdBtn.setBounds(38, 385, 89, 23);
@@ -295,7 +555,7 @@ public class SettingsFrame {
 				
 			}
 		});
-		frame.getContentPane().add(submitBdBtn);
+		mainPnl.add(submitBdBtn);
 		
 		JButton pwBtn = new JButton("change password");
 		pwBtn.setBounds(117, 141, 162, 31);
@@ -335,7 +595,7 @@ public class SettingsFrame {
 				
 			}
 		});
-		frame.getContentPane().add(pwBtn);
+		mainPnl.add(pwBtn);
 		
 		JButton btnKrperdatenAktualisieren = new JButton("refresh body data");
 		btnKrperdatenAktualisieren.setBounds(117, 183, 162, 31);
@@ -376,7 +636,7 @@ public class SettingsFrame {
 			}
 			
 		});
-		frame.getContentPane().add(btnKrperdatenAktualisieren);
+		mainPnl.add(btnKrperdatenAktualisieren);
 		
 		comboBox.addActionListener(new ActionListener() {
 			
@@ -440,7 +700,7 @@ public class SettingsFrame {
 			}
 			
 		});
-		frame.getContentPane().add(deleteBtn);
+		mainPnl.add(deleteBtn);
 		
 		frame.addWindowListener(new WindowAdapter() {
 			
@@ -457,8 +717,6 @@ public class SettingsFrame {
 			
 		});
 		
-		frame.setLocationRelativeTo(null);
-		frame.setResizable(false);
 		frame.setVisible(false);
 		
 	}

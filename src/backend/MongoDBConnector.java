@@ -9,13 +9,24 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
+import gui.BodyDataFrame;
 import gui.FoodRecommendationFrame;
+import gui.FoodsFrame;
+import gui.ImprintFrame;
 import gui.LogInFrm;
+import gui.LoginFrame;
 import gui.MainFrame;
 import gui.MicronutrientsFrame;
+import gui.PasswordFrame;
+import gui.RegisterFrame;
+import gui.SettingFrame;
 import gui.SettingsFrame;
 import gui.SignUpFrame;
+import gui.StartFrame;
+import gui.SupplementFrame;
 import gui.SupplementsFrame;
+import gui.TrackingFrame;
+import gui.WorkoutFrame;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -67,7 +78,7 @@ public class MongoDBConnector {
 			String url = "mongodb+srv://HamidO:123Hamid123@cluster0.f2htr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 			mongoClient = MongoClients.create(url);
 
-			System.out.println("Connectionn created");
+			System.out.println("Connection created");
 
 		} catch (Exception e) {
 			System.out.println("Error : " + e);
@@ -99,7 +110,8 @@ public class MongoDBConnector {
 							.append("userActivity", userActivity);
 					mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("users").insertOne(document);
 					notAlreadyRegistered = true;
-					SignUpFrame.frmDataCollection.setVisible(false);
+					RegisterFrame.hideFrame();
+					LoginFrame.hideFrame();
 
 				} catch (Exception e) {
 					System.out.println("Something went wrong : " + e);
@@ -130,15 +142,20 @@ public class MongoDBConnector {
 
 				if (cursor.next().get("userPassword").equals(userPassword)) {
 
-					MainFrame mainFrame = new MainFrame(_id);
-					mainFrame.frame.setVisible(true);
+					StartFrame mainFrame = new StartFrame();
+					StartFrame.displayFrame();
 
-					FoodRecommendationFrame foodRecommendationFrame = new FoodRecommendationFrame();
-					SupplementsFrame supplementsFrame = new SupplementsFrame(_id);
-					SettingsFrame settingsFrame = new SettingsFrame(_id);
-					MicronutrientsFrame microNutrientsFrame = new MicronutrientsFrame(_id);
+					FoodsFrame foodRecommendationFrame = new FoodsFrame();
+					SupplementFrame supplementsFrame = new SupplementFrame();
+					MicronutrientsFrame microNutrientsFrame = new MicronutrientsFrame();
+					WorkoutFrame workoutFrame = new WorkoutFrame();
+					TrackingFrame trackingFrame = new TrackingFrame();
+					PasswordFrame passwordFrame = new PasswordFrame();
+					BodyDataFrame bodyDataFrame = new BodyDataFrame();
+					ImprintFrame imprintFrame = new ImprintFrame();
 
-					LogInFrm.frmLogIn.setVisible(false);
+					LoginFrame.hideFrame();
+					RegisterFrame.hideFrame();
 
 				} else {
 
@@ -153,7 +170,7 @@ public class MongoDBConnector {
 
 			}
 		} catch (Exception e) {
-			System.out.println("log in didnt work");
+			System.out.println("");
 
 		}
 

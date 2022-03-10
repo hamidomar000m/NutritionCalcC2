@@ -8,6 +8,8 @@ import com.mongodb.client.MongoCursor;
 
 import gui.BodyDataFrame;
 import gui.FoodsFrame;
+import gui.ImprintFrame;
+import gui.LogInFrm;
 import gui.LoginFrame;
 import gui.MicronutrientsFrame;
 import gui.PasswordFrame;
@@ -77,7 +79,7 @@ public class MongoDBConnector {
 			String url = "mongodb+srv://HamidO:123Hamid123@cluster0.f2htr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 			mongoClient = MongoClients.create(url);
 
-			System.out.println("Connectionn created");
+			System.out.println("Connection created");
 
 		} catch (Exception e) {
 			System.out.println("Error : " + e);
@@ -149,6 +151,7 @@ public class MongoDBConnector {
 					TrackingFrame trackingFrame = new TrackingFrame();
 					PasswordFrame passwordFrame = new PasswordFrame();
 					BodyDataFrame bodyDataFrame = new BodyDataFrame();
+					ImprintFrame imprintFrame = new ImprintFrame();
 
 					LoginFrame.hideFrame();
 					RegisterFrame.hideFrame();
@@ -520,9 +523,9 @@ public class MongoDBConnector {
 
 	public static String[] getTrackedData(String date) {
 
-		String[] trackedData = new String[7];
+		String[] trackedData = new String[8];
 		ArrayList<String> trackedDataList = new ArrayList<String>();
-		// trackedDataList = [_id, username, calorie_amout, carbo_amount, date, fat_amount, protein_amount]
+		
 		try {
 			
 			BasicDBObject searchQuery_id = new BasicDBObject();
@@ -563,8 +566,8 @@ public class MongoDBConnector {
 			JOptionPane.showMessageDialog(null, "Something went wrong!", "INFO", JOptionPane.ERROR_MESSAGE);
 
 		}
-
-		return trackedData; // trackedDataList = [_id, username, calorie_amout, carbo_amount, date, fat_amount, protein_amount]
+		System.out.println(trackedData + " mongo trackedata");
+		return trackedData; // trackedDataList = [_id, username, fat_amout, carbo_amount, protein_amount, date, amount, food_name]
 
 	}
 	

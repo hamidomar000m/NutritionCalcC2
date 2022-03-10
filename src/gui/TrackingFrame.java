@@ -58,7 +58,6 @@ public class TrackingFrame extends Thread {
 	private JTextField foodNameField;
 	private JTextField gramsField_1;
 	private JTextField gramsField_2;
-	private JTextField caloriesField;
 	private JTextField fatField;
 	private JTextField carbsField;
 	private JTextField proteinsField;
@@ -67,20 +66,21 @@ public class TrackingFrame extends Thread {
 	private JComboBox comboBoxFood;
 	private JTextField textField;
 	private JDateChooser progressDateChooser;
-	private String formattedprogressDateChooser = "01-01-2022";
+	private String formattedprogressDateChooser;
 	private double proteinCalPercent = 0.0;
 	private double carboCalPercent = 0.0;
 	private double fatCalPercent = 0.0;
-	private Date date;
+	private String date;
 	private String foodname;
 	private double amount;
 	private double calories;
 	private double fats;
 	private double carbs;
 	private double proteins;
-	private int proteinGram = 0;
-	private int carboGram = 0;
-	private int fatGram = 0;
+
+	private double proteinGram = 0.0;
+	private double carboGram = 0.0;
+	private double fatGram = 0.0;
 	private static String[] trackedMacroData;
 	private boolean isRunning;
 	private JPanel mainPnl;
@@ -355,6 +355,33 @@ public class TrackingFrame extends Thread {
 		btnTracking.setEnabled(false);
 		sidePnl.add(btnTracking);
 		
+		{/*JButton btnImprint = new JButton("Imprint");
+        btnImprint.setHorizontalAlignment(SwingConstants.LEFT);
+        btnImprint.setForeground(Constants.LIGHTGRAY);
+        btnImprint.setFont(Constants.BUTTONTEXT);
+        btnImprint.setFocusPainted(false);
+        btnImprint.setBorderPainted(false);
+        btnImprint.setBorder(null);
+        btnImprint.setBackground(Constants.MIDGREEN);
+        btnImprint.setBounds(35, 558, 78, 23);
+        btnImprint.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                frame.setVisible(false);
+                ImprintFrame.displayFrame();
+                btnSettings.setEnabled(true);
+                btnSettings.setFont(Constants.BUTTONTEXT);
+                passwordBtn.setVisible(false);
+                bodydataBtn.setVisible(false);
+                deleteAccBtn.setVisible(false);
+
+            }
+
+        });
+        sidePnl.add(btnImprint);*/}
+		
 		mainPnl = new JPanel();
 		parentPnl.add(mainPnl, BorderLayout.CENTER);
 		mainPnl.setLayout(null);
@@ -383,6 +410,7 @@ public class TrackingFrame extends Thread {
 						MongoDBConnector.saveTrackingData(MongoDBConnector._id, getTrackingNames(), getTrackingData());
 					}
 				}
+				reloadTrackingFrame();
 
 			}
 
@@ -394,16 +422,16 @@ public class TrackingFrame extends Thread {
 		trackSeparator.setBounds(495, 11, 10, 748);
 		mainPnl.add(trackSeparator);
 		
-		JLabel trackEditHeading = new JLabel("Track your nutrition data:");
-		trackEditHeading.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel trackEditHeading = new JLabel("Track your nutrition data");
+		trackEditHeading.setBounds(10, 40, 475, 55);
 		trackEditHeading.setFont(Constants.HEADING);
-		trackEditHeading.setBounds(77, 40, 331, 55);
+		trackEditHeading.setHorizontalAlignment(SwingConstants.CENTER);
 		mainPnl.add(trackEditHeading);
 		
 		JLabel dateLabelLeft = new JLabel("Select date:");
 		dateLabelLeft.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 		dateLabelLeft.setBounds(30, 123, 142, 26);
-		trackEditHeading.setFont(Constants.LOGINTEXT);
+		dateLabelLeft.setFont(Constants.LOGINTEXT);
 		mainPnl.add(dateLabelLeft);
 		
 		JLabel foodComboboxLabel = new JLabel("Select food from list:");
@@ -418,12 +446,12 @@ public class TrackingFrame extends Thread {
 		
 		JLabel foodNameLabel = new JLabel("food name:");
 		foodNameLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-		foodNameLabel.setBounds(30, 389, 186, 26);
+		foodNameLabel.setBounds(30, 442, 186, 26);
 		mainPnl.add(foodNameLabel);
 		
 		foodNameField = new JTextField();
 		foodNameField.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-		foodNameField.setBounds(224, 389, 231, 26);
+		foodNameField.setBounds(224, 442, 231, 26);
 		mainPnl.add(foodNameField);
 		foodNameField.setColumns(10);
 		
@@ -440,28 +468,27 @@ public class TrackingFrame extends Thread {
 		
 		
 		
-		JLabel lblSeeYourProgress = new JLabel("SEE YOUR PROGRESS");
-		lblSeeYourProgress.setFont(new Font("Century Gothic", Font.BOLD, 20));
-		lblSeeYourProgress.setBounds(506, 37, 484, 55);
+		JLabel lblSeeYourProgress = new JLabel("See your progress");
+		lblSeeYourProgress.setBounds(506, 40, 484, 55);
 		lblSeeYourProgress.setFont(Constants.HEADING);
 		lblSeeYourProgress.setHorizontalAlignment(SwingConstants.CENTER);
 		mainPnl.add(lblSeeYourProgress);
   
 		
-		JLabel progessDateLbl = new JLabel("Date");
-		progessDateLbl.setBounds(515, 172, 78, 35);
-		progessDateLbl.setFont(Constants.PLAINTEXT);
+		JLabel progessDateLbl = new JLabel("Date:");
+		progessDateLbl.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		progessDateLbl.setBounds(515, 119, 78, 35);
 		mainPnl.add(progessDateLbl);
 		
 		JDateChooser progressDateChooser = new JDateChooser();
-		progressDateChooser.setBounds(668, 172, 231, 26);	
+		progressDateChooser.setBounds(668, 123, 231, 26);	
 		//((JTextField)progressDateChooser.getDateEditor().getUiComponent()).setText("Jan 1, 2022"); this sets a default text for the dateChooser
 		mainPnl.add(progressDateChooser);
 		
 		
 		
 		JButton searchBtn = new JButton("Search");
-		searchBtn.setBounds(926, 172, 52, 26);
+		searchBtn.setBounds(926, 123, 52, 26);
 		searchBtn.setFont(new Font("Century Gothic", Font.PLAIN, 11));
 		searchBtn.setFocusPainted(false);
 		searchBtn.setBorderPainted(false);
@@ -475,6 +502,7 @@ public class TrackingFrame extends Thread {
 					SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 					String myFormattedDateString = dateFormat.format(progressDateChooser.getDate());       
 					trackedMacroData = MongoDBConnector.getTrackedData(myFormattedDateString);
+
 					
 					if (trackedMacroData[0] != null) {
 						reloadTrackingFrame();
@@ -520,17 +548,6 @@ public class TrackingFrame extends Thread {
 		gramsField_1.setColumns(10);
 		gramsField_1.setBounds(224, 248, 231, 26);
 		mainPnl.add(gramsField_1);
-		
-		JLabel caloriesLabel = new JLabel("calories per 100g:");
-		caloriesLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-		caloriesLabel.setBounds(30, 434, 186, 26);
-		mainPnl.add(caloriesLabel);
-		
-		caloriesField = new JTextField();
-		caloriesField.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-		caloriesField.setColumns(10);
-		caloriesField.setBounds(224, 434, 231, 26);
-		mainPnl.add(caloriesField);
 		
 		JLabel fatLabel = new JLabel("fat per 100g:");
 		fatLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
@@ -654,28 +671,29 @@ public class TrackingFrame extends Thread {
 		
 	}
 	
-	public static void displayFrame() {
-		frame.setVisible(true);
-	}
-	
+
 	
 	/*
 	 * check wheter the input in the tracking frame is valid
 	 */
 	public boolean validTrackingData() {
 		try {
-			date = dateChooserLeft.getDate();
+			SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd-MM-yyyy");
+			date = dateFormat1.format(dateChooserLeft.getDate()); 
+			
+			
 			
 			if(!chckbxFoodNotFound.isSelected()) {
 				foodname = comboBoxFood.getSelectedItem().toString();
 				amount = Double.parseDouble(gramsField_1.getText());
+				
 			} else {
 				foodname = foodNameField.getText();
-				calories = Double.parseDouble(caloriesField.getText());
+				amount = Double.parseDouble(gramsField_2.getText());
 				fats = Double.parseDouble(fatField.getText());
 				carbs = Double.parseDouble(carbsField.getText());
 				proteins = Double.parseDouble(proteinsField.getText());
-				amount = Double.parseDouble(gramsField_2.getText());
+
 			}
 			return true;
 		}catch(Exception e) {
@@ -683,6 +701,7 @@ public class TrackingFrame extends Thread {
 		}
 	}
 	
+
 	
 	
 	/*
@@ -693,10 +712,12 @@ public class TrackingFrame extends Thread {
 			String[] trackingData = {"food name", "amount"};
 			return trackingData;
 		} else {
-			String[] trackingData = {"food name", "calories", "fats", "carbs", "proteins", "amount"};
+			String[] trackingData = {  "fat_amount", "carbo_amount", "protein_amount", "date", "amount", "food_name",};
 			return trackingData;
 		}
 	}
+	
+
 	
 	
 	
@@ -708,12 +729,16 @@ public class TrackingFrame extends Thread {
 			Object[] trackingData = {foodname, amount};
 			return trackingData;
 		} else {
-			Object[] trackingData = {foodname, calories, fats, carbs, proteins, amount};
+			Object[] trackingData = { fats, carbs, proteins, date, amount, foodname};
 			return trackingData;
 		}
 	}
 	
+
 	
+	public static void displayFrame() {
+		frame.setVisible(true);
+	}
 	
 	public static void enableFrame() {
 		frame.setEnabled(true);
@@ -731,16 +756,17 @@ public class TrackingFrame extends Thread {
 		
 		DefaultPieDataset<String> pieDataSet = new DefaultPieDataset<String>();
 		
-		proteinCalPercent = Double.parseDouble(trackedMacroData[6])*4;
-		carboCalPercent = Double.parseDouble(trackedMacroData[3])*4;
-		fatCalPercent = Double.parseDouble(trackedMacroData[5])*9;
+		double amount1 = Double.parseDouble(trackedMacroData[6])/100;
+		proteinCalPercent = Double.parseDouble(trackedMacroData[4])*4*amount1;
+		carboCalPercent = Double.parseDouble(trackedMacroData[3])*4*amount1;
+		fatCalPercent = Double.parseDouble(trackedMacroData[2])*9*amount1;
 
 		double caloriesToEat = Double.parseDouble(macroNutrientsAndCalories[0])-proteinCalPercent-carboCalPercent-fatCalPercent;
 		
 		System.out.println(caloriesToEat + " trackframe calorie to eat 598");
-		proteinGram = (int)Double.parseDouble(trackedMacroData[6]);
-		carboGram = (int)Double.parseDouble(trackedMacroData[3]);
-		fatGram = (int)Double.parseDouble(trackedMacroData[5]);
+		proteinGram = Double.parseDouble(trackedMacroData[4])*amount1;
+		carboGram = Double.parseDouble(trackedMacroData[3])*amount1;
+		fatGram = Double.parseDouble(trackedMacroData[2])*amount1;
 		
 		pieDataSet.setValue("proteins (kcal)", proteinCalPercent);
 		pieDataSet.setValue("carbohydrates (kcal)", carboCalPercent);
@@ -754,49 +780,49 @@ public class TrackingFrame extends Thread {
 		chartPnl.setLayout(null);
 		mainPnl.add(chartPnl);
 		
-		JLabel CarboProgLbl = new JLabel("CARBOHYDRATE");
+		JLabel CarboProgLbl = new JLabel("Carbohydrate:");
 		CarboProgLbl.setBounds(515, 243, 119, 35);
-		CarboProgLbl.setFont(Constants.PLAINTEXT);
+		CarboProgLbl.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 		mainPnl.add(CarboProgLbl);
 		
 		JProgressBar CarboProgBar = new JProgressBar(0,(int) Double.parseDouble(macroNutrientsAndCalories[3]));
 		CarboProgBar.setStringPainted(true);
-		CarboProgBar.setValue(carboGram);
+		CarboProgBar.setValue((int)carboGram);
 		//CarboProgBar.setMaximum((int) Double.parseDouble(macroNutrientsAndCalories[3]));
 		CarboProgBar.setBounds(668, 250, 310, 23);
 		CarboProgBar.setString(carboGram+" g / "+macroNutrientsAndCalories[3]+ " g");
 		mainPnl.add(CarboProgBar);
 
-		JLabel proteinProgLbl = new JLabel("PROTEIN");
+		JLabel proteinProgLbl = new JLabel("Protein:");
 		proteinProgLbl.setBounds(515, 299, 119, 35);
-		proteinProgLbl.setFont(Constants.PLAINTEXT);
+		proteinProgLbl.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 		mainPnl.add(proteinProgLbl);
 		
 		JProgressBar proteinProgBar = new JProgressBar(0,(int) Double.parseDouble(macroNutrientsAndCalories[1]));
 		proteinProgBar.setStringPainted(true);
-		proteinProgBar.setValue(proteinGram);
+		proteinProgBar.setValue((int)proteinGram);
 		proteinProgBar.setBounds(668, 308, 310, 23);
 		proteinProgBar.setString(proteinGram+" g / "+macroNutrientsAndCalories[1]+ " g");
 		mainPnl.add(proteinProgBar);
 		
-		JLabel fatProgLbl = new JLabel("FAT");
+		JLabel fatProgLbl = new JLabel("Fat:");
 		fatProgLbl.setBounds(515, 351, 119, 35);
-		fatProgLbl.setFont(Constants.PLAINTEXT);
+		fatProgLbl.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 		mainPnl.add(fatProgLbl);
 		
 		JProgressBar fatProgBar = new JProgressBar(0, (int) Double.parseDouble(macroNutrientsAndCalories[2]));
 		fatProgBar.setStringPainted(true);
-		fatProgBar.setForeground(Color.DARK_GRAY);
-		fatProgBar.setValue(fatGram);
+		fatProgBar.setValue((int)fatGram);
+		fatProgBar.setString(fatGram+" g / "+macroNutrientsAndCalories[2]+ " g");
 		fatProgBar.setBounds(668, 360, 310, 23);
 		mainPnl.add(fatProgBar);
 		
 		if (caloriesToEat <= 0) {
 
-			JLabel negativeCalAlertLabel = new JLabel("The calorie limit for "+formattedprogressDateChooser+" was exceeded by "+Math.abs(caloriesToEat)+" kcal !!!");
+			JLabel negativeCalAlertLabel = new JLabel("The calorie limit for "+trackedMacroData[5]+" was exceeded by "+Math.abs(caloriesToEat)+" kcal !!!");
 			negativeCalAlertLabel.setBounds(506, 726, 484, 33);
 			negativeCalAlertLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			negativeCalAlertLabel.setFont(Constants.PLAINTEXT);
+			negativeCalAlertLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 			mainPnl.add(negativeCalAlertLabel);
 
 		}

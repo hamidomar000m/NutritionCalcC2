@@ -757,9 +757,10 @@ public class TrackingFrame extends Thread {
 		DefaultPieDataset<String> pieDataSet = new DefaultPieDataset<String>();
 		
 		double amount1 = Double.parseDouble(trackedMacroData[6])/100;
-		proteinCalPercent = Double.parseDouble(trackedMacroData[4])*4*amount1;
-		carboCalPercent = Double.parseDouble(trackedMacroData[3])*4*amount1;
-		fatCalPercent = Double.parseDouble(trackedMacroData[2])*9*amount1;
+		proteinCalPercent = Double.parseDouble(trackedMacroData[4])*4.1*amount1;
+		carboCalPercent = Double.parseDouble(trackedMacroData[3])*4.1*amount1;
+		fatCalPercent = Double.parseDouble(trackedMacroData[2])*9.3*amount1;
+		double calorieSum = proteinCalPercent+carboCalPercent+fatCalPercent;
 
 		double caloriesToEat = Double.parseDouble(macroNutrientsAndCalories[0])-proteinCalPercent-carboCalPercent-fatCalPercent;
 		
@@ -780,6 +781,20 @@ public class TrackingFrame extends Thread {
 		chartPnl.setLayout(null);
 		mainPnl.add(chartPnl);
 		
+		
+		JLabel CalorieProgLbl = new JLabel("Calorie:");
+		CalorieProgLbl.setBounds(515, 199, 119, 35);
+		CalorieProgLbl.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		mainPnl.add(CalorieProgLbl);
+		
+		JProgressBar CalorieProgBar = new JProgressBar(0,(int) Double.parseDouble(macroNutrientsAndCalories[0]));
+		CalorieProgBar.setStringPainted(true);
+		CalorieProgBar.setValue((int)calorieSum);
+		//CalorieProgBar.setMaximum((int) Double.parseDouble(macroNutrientsAndCalories[3]));
+		CalorieProgBar.setBounds(668, 203, 310, 23);
+		CalorieProgBar.setString(calorieSum+" kcal / "+macroNutrientsAndCalories[0]+ " kcal");
+		mainPnl.add(CalorieProgBar);
+		
 		JLabel CarboProgLbl = new JLabel("Carbohydrate:");
 		CarboProgLbl.setBounds(515, 243, 119, 35);
 		CarboProgLbl.setFont(new Font("Century Gothic", Font.PLAIN, 16));
@@ -794,19 +809,19 @@ public class TrackingFrame extends Thread {
 		mainPnl.add(CarboProgBar);
 
 		JLabel proteinProgLbl = new JLabel("Protein:");
-		proteinProgLbl.setBounds(515, 299, 119, 35);
+		proteinProgLbl.setBounds(515, 289, 119, 35);
 		proteinProgLbl.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 		mainPnl.add(proteinProgLbl);
 		
 		JProgressBar proteinProgBar = new JProgressBar(0,(int) Double.parseDouble(macroNutrientsAndCalories[1]));
 		proteinProgBar.setStringPainted(true);
 		proteinProgBar.setValue((int)proteinGram);
-		proteinProgBar.setBounds(668, 308, 310, 23);
+		proteinProgBar.setBounds(668, 299, 310, 23);
 		proteinProgBar.setString(proteinGram+" g / "+macroNutrientsAndCalories[1]+ " g");
 		mainPnl.add(proteinProgBar);
 		
 		JLabel fatProgLbl = new JLabel("Fat:");
-		fatProgLbl.setBounds(515, 351, 119, 35);
+		fatProgLbl.setBounds(515, 335, 119, 35);
 		fatProgLbl.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 		mainPnl.add(fatProgLbl);
 		
@@ -814,7 +829,7 @@ public class TrackingFrame extends Thread {
 		fatProgBar.setStringPainted(true);
 		fatProgBar.setValue((int)fatGram);
 		fatProgBar.setString(fatGram+" g / "+macroNutrientsAndCalories[2]+ " g");
-		fatProgBar.setBounds(668, 360, 310, 23);
+		fatProgBar.setBounds(668, 345, 310, 23);
 		mainPnl.add(fatProgBar);
 		
 		if (caloriesToEat <= 0) {
@@ -822,7 +837,7 @@ public class TrackingFrame extends Thread {
 			JLabel negativeCalAlertLabel = new JLabel("The calorie limit for "+trackedMacroData[5]+" was exceeded by "+Math.abs(caloriesToEat)+" kcal !!!");
 			negativeCalAlertLabel.setBounds(506, 726, 484, 33);
 			negativeCalAlertLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			negativeCalAlertLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+			negativeCalAlertLabel.setFont(new Font("Century Gothic", Font.PLAIN, 12));
 			mainPnl.add(negativeCalAlertLabel);
 
 		}

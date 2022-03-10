@@ -509,15 +509,6 @@ public class TrackingFrame extends Thread {
 		pieDataSet.setValue("fats", Double.parseDouble(macroNutrientsAndCalories[2]));
 		
 		JFreeChart pieChart = ChartFactory.createPieChart("Nutrient distribution", pieDataSet, true, true, true);
-		ChartPanel chartPnl = new ChartPanel(pieChart);
-		chartPnl.setBackground(new Color(154, 205, 50));
-		chartPnl.setBounds(613, 412, 339, 295);
-		chartPnl.setLayout(null);
-		mainPnl.add(chartPnl);
-		
-		JLabel trackEditDate_1_1_1 = new JLabel("Macronutritons:");
-		trackEditDate_1_1_1.setBounds(515, 412, 78, 35);
-		mainPnl.add(trackEditDate_1_1_1);
 		
 		JLabel gramsLabel_1 = new JLabel("amount in grams:");
 		gramsLabel_1.setFont(new Font("Century Gothic", Font.PLAIN, 16));
@@ -712,7 +703,7 @@ public class TrackingFrame extends Thread {
 	/*
 	 * returns an Object-Array that contains the values of the user input
 	 */
-	public Object[] getTrackingData() {		
+	public Object[] getTrackingData() { // tracking Daten sollen addiert werden, nicht neu anlegen
 		if(!chckbxFoodNotFound.isSelected()) {
 			Object[] trackingData = {foodname, amount};
 			return trackingData;

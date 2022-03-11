@@ -18,6 +18,7 @@ import gui.SupplementFrame;
 import gui.TrackingFrame;
 import gui.WorkoutFrame;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -219,7 +220,7 @@ public class MongoDBConnector {
 	
 	
 	
-	public static void saveTrackingData(String username, String[] names, Object[] trackingData) {
+	public static void saveTrackingData(String username, String[] names, String[] trackingData) {
 		MongoCollection collection = mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("tracked-nutrients");
 		
 		try {
@@ -228,13 +229,15 @@ public class MongoDBConnector {
 				document.append(names[i], trackingData[i]);
 			}
 			collection.insertOne(document);
+			//System.out.println(" save track");
 		} 
 		catch(Exception e) {}
+		//System.out.println("error save tracking");
 	}
 	
 	
 	
-	public static void saveNewFoodData(String username, String[] names, Object[] foodData) {
+	public static void saveNewFoodData(String username, String[] names, String[] foodData) {
 		MongoCollection collection = mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("saved-foods");
 		
 		try {
@@ -243,8 +246,10 @@ public class MongoDBConnector {
 				document.append(names[i], foodData[i]);
 			}
 			collection.insertOne(document);
+			//System.out.println(" save food");
 		} 
 		catch(Exception e) {}
+		//System.out.println("error save food");
 	}
 	
 	
@@ -344,7 +349,7 @@ public class MongoDBConnector {
 		} catch (Exception e) {
 			System.out.println("error");
 		}
-		System.out.println( Arrays.toString(data) + "mongodbcon - getMacronutrientsAndCalories");
+		//System.out.println( Arrays.toString(data) + "mongodbcon - getMacronutrientsAndCalories");
 		return data;
 	}
 
@@ -522,8 +527,13 @@ public class MongoDBConnector {
 
 	public static String[] getTrackedData(String date) {
 
-		String[] trackedData = new String[8];
-		ArrayList<String> trackedDataList = new ArrayList<String>();
+		String[] trackedData = new String[4];
+		ArrayList<String> trackedCarboList = new ArrayList<String>();
+		ArrayList<String> trackedFatList = new ArrayList<String>();
+		ArrayList<String> trackedProtList = new ArrayList<String>();
+		double sumCarbo = 0;
+		double sumFat = 0;
+		double sumProt = 0;
 		
 		try {
 			
@@ -535,37 +545,77 @@ public class MongoDBConnector {
 
 			MongoCursor<Document> cursor = mongoClient.getDatabase("ernaehrungstracker-app-db")
 					.getCollection("tracked-nutrients").find(searchQuery_id).iterator();
+			MongoCursor<Document> cursor1 = mongoClient.getDatabase("ernaehrungstracker-app-db")
+					.getCollection("tracked-nutrients").find(searchQuery_id).iterator();
+			MongoCursor<Document> cursor2 = mongoClient.getDatabase("ernaehrungstracker-app-db")
+					.getCollection("tracked-nutrients").find(searchQuery_id).iterator();
+			MongoCursor<Document> cursor3 = mongoClient.getDatabase("ernaehrungstracker-app-db")
+					.getCollection("tracked-nutrients").find(searchQuery_id).iterator();
 			
 			if (!cursor.hasNext()) {
 				JOptionPane.showMessageDialog(null, "No data for this date!", "INFO", JOptionPane.ERROR_MESSAGE);
 			}
-			
-			while (cursor.hasNext()) {
 
-				Document document = cursor.next();
-				Set<String> keys = document.keySet();
-				Iterator iterator = keys.iterator();
+			
+			/*while (cursor.hasNext()) {
+				trackedFatList.add( (String) cursor.next().get("fat_amount"));
+				//System.out.println(trackedDataList + "fat");
+				//trackedDataList1.add( (double) cursor.next().get("carbo_amount"));
+				//System.out.println(trackedDataList1 + "carbo");
+
+				
+
+				//Document document = cursor.next();
+				//System.out.println(document+ "document");
+				//Set<String> keys = document.keySet();
+				//Iterator iterator = keys.iterator();
 
 				while (iterator.hasNext()) {
 
 					String key = (String) iterator.next();
+					System.out.println(key + "key");
 					String value = (String) document.get(key).toString();
+					System.out.println(value + "value");
 					trackedDataList.add(value);
 
 				}
 				
 				for (int i = 0; i < keys.size(); i++) {
 
-					trackedData[i] = trackedDataList.get(i);
+					trackedData[i] += trackedDataList.get(i);
 				}	
+
+			}*/
+			
+			while (cursor.hasNext() ) {
+				trackedCarboList.add((String) cursor.next().get("carbo_amount"));
 			}
+			while (cursor1.hasNext() ) {
+				trackedFatList.add((String) cursor1.next().get("fat_amount"));
+			}
+			while (cursor2.hasNext() ) {
+				trackedProtList.add((String) cursor2.next().get("protein_amount"));
+			}
+			for (int i = 0; i < trackedCarboList.size(); i++) {
+				//System.out.println(trackedDataList1.get(i));
+
+				sumCarbo += Double.parseDouble(trackedCarboList.get(i));
+				sumFat += Double.parseDouble(trackedFatList.get(i));
+				sumProt += Double.parseDouble(trackedProtList.get(i));
+			}
+			
+			trackedData[0] = Double.toString(sumCarbo);
+			trackedData[1] = Double.toString(sumFat);
+			trackedData[2] = Double.toString(sumProt);
+			trackedData[3] = date;
+
 
 			
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Something went wrong!", "INFO", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Something went wrong!" + e, "INFO", JOptionPane.ERROR_MESSAGE);
 
 		}
-		System.out.println(trackedData + " mongo trackedata");
+		//System.out.println(Arrays.toString(trackedData) + " mongo trackedata");
 		return trackedData; // trackedDataList = [_id, username, fat_amout, carbo_amount, protein_amount, date, amount, food_name]
 
 	}

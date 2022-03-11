@@ -72,11 +72,14 @@ public class TrackingFrame extends Thread {
 	private double fatCalPercent = 0.0;
 	private String date;
 	private String foodname;
-	private double amount;
-	private double calories;
-	private double fats;
-	private double carbs;
-	private double proteins;
+	private String amount;
+	private String calories;
+	private String fats;
+	private String carbs;
+	private String proteins;
+	private String fats1;
+	private String carbs1;
+	private String proteins1;
 
 	private double proteinGram = 0.0;
 	private double carboGram = 0.0;
@@ -91,7 +94,7 @@ public class TrackingFrame extends Thread {
 	}
 
 	private void initialize() {
-		System.out.println("trackframe initilize started 78");
+		//System.out.println("trackframe initilize started 78");
 		frame = new JFrame("Tracking");
 		frame.setUndecorated(true);
 		frame.setBounds(100, 100, 1250, 800);
@@ -355,7 +358,7 @@ public class TrackingFrame extends Thread {
 		btnTracking.setEnabled(false);
 		sidePnl.add(btnTracking);
 		
-		{/*JButton btnImprint = new JButton("Imprint");
+		JButton btnImprint = new JButton("Imprint");
         btnImprint.setHorizontalAlignment(SwingConstants.LEFT);
         btnImprint.setForeground(Constants.LIGHTGRAY);
         btnImprint.setFont(Constants.BUTTONTEXT);
@@ -380,7 +383,7 @@ public class TrackingFrame extends Thread {
             }
 
         });
-        sidePnl.add(btnImprint);*/}
+        sidePnl.add(btnImprint);
 		
 		mainPnl = new JPanel();
 		parentPnl.add(mainPnl, BorderLayout.CENTER);
@@ -404,7 +407,7 @@ public class TrackingFrame extends Thread {
 
 				if(validTrackingData()) {
 					if(chckbxFoodNotFound.isSelected()) {
-						MongoDBConnector.saveNewFoodData(MongoDBConnector._id, getTrackingNames(), getTrackingData());
+						MongoDBConnector.saveNewFoodData(MongoDBConnector._id, getTrackingNames(), getTrackingDataSaveFood());
 						MongoDBConnector.saveTrackingData(MongoDBConnector._id, getTrackingNames(), getTrackingData());
 					} else {
 						MongoDBConnector.saveTrackingData(MongoDBConnector._id, getTrackingNames(), getTrackingData());
@@ -502,6 +505,7 @@ public class TrackingFrame extends Thread {
 					SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 					String myFormattedDateString = dateFormat.format(progressDateChooser.getDate());       
 					trackedMacroData = MongoDBConnector.getTrackedData(myFormattedDateString);
+					//System.out.println(Arrays.toString(trackedMacroData));
 
 					
 					if (trackedMacroData[0] != null) {
@@ -673,23 +677,30 @@ public class TrackingFrame extends Thread {
 		try {
 			SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd-MM-yyyy");
 			date = dateFormat1.format(dateChooserLeft.getDate()); 
+			double amountDouble = Double.parseDouble(gramsField_2.getText());
 			
 			
 			
 			if(!chckbxFoodNotFound.isSelected()) {
 				foodname = comboBoxFood.getSelectedItem().toString();
-				amount = Double.parseDouble(gramsField_1.getText());
+				amount = gramsField_2.getText();
 				
 			} else {
+				
 				foodname = foodNameField.getText();
-				amount = Double.parseDouble(gramsField_2.getText());
-				fats = Double.parseDouble(fatField.getText());
-				carbs = Double.parseDouble(carbsField.getText());
-				proteins = Double.parseDouble(proteinsField.getText());
+				fats = Double.toString(Double.parseDouble(fatField.getText())* amountDouble/100);
+				carbs = Double.toString(Double.parseDouble(carbsField.getText())* amountDouble/100);
+				proteins = Double.toString(Double.parseDouble(proteinsField.getText())* amountDouble/100);
+				//variables without multiplication with amountDouble so that it can be save in saved-food collection
+				fats1 = Double.toString(Double.parseDouble(fatField.getText()));
+				carbs1 = Double.toString(Double.parseDouble(carbsField.getText()));
+				proteins1 = Double.toString(Double.parseDouble(proteinsField.getText()));
+
 
 			}
 			return true;
 		}catch(Exception e) {
+
 			return false;
 		}
 	}
@@ -705,7 +716,8 @@ public class TrackingFrame extends Thread {
 			String[] trackingData = {"food name", "amount"};
 			return trackingData;
 		} else {
-			String[] trackingData = {  "fat_amount", "carbo_amount", "protein_amount", "date", "amount", "food_name",};
+			String[] trackingData = {  "fat_amount", "carbo_amount", "protein_amount", "date", "food_name",};
+
 			return trackingData;
 		}
 	}
@@ -717,12 +729,25 @@ public class TrackingFrame extends Thread {
 	/*
 	 * returns an Object-Array that contains the values of the user input
 	 */
-	public Object[] getTrackingData() {		
+	public String[] getTrackingData() {		
 		if(!chckbxFoodNotFound.isSelected()) {
-			Object[] trackingData = {foodname, amount};
+			String[] trackingData = {foodname, amount};
 			return trackingData;
 		} else {
-			Object[] trackingData = { fats, carbs, proteins, date, amount, foodname};
+			String[] trackingData = { fats, carbs, proteins, date, foodname};
+
+			return trackingData;
+		}
+	}
+	
+	//variables without multiplication with amountDouble so that it can be save in saved-food collection
+	public String[] getTrackingDataSaveFood() {		
+		if(!chckbxFoodNotFound.isSelected()) {
+			String[] trackingData = {foodname, amount};
+			return trackingData;
+		} else {
+			String[] trackingData = { fats1, carbs1, proteins1, date, foodname};
+
 			return trackingData;
 		}
 	}
@@ -749,18 +774,18 @@ public class TrackingFrame extends Thread {
 		
 		DefaultPieDataset<String> pieDataSet = new DefaultPieDataset<String>();
 		
-		double amount1 = Double.parseDouble(trackedMacroData[6])/100;
-		proteinCalPercent = Double.parseDouble(trackedMacroData[4])*4.1*amount1;
-		carboCalPercent = Double.parseDouble(trackedMacroData[3])*4.1*amount1;
-		fatCalPercent = Double.parseDouble(trackedMacroData[2])*9.3*amount1;
+		//double amount1 = Double.parseDouble(trackedMacroData[6])/100;
+		proteinCalPercent = Double.parseDouble(trackedMacroData[2])*4.1;
+		carboCalPercent = Double.parseDouble(trackedMacroData[0])*4.1;
+		fatCalPercent = Double.parseDouble(trackedMacroData[1])*9.3;
 		double calorieSum = proteinCalPercent+carboCalPercent+fatCalPercent;
 
 		double caloriesToEat = Double.parseDouble(macroNutrientsAndCalories[0])-proteinCalPercent-carboCalPercent-fatCalPercent;
 		
-		System.out.println(caloriesToEat + " trackframe calorie to eat 598");
-		proteinGram = Double.parseDouble(trackedMacroData[4])*amount1;
-		carboGram = Double.parseDouble(trackedMacroData[3])*amount1;
-		fatGram = Double.parseDouble(trackedMacroData[2])*amount1;
+		//System.out.println(caloriesToEat + " trackframe calorie to eat 598");
+		proteinGram = Double.parseDouble(trackedMacroData[2]);
+		carboGram = Double.parseDouble(trackedMacroData[0]);
+		fatGram = Double.parseDouble(trackedMacroData[1]);
 		
 		pieDataSet.setValue("proteins (kcal)", proteinCalPercent);
 		pieDataSet.setValue("carbohydrates (kcal)", carboCalPercent);
@@ -824,16 +849,22 @@ public class TrackingFrame extends Thread {
 		fatProgBar.setString(fatGram+" g / "+macroNutrientsAndCalories[2]+ " g");
 		fatProgBar.setBounds(668, 345, 310, 23);
 		mainPnl.add(fatProgBar);
+		//System.out.println("1");
+		
+		//System.out.println(caloriesToEat + "Hi");
 		
 		if (caloriesToEat <= 0) {
+			
+			//System.out.println(caloriesToEat + "Ho");
 
-			JLabel negativeCalAlertLabel = new JLabel("The calorie limit for "+trackedMacroData[5]+" was exceeded by "+Math.abs(caloriesToEat)+" kcal !!!");
+			JLabel negativeCalAlertLabel = new JLabel("The calorie limit for "+trackedMacroData[3]+" was exceeded by "+Math.abs(caloriesToEat)+" kcal !!!");
 			negativeCalAlertLabel.setBounds(506, 726, 484, 33);
 			negativeCalAlertLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			negativeCalAlertLabel.setFont(new Font("Century Gothic", Font.PLAIN, 12));
 			mainPnl.add(negativeCalAlertLabel);
 
 		}
+		
 	}
 	
 	

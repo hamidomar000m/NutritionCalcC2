@@ -443,11 +443,12 @@ public class TrackingFrame extends Thread {
 		foodComboboxLabel.setBounds(30, 203, 186, 26);
 		mainPnl.add(foodComboboxLabel);
 
-		comboBoxFood = new JComboBox();
+		Object[] foodsObjects = MongoDBConnector.getSavedFoods();
+        comboBoxFood = new JComboBox(foodsObjects);
 		comboBoxFood.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 		comboBoxFood.setBounds(224, 203, 231, 26);
 		mainPnl.add(comboBoxFood);
-
+		
 		JLabel foodNameLabel = new JLabel("food name:");
 		foodNameLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 		foodNameLabel.setBounds(30, 442, 186, 26);

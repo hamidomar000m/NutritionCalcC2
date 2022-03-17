@@ -71,6 +71,7 @@ public class WorkoutPanels {
 		benchpressTxtArea.setFont(Constants.PLAINTEXT);
 		benchpressTxtArea.setBackground(Constants.MAINBACKGROUND);
 		benchpressTxtArea.setBounds(350, 62, 595, 134);
+		benchpressTxtArea.setEditable(false);
 		panel.add(benchpressTxtArea);
 		
 		JPanel panel_1 = new JPanel();
@@ -111,6 +112,7 @@ public class WorkoutPanels {
 		pushupsTextArea.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		pushupsTextArea.setBackground(SystemColor.menu);
 		pushupsTextArea.setBounds(350, 62, 595, 134);
+		pushupsTextArea.setEditable(false);
 		panel_1.add(pushupsTextArea);
 		
 		JPanel panel_1_1 = new JPanel();
@@ -151,6 +153,7 @@ public class WorkoutPanels {
 		butterflyTextArea.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		butterflyTextArea.setBackground(SystemColor.menu);
 		butterflyTextArea.setBounds(350, 62, 595, 134);
+		butterflyTextArea.setEditable(false);
 		panel_1_1.add(butterflyTextArea);
 		
 		URL returnIconPath = this.getClass().getResource("/resources/exit.png");
@@ -230,6 +233,7 @@ public class WorkoutPanels {
 		pullUpsTxtArea.setFont(Constants.PLAINTEXT);
 		pullUpsTxtArea.setBackground(Constants.MAINBACKGROUND);
 		pullUpsTxtArea.setBounds(350, 62, 595, 134);
+		pullUpsTxtArea.setEditable(false);
 		panel.add(pullUpsTxtArea);
 		
 		JPanel panel_1 = new JPanel();
@@ -273,6 +277,7 @@ public class WorkoutPanels {
 		barbellTxtArea.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		barbellTxtArea.setBackground(SystemColor.menu);
 		barbellTxtArea.setBounds(350, 62, 595, 134);
+		barbellTxtArea.setEditable(false);
 		panel_1.add(barbellTxtArea);
 		
 		JPanel panel_1_1 = new JPanel();
@@ -314,6 +319,7 @@ public class WorkoutPanels {
 		dumbbellTxtArea.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		dumbbellTxtArea.setBackground(SystemColor.menu);
 		dumbbellTxtArea.setBounds(350, 62, 595, 134);
+		dumbbellTxtArea.setEditable(false);
 		panel_1_1.add(dumbbellTxtArea);
 		
 		URL returnIconPath = this.getClass().getResource("/resources/exit.png");
@@ -394,6 +400,7 @@ public class WorkoutPanels {
 		squadsTxtArea.setFont(Constants.PLAINTEXT);
 		squadsTxtArea.setBackground(Constants.MAINBACKGROUND);
 		squadsTxtArea.setBounds(350, 62, 595, 134);
+		squadsTxtArea.setEditable(false);
 		panel.add(squadsTxtArea);
 		
 		JPanel panel_1 = new JPanel();
@@ -434,6 +441,7 @@ public class WorkoutPanels {
 		deadliftTxtArea.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		deadliftTxtArea.setBackground(SystemColor.menu);
 		deadliftTxtArea.setBounds(350, 62, 595, 134);
+		deadliftTxtArea.setEditable(false);
 		panel_1.add(deadliftTxtArea);
 		
 		JPanel panel_1_1 = new JPanel();
@@ -474,6 +482,7 @@ public class WorkoutPanels {
 		calfraisesTxtArea.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		calfraisesTxtArea.setBackground(SystemColor.menu);
 		calfraisesTxtArea.setBounds(350, 62, 595, 134);
+		calfraisesTxtArea.setEditable(false);
 		panel_1_1.add(calfraisesTxtArea);
 		
 		URL returnIconPath = this.getClass().getResource("/resources/exit.png");
@@ -553,6 +562,7 @@ public class WorkoutPanels {
 		curlsTxtArea.setFont(Constants.PLAINTEXT);
 		curlsTxtArea.setBackground(Constants.MAINBACKGROUND);
 		curlsTxtArea.setBounds(350, 62, 595, 134);
+		curlsTxtArea.setEditable(false);
 		panel.add(curlsTxtArea);
 		
 		JPanel panel_1 = new JPanel();
@@ -593,6 +603,7 @@ public class WorkoutPanels {
 		hammerCurlsTxtArea.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		hammerCurlsTxtArea.setBackground(SystemColor.menu);
 		hammerCurlsTxtArea.setBounds(350, 62, 595, 134);
+		hammerCurlsTxtArea.setEditable(false);
 		panel_1.add(hammerCurlsTxtArea);
 		
 		JPanel panel_1_1 = new JPanel();
@@ -633,6 +644,7 @@ public class WorkoutPanels {
 		barbellCurlsTxtArea.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		barbellCurlsTxtArea.setBackground(SystemColor.menu);
 		barbellCurlsTxtArea.setBounds(350, 62, 595, 134);
+		barbellCurlsTxtArea.setEditable(false);
 		panel_1_1.add(barbellCurlsTxtArea);
 		
 		URL returnIconPath = this.getClass().getResource("/resources/exit.png");
@@ -712,6 +724,7 @@ public class WorkoutPanels {
 		dipsTxtArea.setFont(Constants.PLAINTEXT);
 		dipsTxtArea.setBackground(Constants.MAINBACKGROUND);
 		dipsTxtArea.setBounds(350, 62, 595, 134);
+		dipsTxtArea.setEditable(false);
 		panel.add(dipsTxtArea);
 		
 		JPanel panel_1 = new JPanel();
@@ -752,6 +765,7 @@ public class WorkoutPanels {
 		pushdownTxtArea.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		pushdownTxtArea.setBackground(SystemColor.menu);
 		pushdownTxtArea.setBounds(350, 62, 595, 134);
+		pushdownTxtArea.setEditable(false);
 		panel_1.add(pushdownTxtArea);
 		
 		JPanel panel_1_1 = new JPanel();
@@ -792,6 +806,7 @@ public class WorkoutPanels {
 		frenchPressTxtArea.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		frenchPressTxtArea.setBackground(SystemColor.menu);
 		frenchPressTxtArea.setBounds(350, 62, 595, 134);
+		frenchPressTxtArea.setEditable(false);
 		panel_1_1.add(frenchPressTxtArea);
 		
 		URL returnIconPath = this.getClass().getResource("/resources/exit.png");
@@ -871,6 +886,7 @@ public class WorkoutPanels {
 		rollInsTxtArea.setFont(Constants.PLAINTEXT);
 		rollInsTxtArea.setBackground(Constants.MAINBACKGROUND);
 		rollInsTxtArea.setBounds(350, 62, 595, 134);
+		rollInsTxtArea.setEditable(false);
 		panel.add(rollInsTxtArea);
 		
 		JPanel panel_1 = new JPanel();
@@ -911,6 +927,7 @@ public class WorkoutPanels {
 		legRaiseTxtArea.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		legRaiseTxtArea.setBackground(SystemColor.menu);
 		legRaiseTxtArea.setBounds(350, 62, 595, 134);
+		legRaiseTxtArea.setEditable(false);
 		panel_1.add(legRaiseTxtArea);
 		
 		JPanel panel_1_1 = new JPanel();
@@ -951,6 +968,7 @@ public class WorkoutPanels {
 		jackknifeTxtArea.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		jackknifeTxtArea.setBackground(SystemColor.menu);
 		jackknifeTxtArea.setBounds(350, 62, 595, 134);
+		jackknifeTxtArea.setEditable(false);
 		panel_1_1.add(jackknifeTxtArea);
 		
 		URL returnIconPath = this.getClass().getResource("/resources/exit.png");

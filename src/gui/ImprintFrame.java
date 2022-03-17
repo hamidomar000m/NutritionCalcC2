@@ -433,7 +433,7 @@ public class ImprintFrame {
 				+ "The pictures of the workout recommendation are from the website\n"
 				+ "https://modusx.de/fitness-uebungen");
 		descriptionTxtArea.setFont(Constants.PLAINTEXT);
-		descriptionTxtArea.setEnabled(false);
+		descriptionTxtArea.setEditable(false);
 		descriptionTxtArea.setBackground(Constants.MAINBACKGROUND);
 		descriptionTxtArea.setBounds(250, 327, 499, 173);
 		mainPnl.add(descriptionTxtArea);

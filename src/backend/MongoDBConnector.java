@@ -236,13 +236,43 @@ public class MongoDBConnector {
 	}
 	
 	
+	/*
+	 * returns an Object-Array that contains all foods saved by the user
+	 */
+	public static Object[] getSavedFoods(){
+		ArrayList<String> foods = new ArrayList<String>();;
+		MongoCollection collection = mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("saved-foods");
+		
+		BasicDBObject searchQuery_id = new BasicDBObject();
+		searchQuery_id.put("username", _id);
+		
+		MongoCursor<Document> cursor = mongoClient.getDatabase("ernaehrungstracker-app-db")
+				.getCollection("saved-foods").find(searchQuery_id).iterator();
+		
+		while (cursor.hasNext()) {
+			Document document = cursor.next();
+			String foodName = document.get("food_name").toString();
+			foods.add(foodName);
+		}
+		
+		Object[] savedFoods = foods.toArray();
+		
+	for(int i = 0; i < savedFoods.length; i++) {
+		System.out.println(savedFoods[i].toString());
+		}
+		
+	return savedFoods;
+	}
+
+	
+	
 	
 	public static void saveNewFoodData(String username, String[] names, String[] foodData) {
 		MongoCollection collection = mongoClient.getDatabase("ernaehrungstracker-app-db").getCollection("saved-foods");
 		
 		try {
 			Document document = new Document("username", username);
-			for(int i = 0; i < foodData.length-1; i++) {
+			for(int i = 0; i < foodData.length; i++) {
 				document.append(names[i], foodData[i]);
 			}
 			collection.insertOne(document);

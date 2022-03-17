@@ -20,6 +20,8 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
+import backend.Main;
+
 public class WorkoutPanels {
 
 	public WorkoutPanels() {
@@ -87,7 +89,7 @@ public class WorkoutPanels {
 		lblPushups.setBounds(350, 11, 85, 26);
 		panel_1.add(lblPushups);
 		
-		URL pushUpIconPath = this.getClass().getResource("/resources/Liegestutze2.png");
+		URL pushUpIconPath = Main.class.getResource("/resources/Liegestutze2.png");
 		BufferedImage pushUpIcon = null;
 		try {
 			pushUpIcon = ImageIO.read(pushUpIconPath);

@@ -338,7 +338,7 @@ public class PasswordFrame {
 					if(newPassword.equals(confirmedPassword) && newPassword.length() >= 6) {
 						//change password in database
 						MongoDBConnector.changePassword(MongoDBConnector._id, newPassword);
-						JOptionPane.showMessageDialog(null, "Successfully changed your password to " + newPassword, "INFO", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Successfully changed your password.", "INFO", JOptionPane.INFORMATION_MESSAGE);
 					}
 					
 				} catch(Exception ex) {
